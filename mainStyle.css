@@ -1,0 +1,513 @@
+
+:root {
+  --BodyPrimaryColor: #242582; 
+  --TabsPrimaryColor: #553D67; 
+  --TabsSelectedColor: #F64C72;
+  /* Habilidades */
+  --AbilitiesDefensesPrimaryColor: purple;
+  --AbilityFontSize: 30px;
+  /* Defesas */
+  --DefensePrimaryFontSize: 30px;
+  --DefenseSecundaryFontSize: 30px;
+  /* Perícias */
+  --SkillsPrimaryColor: darkgoldenrod;
+  --SkillsPrimaryFontSize: 20px;
+  /* Vantagens */
+  --AdvantagesPrimaryColor: darkgoldenrod;
+
+  /* Poderes */
+}
+
+/***************************
+ * General Itens 
+****************************/
+
+/* Tentar fazer : https://codepen.io/prasanthmj/pen/EWQPrK */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  outline: 0;
+  -moz-appearance: textfield;
+}
+
+input[type=number] {
+    width: 40px;
+    border-radius: 10px;
+    border: 3px solid LimeGreen;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    font-size: 12;
+}
+
+.TraitTotalCell{
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  margin: 10px 0px 10px 0px;
+
+  background-color: grey;
+  border: 4px solid lightgray;
+  border-radius: 15px;
+  color: lightgrey;
+}
+
+.SectionTitle {
+	text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+	color: white;
+	padding:  5px;
+  min-width: 600px;
+  -webkit-text-stroke: 2px black; /* width and color */
+}
+
+/*******************************************
+* Habilidades, Defesas e Traços Adicionais
+********************************************/
+
+/* Grid Styles */
+#AbilityGrid-Container {
+  display: grid;
+  width: 100%;
+  grid-template-areas:
+  'abilities powerLevel'
+  'defenses otherTraits';
+  grid-gap: 10px;
+  padding: 10px;
+}
+.Ability-Item1{ grid-area: abilities; }
+.Ability-Item2{ grid-area: defenses; }
+.Ability-Item3{ grid-area: otherTraits; }
+
+/* Todas as células em campos de Habilidades */
+.AbilityCell {
+  font-size: var(--AbilityFontSize);
+  padding: 5px;
+  text-align: center;
+}
+
+/* Texto dentro das células */
+.AbilityText {
+  border-radius: 10px;
+  border: 4px solid lightgray;
+  padding-right: 5px;
+  padding-left: 5px;
+  
+  text-align: center;
+  font-weight: bold;
+  
+  background-color: white;
+  color: var(--AbilitiesDefensesPrimaryColor);
+}
+
+.AbilityCell input[type=number]{
+  height: 80px;
+  width: 90px;
+  border: 3px solid LimeGreen;
+  text-align: center;
+  margin-left: 5px;
+  font-size: var(--AbilityFontSize);
+}
+
+/***************************************************
+ * Defesas
+***************************************************/
+
+.DefenseCell input[type=number] {
+  font-size: 20px;
+  width: 60px;
+  float: left;
+}
+
+.DefenseCell {
+  text-align: center;
+  font-size: var(--DefensePrimaryFontSize);
+  border: 4px solid lightgray;
+  border-radius: 10px;
+}
+
+.DefenseText {
+  color: var(--AbilitiesDefensesPrimaryColor);
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.DefenseTitleCell {
+  text-align: center;
+  border: 4px solid lightgray;
+  border-radius: 10px;
+  font-size: var(--DefensePrimaryFontSize);
+  font-weight: bold;
+}
+
+/*********************************************
+ * Perícias
+/********************************************/
+
+.SkillGrid-container{
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+}
+
+.Skill-Item{
+  font-size: 20px;
+  padding-right: 50px;
+  height: 100%;
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+.SkillCell input[type=text]{
+  width: 200px;
+}
+
+/* .skillNameTitle{} */
+
+.SkillCell{
+  font-size: 22px;
+  padding: 7px;
+  border: 4px solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.SkillTitleCell{
+  width: 100%;
+  padding-left: 10px;
+  border: 4px solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+  color: var(--SkillsPrimaryColor);
+  font-size: 25px;
+}
+
+.SkillCellText{
+  color: var(--SkillsPrimaryColor);
+  padding: 7px;
+  float: left; 
+}
+
+.SkillCell input[type=number]{
+  width: 60px;
+  font-size: 18px;
+  float: left;
+}
+
+.ExtraSkillTitleCell{
+  width: 100%;
+  padding-left: 10px;
+  border: 4px solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+  color: var(--SkillsPrimaryColor);
+  font-size: 20px;
+}
+
+.AdditionalSkillsList{
+  height: calc(77% - 100px);
+  overflow-y: scroll;
+}
+
+.AddTraitButtons button:hover{
+  background-color: var(--TabsSelectedColor);
+}
+
+/*********************************************
+ * Vantagens do Jogador
+/********************************************/
+
+#PlayerAdvTable {
+  width: 600px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.PlayerAdvName-Cell{
+  background-color: lightgrey;
+  border: 1px solid black;
+  color: black;
+  text-align: center;
+  font-size: 18px;
+  min-width: 75%;
+}
+
+.PlayerAdvRank-Cell{
+  background-color: lightgrey;
+  border: 1px solid black;
+  color: black;
+  text-align: center;
+  font-size: 18px;
+  width: 25%;
+}
+
+/* Vantagens Aumentadas */
+.PlayerEnhAdvName-Cell{
+  background-color: CornflowerBlue;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  min-width: 50%;
+}
+
+.AdvantageInputText input[type=text]{
+  margin-left: 5px;
+}
+
+/* Grid */
+#AdvantageGrid-Container{
+  display: grid;
+  grid-template-areas: 'advantages languages';
+  grid-template-columns: 1fr 1fr;
+}
+
+.AdvantageGrid-Item1{
+  grid-area: advantages;
+}
+
+.AdvantageGrid-Item2{
+  grid-area: languages;
+}
+
+/*
+ * Idiomas
+*/
+
+#LanguagesListTable{
+  width: 600px;
+  font-size: 20px;
+  padding: 5px;
+}
+
+#LanguagesListTable input[type=text]{
+  font-size: 18px;
+  width: 190px;
+}
+
+/********************************
+ * Buttons 
+********************************/
+
+.AddTraitButtons button{
+  font-size: 20px;
+  padding: 8px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.DeleteButton {
+  font-size: 20px;
+  padding: 10px;
+  width: 50px;
+  border-radius: 10px;
+  background-color: red;
+  color: white;
+}
+
+.DeleteButton:hover {
+  color: red;
+  background-color: white;
+}
+
+.plusButton {
+  padding: 5px;
+  background-color: green;
+  color: white;
+  border-radius: 15px;
+  width: 40px;
+  font-size: 18px;
+}
+
+.plusButton:hover {
+  background-color: white;
+  color: green;
+}
+
+.minusButton {
+  padding: 5px;
+  background-color: red;
+  color: white;
+  border-radius: 15px;
+  width: 40px;
+  font-size: 18px;
+}
+
+.minusButton:hover {
+  background-color: white;
+  color: red;
+}
+
+.plusButton:disabled{
+  background-color: grey;
+  color: white;
+}
+
+.minusButton:disabled{
+  background-color: grey;
+  color: white;
+}
+
+/********************************
+*********************************/
+
+.OtherTraitsCell{
+  color: var(--AbilitiesDefensesPrimaryColor);
+}
+
+.OtherTraitsTitle{
+  font-weight: bold;
+}
+
+/******************************************
+* Tabs Styles
+******************************************/
+
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+.headerName {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  padding: 15px;
+  font-size: 17px;
+  width: 100%;
+}
+
+/* Style tab links */
+.tablink {
+  width: 25%;
+  background-color: var(--TabsPrimaryColor);
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+}
+
+.tablink:hover {
+  background-color: var(--TabsSelectedColor);
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  display: none;
+  background-color: white;
+  color: white;
+  padding: 5px;
+  height: 77%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+/*
+#HabilidadesDefesas {background-color: var(--AbilitiesDefensesPrimaryColor);}
+#Pericias {background-color: darkgoldenrod;}
+#Vantagens{ background-color: aquamarine; }
+#Poderes {background-color: orange;}
+#Equipamentos { background-color: limegreen; }
+#Pessoal {background-color: orange;}
+*/
+
+/**
+** PopUp itens
+*/
+
+/* The Modal (background) */
+.PopUp {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.PopUp-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  border: 5px solid #888;
+  width: 75%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*********************************************
+ * Advantage Grid Pop Up
+/********************************************/
+
+#advantagesPopUp{
+  display: grid;
+  max-height: 500px;
+  grid-template-columns: 1fr 1fr;
+}
+
+#advantagesPopUpGridItem1{
+  max-height: 500px;
+  border: 2px solid black;
+  border-radius: 10px;;
+  padding: 10px 10px;
+  overflow-y: auto;
+}
+
+#advantagesPopUpGridItem2{
+  margin-left: 10px;
+  max-height: 500px;
+  border: 2px solid black;
+  border-radius: 10px;;
+  padding: 10px 5px;
+  float: right;
+  overflow-y: auto;
+  scrollbar-width: none;
+  font-size: 20px;
+}
+
+/* Botões do PopUp de Vantagens */
+.addAdvItem {
+  font-size: 22px;
+  padding: 0!important;
+  min-width: 450px;
+  width: 100%;
+}
+
+.addAdvItem:hover{
+  background-color: salmon;
+}

@@ -1,0 +1,115 @@
+---------------------------------
+
+obj.name = "Simon";
+var name = obj.name;
+
+E
+
+obj["name"] = "Simon";
+var name = obj["name"];
+
+São iguais. Então não preciso ficar "_TudoQueTenho[0] sendo habilidade"
+Posso por
+
+"_Traits["Habilidades"]"
+
+(Acho que meu formato ta diferente)
+
+------------------------------------
+
+for (var i = 0; i < a.length; i++) {
+    // Faça algo com a[i]
+}
+
+
+Isso é um pouco ineficaz visto que você está procurando a propriedade length uma vez a cada iteração. Uma melhoria poderia ser:
+
+
+for (var i = 0, len = a.length; i < len; i++) {
+    // Faça algo com a[i]
+}
+
+
+Uma forma mais elegante ainda poderia ser:
+
+for (var i = 0, item; item = a[i++];) {
+    // Faça algo com item
+}
+
+------------------------------------
+
+Uma outra forma de iterar é usar o laço for...in. Note que se alguém adicionou novas propriedades ao Array.prototype, elas também podem ser iteradas usando este laço:
+
+for (var i in a) {
+  // Do something with a[i]
+}
+
+
+------------------------------------
+
+a.toString()
+
+Retorna uma string com o toString()de cada elemento separado por vírgulas.
+
+
+------------------------------------
+
+Meu Slice tá cortando ruim as perícias.
+
+
+------------------------------------
+
+Pode parecer um pouco bobo, mas no corpo da função você tem acesso a uma variável adicional chamada arguments, que é um objeto parecido com um vetor que contém todos os valores passados para a função. Vamos rescrever a função add para tomarmos tantos valores quanto quisermos:
+
+function add() {
+    var sum = 0;
+    for (var i = 0, j = arguments.length; i < j; i++) {
+        sum += arguments[i];
+    }
+    return sum;
+}
+
+> add(2, 3, 4, 5)
+14
+
+------------------------------------
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/A_re-introduction_to_JavaScript#objetos_personalizados
+
+-------------------------------------
+
+Em vez de ter Carga carregada a partir do valor de Força, ter ela como um objeto separado que pega de Força, Força Aumentada e Força de Carga.
+Modificador Limitado a Dano e Limitado a Carga existiram.
+
+-------------------------------------
+
+function personFullName() {
+    return this.first + ' ' + this.last;
+}
+function personFullNameReversed() {
+    return this.last + ', ' + this.first;
+}
+function Person(first, last) {
+    this.first = first;
+    this.last = last;
+    this.fullName = personFullName;
+    this.fullNameReversed = personFullNameReversed;
+}
+
+--------------------------------------
+
+function Person(first, last) {
+    this.first = first;
+    this.last = last;
+}
+Person.prototype.fullName = function() {
+    return this.first + ' ' + this.last;
+}
+Person.prototype.fullNameReversed = function() {
+    return this.last + ', ' + this.first;
+}
+
+Person.prototype é um objeto compartilhado por todas as instâncias de Person. Este forma parte da cadeia de buscas (que tem um nome especial, cadeia de protótipos ou "prototype chain"): toda a vez que você tentar acessar uma propriedade de Person que não está configurada, Javascript irá verificar em Person.prototype para ver se esta propriedade existe por lá. Como resultado, qualquer coisa atribuída à Person.prototype torna-se disponível para todas as instâncias deste construtor, através do objeto this.
+
+
+---------------------------------------------
