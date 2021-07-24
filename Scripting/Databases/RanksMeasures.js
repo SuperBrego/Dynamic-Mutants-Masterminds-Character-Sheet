@@ -4,7 +4,7 @@
 /* **************************************************************************************** */
 //  0    1    2    3      4
 // Grad - Massa - Tempo - Distância - Volume
-const rankMeasures = 
+const _RanksMeasuresTable = 
 [ 
   [-5, "1 kg", "1/8 de segundo", "25 cm", "1 litro"],
   [-4, "2 kg", "1/4 de segundo", "50 cm", "2 litros"],

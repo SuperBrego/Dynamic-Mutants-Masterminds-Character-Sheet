@@ -317,12 +317,6 @@ function UpdateLanguages(){
 
 }
 
-// Cálculo de quantos Idiomas é para ter.
-function multiLanguage(qtn){
-  if( qtn == 1 ) return 2;
-  return multiLanguage(qtn - 1) * 2;
-}
-
 // Armaze ou muda o texto de
 function OnLanguageTextChange(text, id){
   let editLanguage = _LanguageList.find( element => element[0] == id );

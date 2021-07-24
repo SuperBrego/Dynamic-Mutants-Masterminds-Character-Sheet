@@ -15,14 +15,14 @@ window.onload = function() {
   
   popUpItens();
 
-  updateTraits();
+  UpdateTraits();
 
 };
 
 /*
 ** Atualiza as características em cada item da ficha.
 */
-function updateTraits() {
+function UpdateTraits() {
   UpdateSpent();
   UpdateDefenses();
   UpdateSkills();

@@ -75,14 +75,19 @@ function UpdateOtherTraits(){
   // Encontrar na tabela de Graduações e Medidas o tamanho equivalente a graduação da carga.
   let currentSTRCargo = "";
 
-  for(let i = 0; i < rankMeasures.length; i++){
+  let _TotalCargo;
 
-    if(currentSTR == parseInt(rankMeasures[i][0]))
-      currentSTRCargo = rankMeasures[i][1];
+  if(currentSTR < 31){
+    currentSTRCargo = _RanksMeasuresTable.find( element => element[0] == currentSTR )[1];
+    //Atualizar carga
+    $("#maxCargo").text(currentSTRCargo);
+  }
+  else{
+    _TotalCargo = 300000000 * Math.pow(2, (currentSTR - 30));
+    currentSTRCargo = _TotalCargo + " toneladas"
+    $("#maxCargo").text(currentSTRCargo);
   }
 
-  //Atualizar carga
-  $("#maxCargo").text(currentSTRCargo);
 
   //------------ Iniciativa --------------
   let _totalInitiative = taAgility.baseValue;
@@ -92,5 +97,9 @@ function UpdateOtherTraits(){
 
   $("#totalInitiative").text( (_totalInitiative > -1) ? ( "+" + _totalInitiative ) : _totalInitiative );
 }
-  
 
+// Cálculo de quantos Idiomas é para ter.
+function multiCargo(cargo, qtn){
+  if( qtn == 1 ) return 2;
+  return multiCargo(qtn - 1) * 2;
+}
