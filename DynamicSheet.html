@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" /> 
   <link rel="stylesheet" type="text/css" href="mainStyle.css">
-  <script src="jquery-3.6.0.min.js"></script>
+  <script src="Scripting\AdditionalLibraries\jquery-3.6.0.min.js"></script>
   <!-- Databases -->
   <script src="Scripting\Databases\AbilitiesData.js"> </script>
   <script src="Scripting\Databases\DefensesData.js"> </script>
@@ -56,22 +56,14 @@
     <!-- Bloco de Habilidades -->
     <div class="Ability-Item1">
         <table>
-          <tr> <td colspan="4" class="SectionTitle" id="abilitiesTitle">Habilidades</td> </tr>
+          <tr> <td colspan="4" class="SectionTitle" id="AbilitiesTitle">Habilidades</td> </tr>
           <tr>
             <!-- Titulos -->
             <!-- Removido: onmouseexit='hidedescription() -->
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')"> 
-              <span class="AbilityText">Força</span> 
-            </td>
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')">  
-              <span class="AbilityText">Agilidade</span> 
-            </td>
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')">  
-              <span class="AbilityText">Luta</span> 
-            </td>
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')">  
-              <span class="AbilityText">Prontidão</span> 
-            </td>
+            <td class="AbilityCell"> <span class="AbilityText">Força</span> </td>
+            <td class="AbilityCell"> <span class="AbilityText">Agilidade</span> </td>
+            <td class="AbilityCell"> <span class="AbilityText">Luta</span> </td>
+            <td class="AbilityCell"> <span class="AbilityText">Prontidão</span> </td>
           </tr>
           <tr>
             <!-- Titulos -->
@@ -90,18 +82,10 @@
           </tr>
           <tr>
             <!-- Titulos -->
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')"> 
-              <span class="AbilityText">Vigor</span> 
-            </td>
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')"> 
-              <span class="AbilityText">Destreza</span> 
-            </td>
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')"> 
-              <span class="AbilityText">Intelecto</span> 
-            </td>
-            <td class="AbilityCell" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')"> 
-              <span class="AbilityText">Presença</span> 
-            </td>
+            <td class="AbilityCell"> <span class="AbilityText">Vigor</span> </td>
+            <td class="AbilityCell"> <span class="AbilityText">Destreza</span> </td>
+            <td class="AbilityCell"> <span class="AbilityText">Intelecto</span> </td>
+            <td class="AbilityCell"> <span class="AbilityText">Presença</span> </td>
           </tr>
           <tr>
             <td class="AbilityCell"> 
@@ -123,7 +107,7 @@
     <!-- Ability-Item 2 -->
     <div class="Ability-Item4">
       <table>
-        <tr> <td colspan="10" class="SectionTitle" id="defensesTitle">Defesas</td> </tr>
+        <tr> <td colspan="10" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
 
         <!-- Esquiva -->
         <tr>
@@ -162,9 +146,7 @@
 
         <!-- Fortitude -->
         <tr>
-          <td class="DefenseTitleCell" colspan="4" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')">
-            <span class="DefenseText">Fortitude</span>
-          </td>
+          <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Fortitude</span> </td>
           <!-- Graduação da Defesa -->
           <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
           <td class="DefenseCell"> 
@@ -177,9 +159,7 @@
 
         <!-- Vontade -->
         <tr>
-          <td class="DefenseTitleCell" colspan="4" onmouseover="displayDescription(this.name, 'AbilityDefense-Desc')">
-            <span class="DefenseText">Vontade</span>
-          </td>
+          <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Vontade</span> </td>
           <!-- Graduação da Defesa -->
           <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
           <td class="DefenseCell">
@@ -224,7 +204,7 @@
     <div class="Skill-Item">
       <table>
         <tr>
-          <td colspan="4" class="SectionTitle" id="skillsTitle">Perícias</td>
+          <td colspan="4" class="SectionTitle" id="SkillsTitle">Perícias</td>
         </tr>        
         <tr>
           <td class="SkillTitleCell"> <span class="skillNameTitle">Acrobacia</span> </td>

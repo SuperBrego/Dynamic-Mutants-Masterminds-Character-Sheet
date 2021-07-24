@@ -15,13 +15,13 @@ function onDefenseRankChange(currDefense, defenseRank){
       }
     }// Fim de For
   
-    updateDefenses();    
+    UpdateDefenses();    
 }
 
 /****************************************************
 ** Atualiza os valores nos inputs com valores totais para Defesas.
 ****************************************************/
-function updateDefenses(){
+function UpdateDefenses(){
 
   let _curCamp;
 
@@ -31,7 +31,7 @@ function updateDefenses(){
     _curCamp.innerHTML = parseInt(_DefensesList[i].baseValue) + parseInt(_DefensesList[i].baseRank) + parseInt(_DefensesList[i].enhancedValue);
   }
 
-  _curCamp = document.getElementById("ResistênciaTotal");
+  _curCamp = $("#ResistênciaTotal");
   // Perguntar se tem Rolamento Defensivo e Proteção
 
   let _totalToughness = taStamina.baseValue;
@@ -43,21 +43,23 @@ function updateDefenses(){
   }
   _curCamp.innerHTML = _totalToughness;
 
-  updateSkillsSpent();
+  UpdateDefensesSpent();
 }
 
 /****************************************************
 ** Atualiza a quantidade de pontos gastos em Defesas.
 ****************************************************/
-function updateDefensesSpent() {
+function UpdateDefensesSpent() {
   let sum = 0;
-  for(let i = 0; i < _DefensesList.length; i++) {
+
+  // -1 porque não pode pegar Resistência, que está por último
+  for(let i = 0; i < _DefensesList.length - 1; i++) {
     sum += _DefensesList[i].pointsSpent;
   }
-  
+
   // Defesas = 1.
   spentPoints[1][1] = sum;
-  document.getElementById("defensesTitle").innerHTML = "Defesas (" + sum + " pontos)";
+  $("#DefensesTitle").text("Defesas (" + sum + " pontos)");
 
-  updateTotalSpent();
+  UpdateTotalSpent();
 }

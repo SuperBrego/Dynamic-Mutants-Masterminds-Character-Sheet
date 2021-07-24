@@ -15,18 +15,18 @@ function onAbilityRankChange(currABILITY, abilityRank){
       // Atualizo o gasto
       _AbilitiesList[i].pointsSpent = _AbilitiesList[i].baseValue * _AbilitiesList[i].baseCost;
       // Atualizo outras características que usam ela.
-      updateRelatedTraits(_AbilitiesList[i]);
+      UpdateRelatedTraits(_AbilitiesList[i]);
     }
   }
 
-  updateTraits();
-  updateAbilitiesSpent();
+  UpdateTraits();
+  UpdateAbilitiesSpent();
 }
 
 /*********************************************************
  * Atualiza a quantidade de pontos gastos em Habilidades.
 *********************************************************/
-function updateAbilitiesSpent(){
+function UpdateAbilitiesSpent(){
   let sum = 0;
   for(let i = 0; i < _AbilitiesList.length; i++) {
     sum += _AbilitiesList[i].pointsSpent;
@@ -34,16 +34,16 @@ function updateAbilitiesSpent(){
 
   // Habilidade = 0.
   spentPoints[0][1] = sum;
-  document.getElementById("abilitiesTitle").innerHTML = "Habilidades (" + sum + " pontos)";
+  $("#AbilitiesTitle").text( "Habilidades (" + sum + " pontos)" );
 
-  updateTotalSpent();
+  UpdateTotalSpent();
 }
 
 /****************************************************
  * Busco, por objeto da Habilidade em questão, todas Defesas e Perícias que usam essa Habilidade
  * E atualiza o valor base delas (valor da Habilidade).
 ****************************************************/
-function updateRelatedTraits(abilityObject){
+function UpdateRelatedTraits(abilityObject){
   let i = 0;
 
   // Atualizar as Defesas
@@ -66,7 +66,7 @@ function updateRelatedTraits(abilityObject){
 /****************************************************
  * Atualiza características derivadas.
 ****************************************************/
-function updateOtherTraits(){
+function UpdateOtherTraits(){
 
   //--------------- Carga -----------------
   // Pegar valor total de carga
@@ -82,7 +82,7 @@ function updateOtherTraits(){
   }
 
   //Atualizar carga
-  document.getElementById("maxCargo").innerText = currentSTRCargo;
+  $("#maxCargo").text(currentSTRCargo);
 
   //------------ Iniciativa --------------
   let _totalInitiative = taAgility.baseValue;
@@ -90,7 +90,7 @@ function updateOtherTraits(){
   if( _advIniative ) { _totalInitiative += (_advIniative.totalRanks * 4); }
   // let _advIniative = _PlayerEnhancedAdvantages.find( element => element.id == 2061 );
 
-  document.getElementById("totalInitiative").innerText = (_totalInitiative > -1) ? ( "+" + _totalInitiative ) : _totalInitiative ;
+  $("#totalInitiative").text( (_totalInitiative > -1) ? ( "+" + _totalInitiative ) : _totalInitiative );
 }
   
 

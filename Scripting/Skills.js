@@ -26,8 +26,8 @@ function onSkillRankChange(currSkill, skillRank){
     _SkillsList[desiredIndex].baseRank = skillRank;
     _SkillsList[desiredIndex].pointsSpent = parseInt( _SkillsList[desiredIndex].baseRank ) * parseFloat( _SkillsList[desiredIndex].baseCost );
   
-    updateSkills();
-    updateSkillsSpent();
+    UpdateSkills();
+    UpdateSkillsSpent();
 }
 
 /****************************************************
@@ -63,32 +63,32 @@ function addSkill(skillName){
     }
   
     // Apresenta as perícias Extras.
-    displayExtraSkills();
+    DisplayExtraSkills();
   
 }
     
 /****************************************************
   * Remove uma Perícia.
 ****************************************************/
-function removeSkill(skillID, instanceID){
+function RemoveSkill(skillID, instanceID){
 
     let desiredIndex = _SkillsList.findIndex( _skill => _skill.id == skillID && _skill.instanceID == instanceID );
     _SkillsList.splice(desiredIndex, 1);
 
     // Pede para atualizar as Características
-    updateSkills();
+    UpdateSkills();
 
     // Atualiza o Gasto em Perícias
-    updateSkillsSpent();
+    UpdateSkillsSpent();
 
     // Apresenta novas Perícias
-    displayExtraSkills();
+    DisplayExtraSkills();
 }
 
 /****************************************************
  * Atualiza os valores totais para Perícias.
 ****************************************************/
-function updateSkills(){
+function UpdateSkills(){
     let _curCamp;
     for (let i = 0; i < _SkillsList.length; i++) {
       _curCamp = document.getElementById(_SkillsList[i].name+"Total");
@@ -99,7 +99,7 @@ function updateSkills(){
 /****************************************************
  * Atualiza a quantidade de pontos gastos em Perícias.
 /****************************************************/
-function updateSkillsSpent() {
+function UpdateSkillsSpent() {
     let sum = 0;
     let skillsRanks = 0;
     for(let i = 0; i < _SkillsList.length; i++) {
@@ -109,15 +109,15 @@ function updateSkillsSpent() {
   
     // Perícias = 2.
     spentPoints[2][1] = sum;
-    document.getElementById("skillsTitle").innerHTML = "Perícias (" + skillsRanks + " grads/" + sum + " pontos)";
+    $("#SkillsTitle").html("Perícias (" + skillsRanks + " grads/" + sum + " pontos)");
 
-    updateTotalSpent();
+    UpdateTotalSpent();
 }
 
 /****************************************************
  * Função para apresentar perícias extras.
 ****************************************************/
-function displayExtraSkills() {
+function DisplayExtraSkills() {
   
     // Se não tenho perícias extras, volto
     if( _SkillsList.length < _MinimalLength) return;
@@ -141,7 +141,7 @@ function displayExtraSkills() {
           + "<td class='ExtraSkillTitleCell'>"
           + "<span class='SkillCellText'>" + skillName + ": "
           + "<br>"
-          + "<input type='text' value='"+ _SkillsList[i].skillTraitName +"' maxlength='10' size='40' name='"+ skillName +"' onchange='updateSkillText(this.value, " + skillID + ", " + skillInstanceID + ")' >"
+          + "<input type='text' value='"+ _SkillsList[i].skillTraitName +"' maxlength='10' size='40' name='"+ skillName +"' onchange='UpdateSkillText(this.value, " + skillID + ", " + skillInstanceID + ")' >"
           + "</span>"
           + "</td>";
           tableContent += "<td class='SkillCell'>"
@@ -149,7 +149,7 @@ function displayExtraSkills() {
           + "</td>"
           + "<td class='TraitTotalCell'> <span name='"+ _SkillsList[i].name +"Total' id='"+ _SkillsList[i].name +"Total'>0</span> </td>";
           tableContent += "<td>"
-          + "<button class='DeleteButton' onclick='removeSkill("+ skillID +", "+skillInstanceID+")'>"
+          + "<button class='DeleteButton' onclick='RemoveSkill("+ skillID +", "+skillInstanceID+")'>"
           + "X"
           + "</button> </td>";
         }
@@ -157,14 +157,14 @@ function displayExtraSkills() {
   
     tableContent += "</table>";  
   
-    document.getElementById("AdditionalSkillsList").innerHTML = tableContent;
+    $("#AdditionalSkillsList").html(tableContent);
   
 }
 
 /******************************************
  * Atualiza o texto das Perícias Extras
 ******************************************/
-function updateSkillText(skillTraitName, skillID, skillInstanceID){
+function UpdateSkillText(skillTraitName, skillID, skillInstanceID){
     let desiredSkillIndex = _SkillsList.findIndex( _skill => _skill.id == skillID && _skill.instanceID == skillInstanceID );
     _SkillsList[desiredSkillIndex].skillTraitName = skillTraitName;
 }

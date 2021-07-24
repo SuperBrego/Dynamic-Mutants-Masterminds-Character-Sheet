@@ -11,13 +11,11 @@ var _LanguageList = [[0, "Idioma Nativo"]];
 /*******************************************
  * Abre a função de adicionar Vantagens.
 *******************************************/
-function addAdvantage(item){
+function AddAdvantage(item){
 
   let _toBeAddedElement = _PlayerAdvantages.find( element => element.id == item );
 
-  if (_toBeAddedElement && !( _toBeAddedElement.hasOwnProperty('additionalDescription') ) ){
-    return;
-  }
+  if (_toBeAddedElement && !( _toBeAddedElement.hasOwnProperty('additionalDescription') ) ){ return; }
   
   //_advantageID++;
   let _newAdv = _AllAdvantagesList.find( element => element.id == item );
@@ -33,7 +31,7 @@ function addAdvantage(item){
   // Atualiza a lista de Vantagens pra remover as que já tem.
   popUpText.innerHTML = AvaliableAdvantagesList();
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
   
 /**************************************
@@ -44,7 +42,7 @@ function RemoveAdvantage(id) {
   let desiredIndex = _PlayerAdvantages.findIndex( _Advantage => _Advantage.id == id );
   _PlayerAdvantages.splice(desiredIndex,1);
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
 
 
@@ -56,7 +54,7 @@ function RemoveAdvantage(id, advInstID) {
   let desiredIndex = _PlayerAdvantages.findIndex( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   _PlayerAdvantages.splice(desiredIndex,1);
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
 
 /**************************************
@@ -66,14 +64,14 @@ function increaseRank(id){
   let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
 
 function increaseRank(id, advInstID){
   let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
 
 /**************************************
@@ -83,20 +81,20 @@ function decreaseRank(id){
   let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
 
 function decreaseRank(id, advInstID){
   let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
 
-  updateAdvantages();
+  UpdateAdvantages();
 }
 
 /**********************************************************
  * Atualiza a quantidade de pontos gastos em Vantagens.
 **********************************************************/
-function updateAdvantagesSpent() {
+function UpdateAdvantagesSpent() {
     let sum = 0;
 
     for(let i = 0; i < _PlayerAdvantages.length; i++){
@@ -112,7 +110,7 @@ function updateAdvantagesSpent() {
     spentPoints[3][1] = sum;
     $("#AdvantagesTitle").html("Vantagens (" + sum + " pontos)");
 
-    updateTotalSpent();
+    UpdateTotalSpent();
 }
 
 /******************************************************************
@@ -139,7 +137,7 @@ function AvaliableAdvantagesList(){
       if( _AllAdvantagesList[i].id == 2059 ){ continue; }
       
       content += "<tr><td class=''>";
-      content += "<button class='addAdvItem' value=" + _currAdvantage.id + " onclick='addAdvantage(this.value)' onmouseover='showAdvDesc(this.value)'>";
+      content += "<button class='addAdvItem' value=" + _currAdvantage.id + " onclick='AddAdvantage(this.value)' onmouseover='showAdvDesc(this.value)'>";
       content += _currAdvantage.name;
       content += "</button>";
       content += "</td></tr>";
@@ -157,39 +155,34 @@ function AvaliableAdvantagesList(){
 /**********************************
  * Apresenta as Vantagens
 **********************************/
-function updateAdvantages(){
+function UpdateAdvantages(){
 
   let tableContent = "";
   tableContent += "<table id='PlayerAdvTable'>";
   
   let adv;
-  let advID;
-  let advName;
-  let advInstID;
+
   for (let i = 0; i < _PlayerAdvantages.length; i++) {
 
     adv = _PlayerAdvantages[i];
-    advName = _PlayerAdvantages[i].name;
-    advID = _PlayerAdvantages[i].id;
-    advInstID = _PlayerAdvantages[i].instanceID;
 
     tableContent += "<tr>";
     
     if(!adv.ranked){
       tableContent += "<td class='PlayerAdvName-Cell' colspan='2' style='width: 100%;' >";
-      tableContent += advName;
+      tableContent += adv.name;
       if( adv.hasOwnProperty('additionalDescription') ) {
         tableContent += "&emsp;";
-        tableContent += "<input type='text' value='"+ adv.additionalDescription +"' name='"+ advName +"' onchange='updateAdvantageText(this.value, " + advID + ", " + advInstID + ")' >";
+        tableContent += "<input type='text' value='"+ adv.additionalDescription +"' name='"+ adv.name +"' onchange='updateAdvantageText(this.value, " + adv.id + ", " + adv.instanceID + ")' >";
       }
       tableContent += "</td>";
     }
     else{
       tableContent += "<td class='PlayerAdvName-Cell' style='width: 75%;' >";
-      tableContent += advName;
+      tableContent += adv.name;
       if( adv.hasOwnProperty('additionalDescription') ) {
         tableContent += "&emsp;";
-        tableContent += "<input type='text' value='"+ adv.additionalDescription +"' name='"+ advName +"' onchange='updateAdvantageText(this.value, " + advID + ", " + advInstID + ")' >";
+        tableContent += "<input type='text' value='"+ adv.additionalDescription +"' name='"+ adv.name +"' onchange='updateAdvantageText(this.value, " + adv.id + ", " + adv.instanceID + ")' >";
       }
       tableContent += "</td>";
 
@@ -198,10 +191,10 @@ function updateAdvantages(){
 
       // Se o rank total é 1, então não diminuo.
       if(adv.totalRanks == 1){
-        tableContent += "<button class='minusButton' onclick='decreaseRank("+ advID +", "+ advInstID +")' disabled>-</button> ";
+        tableContent += "<button class='minusButton' onclick='decreaseRank("+ adv.id +", "+ adv.instanceID +")' disabled>-</button> ";
       }
       else{
-        tableContent += "<button class='minusButton' onclick='decreaseRank("+ advID +", "+ advInstID +")'>-</button>";
+        tableContent += "<button class='minusButton' onclick='decreaseRank("+ adv.id +", "+ adv.instanceID +")'>-</button>";
       }
 
       // Total de Graduações
@@ -209,10 +202,10 @@ function updateAdvantages(){
 
       // Botão desligado caso esteja no máximo de graduações.
       if( adv.totalRanks == adv.maxRank ){
-        tableContent += " <button class='plusButton' onclick='increaseRank("+ advID +", "+ advInstID +")' disabled>+</button>";
+        tableContent += " <button class='plusButton' onclick='increaseRank("+ adv.id +", "+ adv.instanceID +")' disabled>+</button>";
       }
       else{
-        tableContent += " <button class='plusButton' onclick='increaseRank("+ advID +", "+ advInstID +")'>+</button>";
+        tableContent += " <button class='plusButton' onclick='increaseRank("+ adv.id +", "+ adv.instanceID +")'>+</button>";
       }
     }
 
@@ -225,7 +218,7 @@ function updateAdvantages(){
       tableContent += " onclick='RemoveAdvantage(this.value)'>X</button>";
     }
     else {
-      tableContent += " onclick='RemoveAdvantage(this.value, "+ advInstID + ")'>X</button>";
+      tableContent += " onclick='RemoveAdvantage(this.value, "+ adv.instanceID + ")'>X</button>";
     }
     tableContent += "</td>";
 
@@ -242,28 +235,24 @@ function updateAdvantages(){
     tableContent += "<br><hr><br>"
     tableContent += "<table id='PlayerEnhancedAdvTable'>";
     for (let i = 0; i < _PlayerEnhancedAdvantages.length; i++) {
+      
       adv = _PlayerEnhancedAdvantages[i];
-      /**************************
-        Se não é ranked e não tem additionalDescription, só o nome dela.
-        Se não é ranked e tem additionalDescription, nome dela e o campo para descrição.
-        Se é ranked e não tem additionalDescription, nome dela, botão de aumentar (e diminuir) a graduação.
-        Se é ranked e tem additionalDescription, nome dela, campo para descrição, botão de aumentar e diminuir a graduação 
-      **************************/
+
       tableContent += "<tr>";
       tableContent += "<td class='PlayerEnhAdvName-Cell' colspan='4'>";
-      tableContent += advName;
+      tableContent += adv.name;
       
       // Se tem se tiver descrição adicional, põe ela.
       if( !adv.ranked && adv.hasOwnProperty('additionalDescription') ){
-        tableContent += advName + "&emsp;" + adv.additionalDescription + "";
+        tableContent += adv.name + "&emsp;" + adv.additionalDescription + "";
       }
       // Se tiver graduação mas não descrição adicional, põe ela.
       else if( adv.ranked && !adv.hasOwnProperty('additionalDescription') ){
-        tableContent += advName + "&emsp;" + adv.totalRanks;
+        tableContent += adv.name + "&emsp;" + adv.totalRanks;
       }
       // Se tiver ambos, põe ambos.
       else{
-        tableContent += advName + "&emsp;" + adv.additionalDescription + "&emsp;" + adv.totalRanks;
+        tableContent += adv.name + "&emsp;" + adv.additionalDescription + "&emsp;" + adv.totalRanks;
       }
       tableContent += "</td>";
       tableContent += "</tr>";
@@ -273,11 +262,11 @@ function updateAdvantages(){
 
   $("#AdvantagesListTable").html(tableContent);
   
-  updateAdvantagesSpent();
+  UpdateAdvantagesSpent();
 
   // Como vantagens mexem com Defesas, Ofensiva e Outros Traços, chamo atualização.
-  updateDefenses();
-  updateOtherTraits();
+  UpdateDefenses();
+  UpdateOtherTraits();
 
   // Por fim, chamar atualização de Idiomas
   UpdateLanguages();
@@ -302,7 +291,7 @@ function AddLanguage(){
   _LanguageRanks = parseInt( Math.ceil( Math.log2(_LanguageList.length) ) );
   $('#LanguagesTitle').text("Idiomas (" + _LanguageList.length + " Idiomas/ " + _LanguageRanks + " grads.)");
 
-  updateAdvantagesSpent();
+  UpdateAdvantagesSpent();
   UpdateLanguages();
 }
 
@@ -351,6 +340,6 @@ function RemoveLanguage(id){
   if( _LanguageRanks == 0) $('#LanguagesTitle').text("Idiomas");
   else $('#LanguagesTitle').text("Idiomas (" + _LanguageList.length + " Idiomas/ " + _LanguageRanks + " grads.)");
 
-  updateAdvantagesSpent();
+  UpdateAdvantagesSpent();
   UpdateLanguages();
 }

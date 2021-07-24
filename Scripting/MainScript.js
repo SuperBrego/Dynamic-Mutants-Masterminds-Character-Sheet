@@ -23,11 +23,11 @@ window.onload = function() {
 ** Atualiza as características em cada item da ficha.
 */
 function updateTraits() {
-  updateSpent();
-  updateDefenses();
-  updateSkills();
-  updateAdvantages();
-  updateOtherTraits();
+  UpdateSpent();
+  UpdateDefenses();
+  UpdateSkills();
+  UpdateAdvantages();
+  UpdateOtherTraits();
 }
 
 /*********************************************************
@@ -64,37 +64,19 @@ function openPage(pageName, elmnt, color) {
 /*********************************************************
  * Atualiza o gasto.
 *********************************************************/
-function updateSpent(){
-  updateAbilitiesSpent();
-  updateDefensesSpent();
-  updateSkillsSpent();
-  updateAdvantagesSpent();
+function UpdateSpent(){
+  UpdateAbilitiesSpent();
+  UpdateDefensesSpent();
+  UpdateSkillsSpent();
+  UpdateAdvantagesSpent();
 
-  updateTotalSpent();
-}
-
-/*********************************************************
- * Atualiza o que foi gasto por cada seção.
-*********************************************************/
-function updateSpent(section) {
-  
-  switch (section) {
-    case 1: updateAbilitiesSpent(); break;
-    case 2: updateDefensesSpent(); break;
-    case 3: updateSkillsSpent(); break;
-    case 4: updateAdvantagesSpent(); break;
-    default: return;
-  }
-
-  updateTotalSpent();
-
+  UpdateTotalSpent();
 }
 
 /********************************
 * Atualiza o total de pontos.
 ********************************/
-
-function updateTotalSpent(){
+function UpdateTotalSpent(){
   let sum = 0.0;
   for(let i = 0; i < spentPoints.length; i++){
     sum += parseFloat(spentPoints[i][1]);
