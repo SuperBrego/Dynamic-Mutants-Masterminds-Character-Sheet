@@ -61,35 +61,35 @@ function onSkillRankChange(skillID, skillRank){
 ****************************************************/
 function addSkill(skillName){
 
-    let _currSkill;
-  
-    switch(skillName){
-      case "Expertise": 
-        _currSkill = Object.assign({}, tsExpertise);
-        _currSkill.name = "Especialidade #"+_currentSkillID;
-        _currSkill.instanceID = _currentSkillID;
-        _SkillsList.push( _currSkill );
-        _currentSkillID++;
-        break;
-      case "RangedCombat": 
-        _currSkill = Object.assign({}, tsRangedCombat);
-        _currSkill.name = "Combate A Distância #"+_currentSkillID;
-        _currSkill.instanceID = _currentSkillID;
-        _SkillsList.push( _currSkill );
-        _currentSkillID++;
-        break;
-      case "CloseCombat": 
-        _currSkill = Object.assign({}, tsCloseCombat);
-        _currSkill.name = "Combate Corpo-a-corpo #"+_currentSkillID;
-        _currSkill.instanceID = _currentSkillID;
-        _SkillsList.push( _currSkill );
-        _currentSkillID++;
-        break;
-      default: break;
-    }
-  
-    // Apresenta as perícias Extras.
-    DisplayExtraSkills();
+  let _currSkill;
+
+  switch(skillName){
+    case "Expertise": 
+      _currSkill = Object.assign({}, tsExpertise);
+      _currSkill.name = "Especialidade #"+_currentSkillID;
+      _currSkill.instanceID = _currentSkillID;
+      _SkillsList.push( _currSkill );
+      _currentSkillID++;
+      break;
+    case "RangedCombat": 
+      _currSkill = Object.assign({}, tsRangedCombat);
+      _currSkill.name = "Combate A Distância #"+_currentSkillID;
+      _currSkill.instanceID = _currentSkillID;
+      _SkillsList.push( _currSkill );
+      _currentSkillID++;
+      break;
+    case "CloseCombat": 
+      _currSkill = Object.assign({}, tsCloseCombat);
+      _currSkill.name = "Combate Corpo-a-corpo #"+_currentSkillID;
+      _currSkill.instanceID = _currentSkillID;
+      _SkillsList.push( _currSkill );
+      _currentSkillID++;
+      break;
+    default: break;
+  }
+
+  // Apresenta as perícias Extras.
+  DisplayExtraSkills();
   
 }
     
@@ -103,12 +103,6 @@ function RemoveSkill(skillID, instanceID){
 
     // Pede para atualizar as Características
     UpdateSkills();
-
-    // Atualiza o Gasto em Perícias
-    UpdateSkillsSpent();
-
-    // Apresenta novas Perícias
-    DisplayExtraSkills();
 }
 
 /****************************************************
@@ -119,7 +113,13 @@ function UpdateSkills(){
     for (let i = 0; i < _SkillsList.length; i++) {
       _curCamp = document.getElementById(_SkillsList[i].name+"Total");
       _curCamp.innerHTML = parseInt(_SkillsList[i].baseValue) + parseInt(_SkillsList[i].baseRank) + parseInt(_SkillsList[i].enhancedValue);
-    }  
+    }
+
+    // Atualiza o Gasto em Perícias
+    UpdateSkillsSpent();
+
+    // Apresenta novas Perícias
+    DisplayExtraSkills();
 }
 
 /****************************************************
@@ -145,45 +145,45 @@ function UpdateSkillsSpent() {
 ****************************************************/
 function DisplayExtraSkills() {
   
-    // Se não tenho perícias extras, volto
-    if( _SkillsList.length < _MinimalLength) return;
-  
-    // Caso eu tenha alguma coisa, crio a tabela nova.
-    let tableContent = "";
-    tableContent += "<table>" 
-  
-    let skillName, skillID, skillInstanceID;
-    for(let i = 0; i < _SkillsList.length; i++){
-        skillID = _SkillsList[i].id;
-        skillInstanceID = _SkillsList[i].instanceID;
+  // Se não tenho perícias extras, volto
+  if( _SkillsList.length < _MinimalLength) return;
 
-        // Tem que perguntar se começa como uma das tipos diferentes
-        skillName = _SkillsList[i].name;
-        if ( skillID == 3004 || skillID == 3005 || skillID == 3006 ) {
+  // Caso eu tenha alguma coisa, crio a tabela nova.
+  let tableContent = "";
+  tableContent += "<table>" 
 
-          skillName = skillName.split(' #')[0];
-          
-          tableContent += "<tr>"
-          + "<td class='ExtraSkillTitleCell'>"
-          + "<span class='SkillCellText'>" + skillName + ": "
-          + "<br>"
-          + "<input type='text' value='"+ _SkillsList[i].skillTraitName +"' maxlength='10' size='40' name='"+ skillName +"' onchange='UpdateSkillText(this.value, " + skillID + ", " + skillInstanceID + ")' >"
-          + "</span>"
-          + "</td>";
-          tableContent += "<td class='SkillCell'>"
-          + "<input autocomplete='off' type='number' name='" + _SkillsList[i].name + "' value='0' min='0' onchange='onSkillRankChange(this.name, this.value)'>"
-          + "</td>"
-          + "<td class='TraitTotalCell'> <span name='"+ _SkillsList[i].name +"Total' id='"+ _SkillsList[i].name +"Total'>0</span> </td>";
-          tableContent += "<td>"
-          + "<button class='DeleteButton' onclick='RemoveSkill("+ skillID +", "+skillInstanceID+")'>"
-          + "X"
-          + "</button> </td>";
-        }
-    }
-  
-    tableContent += "</table>";  
-  
-    $("#AdditionalSkillsList").html(tableContent);
+  let skillName, skillID, skillInstanceID;
+
+  for(let i = 0; i < _SkillsList.length; i++){
+      skillID = _SkillsList[i].id;
+      skillInstanceID = _SkillsList[i].instanceID;
+      skillName = _SkillsList[i].name;
+      
+      if ( skillID == 3004 || skillID == 3005 || skillID == 3006 ) {
+
+        skillName = skillName.split(' #')[0];
+        
+        tableContent += "<tr>"
+        + "<td class='ExtraSkillTitleCell'>"
+        + "<span class='SkillCellText'>" + skillName + ": "
+        + "<br>"
+        + "<input type='text' value='"+ _SkillsList[i].skillTraitName +"' maxlength='10' size='40' name='"+ skillName +"' onchange='UpdateSkillText(this.value, " + skillID + ", " + skillInstanceID + ")' >"
+        + "</span>"
+        + "</td>";
+        tableContent += "<td class='SkillCell'>"
+        + "<input autocomplete='off' type='number' name='" + _SkillsList[i].name + "' value='0' min='0' onchange='onSkillRankChange(this.name, this.value)'>"
+        + "</td>"
+        + "<td class='TraitTotalCell'> <span name='"+ _SkillsList[i].name +"Total' id='"+ _SkillsList[i].name +"Total'>0</span> </td>";
+        tableContent += "<td>"
+        + "<button class='DeleteButton' onclick='RemoveSkill("+ skillID +", "+skillInstanceID+")'>"
+        + "X"
+        + "</button> </td>";
+      }
+  }
+
+  tableContent += "</table>";  
+
+  $("#AdditionalSkillsList").html(tableContent);
   
 }
 

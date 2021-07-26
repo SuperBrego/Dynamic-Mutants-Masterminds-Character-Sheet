@@ -63,6 +63,18 @@ input[type=number] {
   -webkit-text-stroke: 2px black; /* width and color */
 }
 
+@media screen and (max-width: 1280px) and (max-height: 720px) {
+  zoom: -2;
+}
+
+/******************
+ * Main Container 
+******************/
+#MainContainer{
+  height: 100%;
+  min-width: 1200px;
+}
+
 /*******************************************
 * Habilidades, Defesas e Traços Adicionais
 ********************************************/
@@ -162,7 +174,16 @@ input[type=number] {
   width: 200px;
 }
 
-/* .skillNameTitle{} */
+#ExtraSkillsTitle{
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  padding:  5px;
+  width: 400px;
+  background-color: var(--SkillsPrimaryColor);
+  -webkit-text-stroke: 2px black; /* width and color */
+}
 
 .SkillCell{
   font-size: 22px;
@@ -194,7 +215,7 @@ input[type=number] {
 }
 
 .ExtraSkillTitleCell{
-  width: 100%;
+  width: 80%;
   padding-left: 10px;
   border: 4px solid lightgray;
   border-radius: 10px;
@@ -278,13 +299,13 @@ input[type=number] {
  * Advantage Grid Pop Up
 /********************************************/
 
-#advantagesPopUp{
+#BiLateralListPopUp{
   display: grid;
   max-height: 500px;
   grid-template-columns: 1fr 1fr;
 }
 
-#advantagesPopUpGridItem1{
+#BiLateralListItem1{
   max-height: 500px;
   border: 2px solid black;
   border-radius: 10px;;
@@ -292,7 +313,7 @@ input[type=number] {
   overflow-y: auto;
 }
 
-#advantagesPopUpGridItem2{
+#BiLateralListItem2{
   margin-left: 10px;
   max-height: 500px;
   border: 2px solid black;
@@ -305,14 +326,13 @@ input[type=number] {
 }
 
 /* Botões do PopUp de Vantagens */
-.addAdvItem {
+.PopUpAddItem {
   font-size: 22px;
-  padding: 0!important;
-  min-width: 450px;
+  padding: 10px;
   width: 100%;
 }
 
-.addAdvItem:hover{
+.PopUpAddItem:hover{
   background-color: salmon;
 }
 
@@ -389,6 +409,31 @@ input[type=number] {
 
 .OtherTraitsTitle{
   font-weight: bold;
+}
+
+/************************
+ * Complicações
+************************/
+
+#ComplicationListTable{
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.ComplicationTitleCell input{
+  font-size: 20px;
+  width: 500px;
+  background-color: lightgrey;
+  padding: 3px;
+}
+
+.ComplicationDescription{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  min-width: 600px;
+  min-height: 300px;
+  background-color: lightgrey;
+  padding: 3px;
 }
 
 /**************************

@@ -1,7 +1,7 @@
 /****************************
  * "Seta" os itens de PopUps de tela.
 ****************************/
-function popUpItens(){
+function SetPopUp(){
     modal = document.getElementById("myPopUp");
     popUpClose = document.getElementsByClassName("close")[0];
     popUpText = document.getElementById("PopUp-Text");
@@ -13,22 +13,42 @@ function popUpItens(){
 function showPopUp(type){
   modal.style.display = "block";
 
-  if(type == "Pericias"){
-    popUpText.innerHTML = _SkillPopUpContent;
+  /********************
+  ** Nomenclatura: 
+  ** 1 - Habilidades
+  ** 2 - Defesas
+  ** 3 - Perícias
+  ** 4 - Vantagens
+  ** 5 - Poderes
+  ** 6 - Equipamentos
+  ** 8 - Complicações
+  ********************/
+  let _PopUpContext;
+
+  switch(type){
+    // Perícias
+    case 3:
+      $(popUpText).html(_SkillPopUpContent);
+      break;
+    // Vantagens
+    case 4: 
+      _PopUpContext = AvaliableAdvantagesList();
+      break;
+    // Poderes
+    case 5: break;
+    // Equipamentos
+    case 6: break;
+    // Complicações
+    case 8: 
+      _PopUpContext = ComplicationsList();
+      break;
+    default: return;
   }
 
-  if(type == "Vantagens"){
+  $(popUpText).html(_PopUpContext);
     
-    let _AdvantagesPopUpContent = AvaliableAdvantagesList();
-
-    popUpText.innerHTML = _AdvantagesPopUpContent;
-  }
-
-  if(type == "Equipamentos"){
-    
-  }
-
 }
+
   
 /****************************
   * Fecha o PopUp 

@@ -7,6 +7,8 @@
 ** 3 - Perícias
 ** 4 - Vantagens
 ** 5 - Poderes
+** 6 - Equipamentos
+** 8 - Complicações
 ** 
 ********************************************************
 */

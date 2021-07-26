@@ -1,22 +1,22 @@
 /*
 ********************************************************
-** Nomenclatura de IDs: 
+** Todas as Vantagens
+** Nomenclatura: 
 ** 1 - Habilidades
 ** 2 - Defesas
 ** 3 - Perícias
 ** 4 - Vantagens
 ** 5 - Poderes
+** 6 - Equipamentos
+** 8 - Complicações
 ** 
 ********************************************************
 */
 
-/* **************************************************************************************** */
-/* **************************************DEFESAS******************************************* */
-/* **************************************************************************************** */
-
 const tdDodge = {
   name: "Esquiva",
   keyTrait: "Agilidade",
+  keyTraitID: 1003,
   baseValue: 0,
   baseRank: 0,
   enhancedValue: 0,
@@ -28,6 +28,7 @@ const tdDodge = {
 const tdParry = {
   name: "Aparar",
   keyTrait: "Luta",
+  keyTraitID: 1005,
   baseValue: 0,
   baseRank: 0,
   enhancedValue: 0,
@@ -39,6 +40,7 @@ const tdParry = {
 const tdFortitude = {
   name: "Fortitude",
   keyTrait: "Vigor",
+  keyTraitID: 1002,
   baseValue: 0,
   baseRank: 0,
   enhancedValue: 0,
@@ -50,6 +52,7 @@ const tdFortitude = {
 const tdWill = {
   name: "Vontade",
   keyTrait: "Prontidão",
+  keyTraitID: 1007,
   baseValue: 0,
   baseRank: 0,
   enhancedValue: 0,
@@ -61,6 +64,7 @@ const tdWill = {
 const tdToughness = {
   name: "Resistência",
   keyTrait: "Vigor",
+  keyTraitID: 1002,
   baseValue: 0,
   enhancedValue: 0, // ← aqui tem que ser poder Proteções.
   description: "Defesa Resistência é baseada no valor de Vigor e é a resistência direta contra danos ou ferimentos, e é a durabilidade em geral."

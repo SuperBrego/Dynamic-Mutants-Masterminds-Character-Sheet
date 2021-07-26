@@ -14,7 +14,7 @@ var _PointsPerLevel;
 ** 5 - Poderes
 ** 6 - Equipamentos
 *********************************************************/
-var _AbilitiesList = [taStrength, taAgility, taStamina, taDexterity, taFighting, taIntelect, taAwareness, taPresence];
+var _AbilitiesList = [taStrength, taStamina, taAgility, taDexterity, taFighting, taIntelect, taAwareness, taPresence];
 var _DefensesList = [tdDodge, tdParry, tdFortitude, tdWill, tdToughness];
 var _SkillsList = [tsAcrobatics, tsAthletics, tsDeception, tsStealth, tsIntimidation, tsInsight, tsInvestigation, tsPerception, tsPersuasion, tsSleightOfHand, tsTechnology, tsTreatment, tsVehicles];
 
@@ -22,7 +22,6 @@ var _SkillsList = [tsAcrobatics, tsAthletics, tsDeception, tsStealth, tsIntimida
 ** Controle de Gastos
 ************************************/
 var spentPoints = [ ["Habilidades", 0], ["Defesas", 0], ["Perícias", 0], ["Vantagens", 0], ["Poderes", 0] ];
-
 
 /**************************
  * Vantagens

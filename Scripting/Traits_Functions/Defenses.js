@@ -28,20 +28,21 @@ function UpdateDefenses(){
   // Toughness fica por último, fazemos diferente
   for (let i = 0; i < _DefensesList.length - 1; i++) {
     _curCamp = document.getElementById(_DefensesList[i].name + "Total");
-    _curCamp.innerHTML = parseInt(_DefensesList[i].baseValue) + parseInt(_DefensesList[i].baseRank) + parseInt(_DefensesList[i].enhancedValue);
+    $(_curCamp).html (parseInt(_DefensesList[i].baseValue) + parseInt(_DefensesList[i].baseRank) + parseInt(_DefensesList[i].enhancedValue));
   }
 
   _curCamp = $("#ResistênciaTotal");
   // Perguntar se tem Rolamento Defensivo e Proteção
 
-  let _totalToughness = taStamina.baseValue;
+  let _totalToughness = taStamina.totalRanks();
+  
   // Perguntar Proteção Primeiro.
 
   let _defensiveRoll = _PlayerAdvantages.find( element => element.id == 2083 );
   if( _defensiveRoll ) {
     _totalToughness = (_defensiveRoll.totalRanks + _totalToughness) + "/" + _totalToughness + "* (Vulnerável)";
   }
-  _curCamp.innerHTML = _totalToughness;
+  $(_curCamp).html(_totalToughness);
 
   UpdateDefensesSpent();
 }

@@ -22,8 +22,21 @@ function hideDescription(section){
 /*********************************************************
  * Mostra a descrição das Vantagens
 *********************************************************/
-function showAdvDesc(entryID){
-  let campoDeDescricoes = document.getElementById("advantagesPopUpGridItem2");
-  let content = _AllAdvantagesList.find( element => element.id == entryID ).description;
-  campoDeDescricoes.innerHTML = content;
+function ShowDescription(entryID, type){
+  let content;
+
+  switch(type){
+    case 3: break;
+    // Vantagens
+    case 4:
+      content = _AllAdvantagesList.find( element => element.id == entryID ).description;
+      break;
+    // Complicações
+    case 8: 
+      content = _DefaultComplicationList.find( element => element.id == entryID ).description;
+      break;
+    default: return;
+  }
+  
+  $("#BiLateralListItem2").html(content);
 }

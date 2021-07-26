@@ -8,10 +8,10 @@
   <title>Dynamic Mutants and Masterminds Character Sheet</title>
 </head>
 <body>
-  <div style="height: 100%;">
+  <div id="MainContainer">
 
     <div class="headerName">
-      <div><b>Nome</b>: <input type="text" name="characterName" id="characterName"> <span id="totalPointsHeader"><b>Pontos gastos</b>: <span id="totalSpentPoints">0</span></span>
+      <div><b>Nome</b>: <input type="text" id="CharacterName"> <span id="totalPointsHeader"><b>Pontos gastos</b>: <span id="totalSpentPoints">0</span></span>
       </div>
     </div>
   
@@ -52,16 +52,16 @@
               <tr>
                 <!-- Titulos -->
                 <td class="AbilityCell"> 
-                  <input autocomplete="off" type="number" name="Força" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)" > 
+                  <input autocomplete="off" type="number"  name="Força" value="0" min='-5' onchange="onAbilityRankChange(1001, this.value)" > 
                 </td>
                 <td class="AbilityCell">
-                  <input autocomplete="off" type="number" name="Agilidade" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)">
+                  <input autocomplete="off" type="number" name="Agilidade" value="0" min='-5' onchange="onAbilityRankChange(1003, this.value)">
                 </td>
                 <td class="AbilityCell">
-                  <input autocomplete="off" type="number" name="Luta" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                  <input autocomplete="off" type="number" name="Luta" value="0" min='-5' onchange="onAbilityRankChange(1005, this.value)"> 
                 </td>
                 <td class="AbilityCell">
-                  <input autocomplete="off" type="number" name="Prontidão" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                  <input autocomplete="off" type="number" name="Prontidão" value="0" min='-5' onchange="onAbilityRankChange(1007, this.value)"> 
                 </td>
               </tr>
               <tr>
@@ -73,16 +73,16 @@
               </tr>
               <tr>
                 <td class="AbilityCell"> 
-                  <input autocomplete="off" type="number" name="Vigor" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                  <input autocomplete="off" type="number" name="Vigor" value="0" min='-5' onchange="onAbilityRankChange(1002, this.value)"> 
                 </td>
                 <td class="AbilityCell"> 
-                  <input autocomplete="off" type="number" name="Destreza" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                  <input autocomplete="off" type="number" name="Destreza" value="0" min='-5' onchange="onAbilityRankChange(1004, this.value)"> 
                 </td>
                 <td class="AbilityCell"> 
-                  <input autocomplete="off" type="number" name="Intelecto" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                  <input autocomplete="off" type="number" name="Intelecto" value="0" min='-5' onchange="onAbilityRankChange(1006, this.value)"> 
                 </td>
                 <td class="AbilityCell"> 
-                  <input autocomplete="off" type="number" name="Presença" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                  <input autocomplete="off" type="number" name="Presença" value="0" min='-5' onchange="onAbilityRankChange(1008, this.value)"> 
                 </td>
               </tr>
           </table>
@@ -91,7 +91,7 @@
         <!-- Ability-Item 2 -->
         <div class="Ability-Item4">
           <table>
-            <tr> <td colspan="10" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
+            <tr> <td colspan="8" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
   
             <!-- Esquiva -->
             <tr>
@@ -190,14 +190,14 @@
         <div class="Skill-Item">
           <table>
             <tr>
-              <td class='SectionTitle'>Perícias Adicionais</td>
-              <td class='AddTraitButtons'> <button name="Adicionar Perícia" onclick="showPopUp('Pericias')">Adicionar Perícia</button>  </td> 
+              <td class='' id="ExtraSkillsTitle">Perícias Adicionais</td>
+              <td class='AddTraitButtons'> <button name="Adicionar Perícia" onclick="showPopUp(3)">Adicionar Perícia</button>  </td> 
             </tr>
           </table>
+          <!-- Onde é renderizado a lista de Perícias adicionais -->
+          <div id="AdditionalSkillsList"> </div>
         </div>
 
-        <!-- Onde é renderizado a lista de Perícias adicionais -->
-        <div id="AdditionalSkillsList"> </div>
       </div>
     </div>
   
@@ -212,7 +212,7 @@
             </tr>
             <tr>
               <td colspan="4" style="text-align: center;" class="AddTraitButtons">
-                <button onclick='showPopUp("Vantagens")'>Adicionar Vantagem</button>
+                <button onclick='showPopUp(4)'>Adicionar Vantagem</button>
               </td>
             </tr>
           </table>
@@ -251,7 +251,7 @@
         </tr>
         <tr>
           <td colspan="4" style="text-align: center;" class="AddTraitButtons">
-            <button onclick='showPopUp("Equipamentos")'>Adicionar Equipamento</button>
+            <button onclick='showPopUp(7)'>Adicionar Equipamento</button>
           </td>
         </tr>
       </table>
@@ -274,12 +274,13 @@
         </tr>
         <tr>
           <td colspan="4" style="text-align: center;" class="AddTraitButtons">
-            <button onclick='showPopUp("Complicações")'>Adicionar Complicação</button>
+            <button onclick='showPopUp(8)'>Adicionar Complicação</button>
           </td>
         </tr>
       </table>
       <div id="ComplicationListTable"></div>
     </div>
+    <!-- Fim da Aba Complicações ------------------------------------------------------>
   
     <!-- --------------------------------------------------------------------------- -->
     <!-- Oitava Aba -->
@@ -338,6 +339,7 @@
         </div>
       </div>
     </div>
+    <!-- Fim da Aba Pessoal -------------------------------------------------------- -->
 
   </div>
 </body>
@@ -351,14 +353,17 @@
   <script src="Scripting\Databases\SkillsData.js"> </script>
   <script src="Scripting\Databases\AdvantagesData.js"> </script>
   <script src="Scripting\Databases\EffectsData.js"> </script>
+  <script src="Scripting\Databases\ComplicationsData.js"> </script>
   <script src="Scripting\Databases\CharacterTraits.js"> </script>
+  <script src="Scripting\Databases\Character.js"> </script>
   <script src="Scripting\Databases\RanksMeasures.js"> </script>
   <!-- Traits Functions -->
-  <script src="Scripting\CharacterTraitsControl.js"> </script>
-  <script src="Scripting\Advantages.js"> </script>
-  <script src="Scripting\Skills.js"> </script>
-  <script src="Scripting\Defenses.js"> </script>
-  <script src="Scripting\Abilities.js"> </script>
+  <script src="Scripting\Traits_Functions\Personal.js"> </script>
+  <script src="Scripting\Traits_Functions\Complications.js"> </script>
+  <script src="Scripting\Traits_Functions\Advantages.js"> </script>
+  <script src="Scripting\Traits_Functions\Skills.js"> </script>
+  <script src="Scripting\Traits_Functions\Defenses.js"> </script>
+  <script src="Scripting\Traits_Functions\Abilities.js"> </script>
   <!-- General Functions-->
   <script src="Scripting\PopUpFunctions.js"> </script>
   <script src="Scripting\BehaviourFunctions.js"> </script>

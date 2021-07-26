@@ -1,3 +1,18 @@
+/*
+********************************************************
+** Todas as Vantagens
+** Nomenclatura: 
+** 1 - Habilidades
+** 2 - Defesas
+** 3 - Perícias
+** 4 - Vantagens
+** 5 - Poderes
+** 6 - Equipamentos
+** 8 - Complicações
+** 
+********************************************************
+*/
+
 const effect = {
 	name: "Nome",
 	baseCost: 0,

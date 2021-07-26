@@ -1,7 +1,7 @@
 /*********************************************************
  * Ao alterar o valor de Habilidade.
 *********************************************************/
-function onAbilityRankChange(currABILITY, abilityRank){
+function onAbilityRankChange(abilityID, abilityRank){
 
   abilityRank = RankValidation(abilityRank, true);
 
@@ -9,11 +9,9 @@ function onAbilityRankChange(currABILITY, abilityRank){
   for(let i = 0; i < _AbilitiesList.length; i++) {
 
     // Encontrei Habilidade em questão
-    if(_AbilitiesList[i].name == currABILITY){
+    if(_AbilitiesList[i].id == abilityID){
       // Atualizo a graduação
-      _AbilitiesList[i].baseValue = abilityRank;
-      // Atualizo o gasto
-      _AbilitiesList[i].pointsSpent = _AbilitiesList[i].baseValue * _AbilitiesList[i].baseCost;
+      _AbilitiesList[i].baseRank = abilityRank;
       // Atualizo outras características que usam ela.
       UpdateRelatedTraits(_AbilitiesList[i]);
     }
@@ -29,7 +27,7 @@ function onAbilityRankChange(currABILITY, abilityRank){
 function UpdateAbilitiesSpent(){
   let sum = 0;
   for(let i = 0; i < _AbilitiesList.length; i++) {
-    sum += _AbilitiesList[i].pointsSpent;
+    sum += _AbilitiesList[i].pointsSpent();
   }
 
   // Habilidade = 0.
@@ -48,16 +46,16 @@ function UpdateRelatedTraits(abilityObject){
 
   // Atualizar as Defesas
   for(i; i < _DefensesList.length; i++){
-    if( _DefensesList[i].keyTrait == abilityObject.name ){
-      _DefensesList[i].baseValue = ( parseInt(abilityObject.baseValue) + parseInt(abilityObject.enhancedValue) );
+    if( _DefensesList[i].keyTraitID == abilityObject.id ){
+      _DefensesList[i].baseValue = ( parseInt(abilityObject.totalRanks()) );
     }
   }
 
   i = 0;
   // Atualizar as Perícias
   for(i; i < _SkillsList.length; i++){
-    if( _SkillsList[i].keyTrait == abilityObject.name ){
-      _SkillsList[i].baseValue = ( parseInt(abilityObject.baseValue) + parseInt(abilityObject.enhancedValue) );
+    if( _SkillsList[i].keyTraitID == abilityObject.id ){
+      _SkillsList[i].baseValue = ( parseInt(abilityObject.totalRanks()) );
     }
   }
 
@@ -70,7 +68,7 @@ function UpdateOtherTraits(){
 
   //--------------- Carga -----------------
   // Pegar valor total de carga
-  let currentSTR = parseInt(taStrength.baseValue) + parseInt(taStrength.enhancedValue);
+  let currentSTR = taStrength.totalRanks();
 
   // Encontrar na tabela de Graduações e Medidas o tamanho equivalente a graduação da carga.
   let currentSTRCargo = "";
@@ -84,13 +82,13 @@ function UpdateOtherTraits(){
   }
   else{
     _TotalCargo = 300000000 * Math.pow(2, (currentSTR - 30));
-    currentSTRCargo = formatCargoText(_TotalCargo) + " toneladas"
+    currentSTRCargo = formatCargoText("" + _TotalCargo);
     $("#maxCargo").text(currentSTRCargo);
   }
 
 
   //------------ Iniciativa --------------
-  let _totalInitiative = taAgility.baseValue;
+  let _totalInitiative = taAgility.baseRank;
   let _advIniative = _PlayerAdvantages.find( element => element.id == 2061 );
   if( _advIniative ) { _totalInitiative += (_advIniative.totalRanks * 4); }
   // let _advIniative = _PlayerEnhancedAdvantages.find( element => element.id == 2061 );
@@ -103,5 +101,16 @@ function UpdateOtherTraits(){
 
 // Retorna uma apresentação de texto mais agradável para os milhões
 function formatCargoText(number){
-  console.log(number.match('0').length); //logs 4
+  let zeroLength = number.split('0').length - 1;
+
+  let index = Math.abs(9 - zeroLength);
+  console.log(index);
+
+  return ( GetFirstMillions(index, number).split( '' ).reverse().join( '' ) ) + " milhões t";
+
+}
+
+function GetFirstMillions(currIndex, number){
+  if(currIndex == -1) return "";
+  return number.charAt(currIndex) + GetFirstMillions(currIndex - 1, number);
 }

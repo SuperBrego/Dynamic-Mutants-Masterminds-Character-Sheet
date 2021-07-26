@@ -29,29 +29,6 @@ function AddAdvantage(item){
 }
   
 /**************************************
- * Função para remover Vantagens
-**************************************/
-function RemoveAdvantage(id) {
-
-  let desiredIndex = _PlayerAdvantages.findIndex( _Advantage => _Advantage.id == id );
-  _PlayerAdvantages.splice(desiredIndex,1);
-
-  UpdateAdvantages();
-}
-
-
-/**************************************
- * Remove Vantagem, com instâncias.
-**************************************/
-function RemoveAdvantage(id, advInstID) {
-
-  let desiredIndex = _PlayerAdvantages.findIndex( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
-  _PlayerAdvantages.splice(desiredIndex,1);
-
-  UpdateAdvantages();
-}
-
-/**************************************
  * Aumenta a graduação da Vantagem
 **************************************/
 function increaseRank(id){
@@ -111,39 +88,39 @@ function UpdateAdvantagesSpent() {
  * Constrói o Popup de Vantagens, com todas as vantagens
 ******************************************************************/
 function AvaliableAdvantagesList(){
-    let content = "";
-    content += "<div id='advantagesPopUp'>";
-    content += "<div id='advantagesPopUpGridItem1'>";
-    content += "<table>";
-  
-    let _isPlayerAquiredAdv;
-    let _currAdvantage;
+  let content = "";
+  content += "<div id='BiLateralListPopUp'>";
+  content += "<div id='BiLateralListItem1'>";
+  content += "<table>";
 
-    for (let i = 0; i < _AllAdvantagesList.length; i++) {
-  
-      _currAdvantage = _AllAdvantagesList[i];
-  
-      _isPlayerAquiredAdv = _PlayerAdvantages.find(element => element.id == _currAdvantage.id );
-      
-      // Pergunto se tenho a Vantagem em questão. Se tiver, mas não for de campo preenchível, continua o loop.  
-      if( (_isPlayerAquiredAdv != undefined) && !_isPlayerAquiredAdv.hasOwnProperty('additionalDescription') ){ continue; }
-      // Se for Idiomas, pula também. ID 2059
-      if( _AllAdvantagesList[i].id == 2059 ){ continue; }
-      
-      content += "<tr><td class=''>";
-      content += "<button class='addAdvItem' value=" + _currAdvantage.id + " ondblclick='AddAdvantage(this.value)' onmouseover='showAdvDesc(this.value)'>";
-      content += _currAdvantage.name;
-      content += "</button>";
-      content += "</td></tr>";
-    }
-    content += "</table>";
-    content += "</div>"; // Fim de Item 1
+  let _isPlayerAquiredAdv;
+  let _currAdvantage;
 
-    // Campo para descrição das Vantagens
-    content += "<div id='advantagesPopUpGridItem2'>";
-    content += "</div>"; // Fim de Item 2
-    content += "</div>"; // Fim de Grid
-    return content;
+  for (let i = 0; i < _AllAdvantagesList.length; i++) {
+
+    _currAdvantage = _AllAdvantagesList[i];
+
+    _isPlayerAquiredAdv = _PlayerAdvantages.find(element => element.id == _currAdvantage.id );
+    
+    // Pergunto se tenho a Vantagem em questão. Se tiver, mas não for de campo preenchível, continua o loop.  
+    if( (_isPlayerAquiredAdv != undefined) && !_isPlayerAquiredAdv.hasOwnProperty('additionalDescription') ){ continue; }
+    // Se for Idiomas, pula também. ID 2059
+    if( _AllAdvantagesList[i].id == 2059 ){ continue; }
+    
+    content += "<tr><td>";
+    content += "<button class='PopUpAddItem' value=" + _currAdvantage.id + " onclick='AddAdvantage(this.value)' onmouseover='ShowDescription(this.value, 4)'>";
+    content += _currAdvantage.name;
+    content += "</button>";
+    content += "</td></tr>";
+  }
+    
+  content += "</table>";
+  content += "</div>"; // Fim de Item 1
+
+  // Campo para descrição das Vantagens
+  content += "<div id='BiLateralListItem2'> </div>"; 
+  content += "</div>"; // Fim de Grid
+  return content;
 }
 
 /**********************************
@@ -209,10 +186,10 @@ function UpdateAdvantages(){
     
     // Se tem descrição adicional, tem então tem que avisar com o ID da instância.
     if( !adv.hasOwnProperty('additionalDescription') ) {
-      tableContent += " onclick='RemoveAdvantage(this.value)'>X</button>";
+      tableContent += " onclick='RemoveTrait(this.value, 4)'>X</button>";
     }
     else {
-      tableContent += " onclick='RemoveAdvantage(this.value, "+ adv.instanceID + ")'>X</button>";
+      tableContent += " onclick='RemoveTrait(this.value, 4, "+ adv.instanceID + ")'>X</button>";
     }
     tableContent += "</td>";
 
