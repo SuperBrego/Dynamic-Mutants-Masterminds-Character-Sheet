@@ -3,15 +3,358 @@
 <head>
   <meta charset="UTF-8" /> 
   <link rel="stylesheet" type="text/css" href="mainStyle.css">
+  <!-- Famicon -->
+  <link rel="shortcut icon" type="image/jpg" href="images/mnm-icon.jpg"/>
+  <title>Dynamic Mutants and Masterminds Character Sheet</title>
+</head>
+<body>
+  <div style="height: 100%;">
+
+    <div class="headerName">
+      <div><b>Nome</b>: <input type="text" name="characterName" id="characterName"> <span id="totalPointsHeader"><b>Pontos gastos</b>: <span id="totalSpentPoints">0</span></span>
+      </div>
+    </div>
+  
+    <button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')" id="defaultOpen">Habilidades e Defesas</button>
+    <button class="tablink" onclick="openPage('Pericias', this, 'darkgoldenrod')">Perícias</button>
+    <button class="tablink" onclick="openPage('Vantagens', this, 'aquamarine')">Vantagens</button>
+    <button class="tablink" onclick="openPage('Poderes', this, 'orange')">Poderes</button>
+    <button class="tablink" onclick="openPage('Equipamentos', this, 'limegreen')">Equipamentos</button>
+    <button class="tablink" onclick="openPage('Ofensiva', this, 'red')">Ofensiva</button>
+    <button class="tablink" onclick="openPage('Complicações', this, 'DarkOliveGreen')">Complicações</button>
+    <button class="tablink" onclick="openPage('Pessoal', this, 'lightblue')">Pessoal</button>
+  
+    <!-- The Modal -->
+    <div class="PopUp" id="myPopUp">
+      <!-- PopUp content -->
+      <div class="PopUp-content">
+        <span class="close" onclick="closePopUp()">&times;</span>
+        <div id="PopUp-Text"></div>
+      </div>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Primeira aba -->
+    <div id="HabilidadesDefesas" class="tabcontent">
+      
+      <div id="AbilityGrid-Container">
+        <!-- Bloco de Habilidades -->
+        <div class="Ability-Item1">
+            <table>
+              <tr> <td colspan="4" class="SectionTitle" id="AbilitiesTitle">Habilidades</td> </tr>
+              <tr>
+                <!-- Titulos -->
+                <td class="AbilityCell"> <span class="AbilityText">Força</span> </td>
+                <td class="AbilityCell"> <span class="AbilityText">Agilidade</span> </td>
+                <td class="AbilityCell"> <span class="AbilityText">Luta</span> </td>
+                <td class="AbilityCell"> <span class="AbilityText">Prontidão</span> </td>
+              </tr>
+              <tr>
+                <!-- Titulos -->
+                <td class="AbilityCell"> 
+                  <input autocomplete="off" type="number" name="Força" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)" > 
+                </td>
+                <td class="AbilityCell">
+                  <input autocomplete="off" type="number" name="Agilidade" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)">
+                </td>
+                <td class="AbilityCell">
+                  <input autocomplete="off" type="number" name="Luta" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                </td>
+                <td class="AbilityCell">
+                  <input autocomplete="off" type="number" name="Prontidão" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                </td>
+              </tr>
+              <tr>
+                <!-- Titulos -->
+                <td class="AbilityCell"> <span class="AbilityText">Vigor</span> </td>
+                <td class="AbilityCell"> <span class="AbilityText">Destreza</span> </td>
+                <td class="AbilityCell"> <span class="AbilityText">Intelecto</span> </td>
+                <td class="AbilityCell"> <span class="AbilityText">Presença</span> </td>
+              </tr>
+              <tr>
+                <td class="AbilityCell"> 
+                  <input autocomplete="off" type="number" name="Vigor" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                </td>
+                <td class="AbilityCell"> 
+                  <input autocomplete="off" type="number" name="Destreza" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                </td>
+                <td class="AbilityCell"> 
+                  <input autocomplete="off" type="number" name="Intelecto" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                </td>
+                <td class="AbilityCell"> 
+                  <input autocomplete="off" type="number" name="Presença" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
+                </td>
+              </tr>
+          </table>
+        </div>
+        <!-- Fim Ability-Item 1 -->
+        <!-- Ability-Item 2 -->
+        <div class="Ability-Item4">
+          <table>
+            <tr> <td colspan="10" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
+  
+            <!-- Esquiva -->
+            <tr>
+              <td class="DefenseTitleCell" colspan="4">  <span class="DefenseText">Esquiva</span> </td>
+              <!-- Graduação da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
+              <td class="DefenseCell">
+                <input autocomplete="off" type="number" name="Esquiva" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
+              </td>
+              <!-- Total da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
+              <td class="TraitTotalCell"> <span name="EsquivaTotal" id="EsquivaTotal">0</span> </td>
+            </tr>
+  
+            <!-- Aparar -->
+            <tr>
+              <td class="DefenseTitleCell" colspan='4'> <span class="DefenseText">Aparar</span> </td>
+              <!-- Graduação da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
+              <td class="DefenseCell">
+                <input autocomplete="off" type="number" name="Aparar" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
+              </td>
+              <!-- Total da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
+              <td class="TraitTotalCell"> <span name="ApararTotal" id="ApararTotal">0</span> </td>
+            </tr>
+  
+            <!-- Resistência -->
+            <tr>
+              <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Resistência</span> </td>
+              <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
+              <td class="TraitTotalCell"> <span id="ResistênciaTotal">0</span> </td>
+              <td></td>
+            </tr>
+  
+            <!-- Fortitude -->
+            <tr>
+              <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Fortitude</span> </td>
+              <!-- Graduação da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
+              <td class="DefenseCell"> 
+                <input autocomplete="off" type="number" name="Fortitude" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
+              </td>
+              <!-- Total da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
+              <td class="TraitTotalCell"> <span name="FortitudeTotal" id="FortitudeTotal">0</span> </td>
+            </tr>
+  
+            <!-- Vontade -->
+            <tr>
+              <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Vontade</span> </td>
+              <!-- Graduação da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
+              <td class="DefenseCell">
+                <input autocomplete="off" type="number" name="Vontade" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
+              </td>
+              <!-- Total da Defesa -->
+              <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
+              <td class="TraitTotalCell"><span name="VontadeTotal" id="VontadeTotal">0</span> </td>
+            </tr>
+          </table>
+  
+        </div>
+        <!-- Fim Ability-Item 2 -->
+        <!-- Ability-Item 3 -->
+        <div class="Ability-Item3">
+          <table>
+            <tr> <td colspan="2" class="SectionTitle" id="otherTraitsTitle">Outras Características e Pontos Gastos</td> </tr>
+            <tr>
+              <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Tamanho</span>: </td> 
+              <td class="OtherTraitsCell">Médio</td>
+            </tr>
+            <tr>
+              <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Capacidade de Carga</span>: </td>
+              <td class="OtherTraitsCell"><span id="maxCargo">Cargo</span></td>
+            </tr>
+            <tr>
+              <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Iniciativa</span>: </td>
+              <td class="OtherTraitsCell"><span id="totalInitiative">Initiative</span></td>
+            </tr>
+            <tr> <td colspan="4"> <hr> </td> </tr>
+          </table>
+        </div>
+        <!-- Fim de Ability-Item 3 -->
+      </div>
+      <!-- Fim Div Grid Container-->
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Segunda Aba -->
+    <div id="Pericias" class="tabcontent">
+
+      <div class="SkillGrid-container">
+        <!-- Onde é Renderizado as Perícias base. -->
+        <div class="Skill-Item" id="BaseSkillList"> </div>
+        <div class="Skill-Item">
+          <table>
+            <tr>
+              <td class='SectionTitle'>Perícias Adicionais</td>
+              <td class='AddTraitButtons'> <button name="Adicionar Perícia" onclick="showPopUp('Pericias')">Adicionar Perícia</button>  </td> 
+            </tr>
+          </table>
+        </div>
+
+        <!-- Onde é renderizado a lista de Perícias adicionais -->
+        <div id="AdditionalSkillsList"> </div>
+      </div>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Terceira Aba -->
+    <div id="Vantagens" class="tabcontent">
+      <div id="AdvantageGrid-Container">
+        <div id="AdvantageGrid-Item1">
+          <table>
+            <tr>
+              <td colspan="4" class="SectionTitle" id="AdvantagesTitle">Vantagens</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align: center;" class="AddTraitButtons">
+                <button onclick='showPopUp("Vantagens")'>Adicionar Vantagem</button>
+              </td>
+            </tr>
+          </table>
+          <!-- Local onde vai as vantagens -->
+          <div id="AdvantagesListTable"></div>
+        </div>
+        <div id="AdvantageGrid-Item2">
+          <table>
+            <tr> <td colspan="4" class="SectionTitle" id="LanguagesTitle">Idiomas</td> </tr>
+            <tr>
+              <td colspan="4" style="text-align: center;" class="AddTraitButtons">
+                <button onclick='AddLanguage()'>Adicionar Idioma</button>
+              </td>
+            </tr>
+          </table>
+  
+          <!-- Local onde vai os idiomas -->
+          <div id="LanguagesListTable"></div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Quarta Aba -->
+    <div id="Poderes" class="tabcontent">
+      Poderes
+      <p>Get in touch, or swing by for a cup of coffee.</p>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Quinta Aba -->
+    <div id="Equipamentos" class="tabcontent">
+      <table>
+        <tr>
+          <td colspan="4" class="SectionTitle" id="EquipmentTitle">Equipamentos</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center;" class="AddTraitButtons">
+            <button onclick='showPopUp("Equipamentos")'>Adicionar Equipamento</button>
+          </td>
+        </tr>
+      </table>
+      <div id="EquipmentListTable"></div>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Sexta Aba -->
+    <div id="Ofensiva" class="tabcontent">
+      Especial
+      <p>Who we are and what we do.</p>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Sétima Aba -->
+    <div id="Complicações" class="tabcontent">
+      <table>
+        <tr>
+          <td colspan="4" class="SectionTitle" id="ComplicationTitle">Complicações</td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center;" class="AddTraitButtons">
+            <button onclick='showPopUp("Complicações")'>Adicionar Complicação</button>
+          </td>
+        </tr>
+      </table>
+      <div id="ComplicationListTable"></div>
+    </div>
+  
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Oitava Aba -->
+    <div id="Pessoal" class="tabcontent">
+      <div id="PersonalTraitsGrid">
+        <div class='PersonalTraitsGridItem'>
+          <table>
+            <tr>
+              <td colspan="4" class="SectionTitle" id="PersonalTitle">Dados Pessoais</td>
+            </tr>
+            <tr>
+              <td class="PersonalTraitsCell" id="GenderSelectionCell">
+                <span class="PersonalTraitTitle">Gênero:</span>
+                <select name='GenderSelection' id='GenderSelection'></select>
+              </td>
+              <td class="PersonalTraitsCell">
+                <span class="PersonalTraitTitle">Idade:</span>
+                <input type="number" class="PersonalInputs" id="CharacterAge" min="0" value="0" onchange="ChangeAge(this.value)">
+              </td>
+            </tr>
+            <tr>
+              <td class="PersonalTraitsCell">
+                <span class="PersonalTraitTitle">Altura:</span>
+                <input type="number" class="PersonalInputs" id="CharacterHeight" min="0" value="0" onchange="ChangeHeight(this.value)">cm. 
+                <span id='heightInMeters'></span>
+              </td>
+              <td class="PersonalTraitsCell">
+                <span class="PersonalTraitTitle">Peso:</span>
+                <input type="number" class="PersonalInputs" id="CharacterWeight" min="0" value="0" onchange="ChangeWeight(this.value)">kg.
+              </td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+            <tr>
+              <td class="PersonalTraitsCell">
+                <span class="PersonalTraitTitle">História:</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="PersonalTraitsCell" colspan="4">
+                <textarea id="BackgroundDescription" placeholder="Digite a história do seu personagem aqui..." onchange="ChangeCharacterBackground(this.value)"></textarea>
+              </td>
+            </tr>
+          </table>
+        </div>
+    
+        <div class='PersonalTraitsGridItem'>
+          <table>
+            <tr>
+              <td colspan="2" class="SectionTitle">Galeria</td>
+              <td class="AddTraitButtons"> <button name="Adicionar Imagem" onclick="AddImage()">Adicionar Imagem</button>  </td> 
+            </tr>
+          </table>
+
+          <div id="GalleryURLs"> </div>
+          <div id="ImageGallery"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
+
+<head>
   <script src="Scripting\AdditionalLibraries\jquery-3.6.0.min.js"></script>
   <!-- Databases -->
   <script src="Scripting\Databases\AbilitiesData.js"> </script>
   <script src="Scripting\Databases\DefensesData.js"> </script>
   <script src="Scripting\Databases\SkillsData.js"> </script>
   <script src="Scripting\Databases\AdvantagesData.js"> </script>
+  <script src="Scripting\Databases\EffectsData.js"> </script>
+  <script src="Scripting\Databases\CharacterTraits.js"> </script>
   <script src="Scripting\Databases\RanksMeasures.js"> </script>
-  <script src="Scripting\Databases\CharacterTraitsControl.js"> </script>
   <!-- Traits Functions -->
+  <script src="Scripting\CharacterTraitsControl.js"> </script>
   <script src="Scripting\Advantages.js"> </script>
   <script src="Scripting\Skills.js"> </script>
   <script src="Scripting\Defenses.js"> </script>
@@ -20,383 +363,4 @@
   <script src="Scripting\PopUpFunctions.js"> </script>
   <script src="Scripting\BehaviourFunctions.js"> </script>
   <script src="Scripting\MainScript.js"> </script>
-  <!-- Famicon -->
-  <link rel="shortcut icon" type="image/jpg" href="images/mnm-icon.jpg"/>
-  <title>Dynamic Mutants and Masterminds Character Sheet</title>
 </head>
-<body>
-<div class="headerName">
-  <div><b>Nome</b>: <input type="text" name="characterName" id="characterName"> <span id="totalPointsHeader"><b>Pontos gastos</b>: <span id="totalSpentPoints">0</span></span>
-  </div>
-</div>
-
-<button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')">Habilidades e Defesas</button>
-<button class="tablink" onclick="openPage('Pericias', this, 'darkgoldenrod')">Perícias</button>
-<button class="tablink" onclick="openPage('Vantagens', this, 'aquamarine')" id="defaultOpen">Vantagens</button>
-<button class="tablink" onclick="openPage('Poderes', this, 'orange')">Poderes</button>
-<button class="tablink" onclick="openPage('Equipamentos', this, 'limegreen')">Equipamentos</button>
-<button class="tablink" onclick="openPage('Ofensiva', this, 'red')">Ofensiva</button>
-<button class="tablink" onclick="openPage('Complicações', this, 'DarkOliveGreen')">Complicações</button>
-<button class="tablink" onclick="openPage('Pessoal', this, 'lightblue')">Pessoal</button>
-
-<!-- The Modal -->
-<div class="PopUp" id="myPopUp">
-  <!-- PopUp content -->
-  <div class="PopUp-content">
-    <span class="close" onclick="closePopUp()">&times;</span>
-    <div id="PopUp-Text"></div>
-  </div>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Primeira aba -->
-<div id="HabilidadesDefesas" class="tabcontent">
-  
-  <div id="AbilityGrid-Container">
-    <!-- Bloco de Habilidades -->
-    <div class="Ability-Item1">
-        <table>
-          <tr> <td colspan="4" class="SectionTitle" id="AbilitiesTitle">Habilidades</td> </tr>
-          <tr>
-            <!-- Titulos -->
-            <!-- Removido: onmouseexit='hidedescription() -->
-            <td class="AbilityCell"> <span class="AbilityText">Força</span> </td>
-            <td class="AbilityCell"> <span class="AbilityText">Agilidade</span> </td>
-            <td class="AbilityCell"> <span class="AbilityText">Luta</span> </td>
-            <td class="AbilityCell"> <span class="AbilityText">Prontidão</span> </td>
-          </tr>
-          <tr>
-            <!-- Titulos -->
-            <td class="AbilityCell"> 
-              <input autocomplete="off" type="number" name="Força" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)" > 
-            </td>
-            <td class="AbilityCell">
-              <input autocomplete="off" type="number" name="Agilidade" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-            <td class="AbilityCell">
-              <input autocomplete="off" type="number" name="Luta" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-            <td class="AbilityCell">
-              <input autocomplete="off" type="number" name="Prontidão" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-          </tr>
-          <tr>
-            <!-- Titulos -->
-            <td class="AbilityCell"> <span class="AbilityText">Vigor</span> </td>
-            <td class="AbilityCell"> <span class="AbilityText">Destreza</span> </td>
-            <td class="AbilityCell"> <span class="AbilityText">Intelecto</span> </td>
-            <td class="AbilityCell"> <span class="AbilityText">Presença</span> </td>
-          </tr>
-          <tr>
-            <td class="AbilityCell"> 
-              <input autocomplete="off" type="number" name="Vigor" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-            <td class="AbilityCell"> 
-              <input autocomplete="off" type="number" name="Destreza" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-            <td class="AbilityCell"> 
-              <input autocomplete="off" type="number" name="Intelecto" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-            <td class="AbilityCell"> 
-              <input autocomplete="off" type="number" name="Presença" value="0" min='-5' onchange="onAbilityRankChange(this.name, this.value)"> 
-            </td>
-          </tr>
-      </table>
-    </div>
-    <!-- Fim Ability-Item 1 -->
-    <!-- Ability-Item 2 -->
-    <div class="Ability-Item4">
-      <table>
-        <tr> <td colspan="10" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
-
-        <!-- Esquiva -->
-        <tr>
-          <td class="DefenseTitleCell" colspan="4">  <span class="DefenseText">Esquiva</span> </td>
-          <!-- Graduação da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
-          <td class="DefenseCell">
-            <input autocomplete="off" type="number" name="Esquiva" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
-          </td>
-          <!-- Total da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
-          <td class="TraitTotalCell"> <span name="EsquivaTotal" id="EsquivaTotal">0</span> </td>
-        </tr>
-
-        <!-- Aparar -->
-        <tr>
-          <td class="DefenseTitleCell" colspan='4'> <span class="DefenseText">Aparar</span> </td>
-          <!-- Graduação da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
-          <td class="DefenseCell">
-            <input autocomplete="off" type="number" name="Aparar" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
-          </td>
-          <!-- Total da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
-          <td class="TraitTotalCell"> <span name="ApararTotal" id="ApararTotal">0</span> </td>
-        </tr>
-
-        <!-- Resistência -->
-        <tr>
-          <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Resistência</span> </td>
-          <td></td>
-          <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
-          <td class="TraitTotalCell"> <span id="ResistênciaTotal">0</span> </td>
-          <td></td>
-        </tr>
-
-        <!-- Fortitude -->
-        <tr>
-          <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Fortitude</span> </td>
-          <!-- Graduação da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
-          <td class="DefenseCell"> 
-            <input autocomplete="off" type="number" name="Fortitude" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
-          </td>
-          <!-- Total da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
-          <td class="TraitTotalCell"> <span name="FortitudeTotal" id="FortitudeTotal">0</span> </td>
-        </tr>
-
-        <!-- Vontade -->
-        <tr>
-          <td class="DefenseTitleCell" colspan="4"> <span class="DefenseText">Vontade</span> </td>
-          <!-- Graduação da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
-          <td class="DefenseCell">
-            <input autocomplete="off" type="number" name="Vontade" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
-          </td>
-          <!-- Total da Defesa -->
-          <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
-          <td class="TraitTotalCell"><span name="VontadeTotal" id="VontadeTotal">0</span> </td>
-        </tr>
-      </table>
-
-    </div>
-    <!-- Fim Ability-Item 2 -->
-    <!-- Ability-Item 3 -->
-    <div class="Ability-Item3">
-      <table>
-        <tr> <td colspan="2" class="SectionTitle" id="otherTraitsTitle">Outras Características e Pontos Gastos</td> </tr>
-        <tr>
-          <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Tamanho</span>: </td> 
-          <td class="OtherTraitsCell">Médio</td>
-        </tr>
-        <tr>
-          <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Capacidade de Carga</span>: </td>
-          <td class="OtherTraitsCell"><span id="maxCargo">Cargo</span></td>
-        </tr>
-        <tr>
-          <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Iniciativa</span>: </td>
-          <td class="OtherTraitsCell"><span id="totalInitiative">Initiative</span></td>
-        </tr>
-        <tr> <td colspan="4"> <hr> </td> </tr>
-      </table>
-    </div>
-    <!-- Fim de Ability-Item 3 -->
-  </div>
-  <!-- Fim Div Grid Container-->
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Segunda Aba -->
-<div id="Pericias" class="tabcontent">
-  <div class="SkillGrid-container">
-    <div class="Skill-Item">
-      <table>
-        <tr>
-          <td colspan="4" class="SectionTitle" id="SkillsTitle">Perícias</td>
-        </tr>        
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Acrobacia</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Acrobacias" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="AcrobaciasTotal" id="AcrobaciasTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Atletismo</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Atletismo" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="AtletismoTotal" id="AtletismoTotal">0</span> </td>
-        </tr>
-        
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Enganação</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Enganação" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="EnganaçãoTotal" id="EnganaçãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Furtividade</span> </td>
-          <td class="SkillCell"> 
-            <input autocomplete="off" type="number" name="Furtividade" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="FurtividadeTotal" id="FurtividadeTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Intimidação</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Intimidação" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="IntimidaçãoTotal" id="IntimidaçãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Intuição</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Intuição" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="IntuiçãoTotal" id="IntuiçãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Investigação</span> </td>
-          <td class="SkillCell"> 
-            <input autocomplete="off" type="number" name="Investigação" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="InvestigaçãoTotal" id="InvestigaçãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Percepção</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Percepção" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="PercepçãoTotal" id="PercepçãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Persuasão</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Persuasão" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="PersuasãoTotal" id="PersuasãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Prestidigitação</span> </td>
-          <td class="SkillCell"> 
-            <input autocomplete="off" type="number" name="Prestidigitação" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="PrestidigitaçãoTotal" id="PrestidigitaçãoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Tecnologia</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Tecnologia" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="TecnologiaTotal" id="TecnologiaTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Tratamento</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Tratamento" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="TratamentoTotal" id="TratamentoTotal">0</span> </td>
-        </tr>
-
-        <tr>
-          <td class="SkillTitleCell"> <span class="skillNameTitle">Veículos</span> </td>
-          <td class="SkillCell">
-            <input autocomplete="off" type="number" name="Veículos" value="0" min="0" onchange="onSkillRankChange(this.name, this.value)">
-          </td>
-          <td class="TraitTotalCell"> <span name="VeículosTotal" id="VeículosTotal">0</span> </td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="Skill-Item">
-      <div class="AddTraitButtons">
-        <table>
-          <tr>
-            <td class='SectionTitle' >Perícias Adicionais</td>
-            <td> <button name="Adicionar Perícia" onclick="showPopUp('Pericias')">Adicionar Perícia</button>  </td> 
-          </tr>
-        </table>
-      </div>
-
-      <div id="AdditionalSkillsList">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Terceira Aba -->
-<div id="Vantagens" class="tabcontent">
-  <div id="AdvantageGrid-Container">
-    <div id="AdvantageGrid-Item1">
-      <table>
-        <tr>
-          <td colspan="4" class="SectionTitle" id="AdvantagesTitle">Vantagens</td>
-        </tr>
-        <tr>
-          <td colspan="4" style="text-align: center;" class="AddTraitButtons">
-            <button onclick='showPopUp("Vantagens")'>Adicionar Vantagem</button>
-          </td>
-        </tr>
-      </table>
-      <!-- Local onde vai as vantagens -->
-      <div id="AdvantagesListTable"></div>
-    </div>
-    <div id="AdvantageGrid-Item2">
-      <table>
-        <tr>
-          <td colspan="4" class="SectionTitle" id="LanguagesTitle">Idiomas</td>
-        </tr>
-        <tr>
-          <td colspan="4" style="text-align: center;" class="AddTraitButtons">
-            <button onclick='AddLanguage()'>Adicionar Idioma</button>
-          </td>
-        </tr>
-      </table>
-      <!-- Local onde vai os idiomas -->
-      <div id="LanguagesListTable"></div>
-    </div>
-  </div>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Quarta Aba -->
-<div id="Poderes" class="tabcontent">
-  Poderes
-  <p>Get in touch, or swing by for a cup of coffee.</p>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Quinta Aba -->
-<div id="Equipamentos" class="tabcontent">
-  Equipamentos
-  <p>Who we are and what we do.</p>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Sexta Aba -->
-<div id="Ofensiva" class="tabcontent">
-  Especial
-  <p>Who we are and what we do.</p>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Sétima Aba -->
-<div id="Complicações" class="tabcontent">
-  Complicações
-  <p>Who we are and what we do.</p>
-</div>
-
-<!-- --------------------------------------------------------------------------- -->
-<!-- Oitava Aba -->
-<div id="Pessoal" class="tabcontent">
-  Pessoal
-  <p>Who we are and what we do.</p>
-</div>
-
-</body>
-</html>

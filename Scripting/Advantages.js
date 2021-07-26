@@ -1,12 +1,7 @@
-/**************************
+/*******************************************
  * Variáveis
-**************************/
-var _PlayerAdvantages = [];
-var _PlayerEnhancedAdvantages = [];
+*******************************************/
 var _GenAdvantageID = 0;
-var _LanguageRanks = 0;
-var _LanguagesID = 1;
-var _LanguageList = [[0, "Idioma Nativo"]];
 
 /*******************************************
  * Abre a função de adicionar Vantagens.
@@ -17,7 +12,6 @@ function AddAdvantage(item){
 
   if (_toBeAddedElement && !( _toBeAddedElement.hasOwnProperty('additionalDescription') ) ){ return; }
   
-  //_advantageID++;
   let _newAdv = _AllAdvantagesList.find( element => element.id == item );
   _newAdv = Object.assign({}, _newAdv);
   
@@ -137,7 +131,7 @@ function AvaliableAdvantagesList(){
       if( _AllAdvantagesList[i].id == 2059 ){ continue; }
       
       content += "<tr><td class=''>";
-      content += "<button class='addAdvItem' value=" + _currAdvantage.id + " onclick='AddAdvantage(this.value)' onmouseover='showAdvDesc(this.value)'>";
+      content += "<button class='addAdvItem' value=" + _currAdvantage.id + " ondblclick='AddAdvantage(this.value)' onmouseover='showAdvDesc(this.value)'>";
       content += _currAdvantage.name;
       content += "</button>";
       content += "</td></tr>";
@@ -267,6 +261,7 @@ function UpdateAdvantages(){
   // Como vantagens mexem com Defesas, Ofensiva e Outros Traços, chamo atualização.
   UpdateDefenses();
   UpdateOtherTraits();
+  UpdateEquipment();
 
   // Por fim, chamar atualização de Idiomas
   UpdateLanguages();
@@ -307,6 +302,7 @@ function UpdateLanguages(){
   tableContent += "<td> <input type='text' onChange='OnLanguageTextChange(this.value, this.id)' value='" + _LanguageList[0][1] + "' id='" + _LanguageList[0][0] + "' > </td> <td width='60'></td>";
   for(let i = 1; i < _LanguageList.length; i++){
     if(i % 2 == 0) tableContent += "</tr> <tr>";
+
     tableContent += "<td> <input type='text' placeholder='Idioma...' onChange='OnLanguageTextChange(this.value, this.id)' value='" + _LanguageList[i][1] + "' id='" + _LanguageList[i][0] + "' > </td>";
     tableContent += "<td> <button class='DeleteButton' value='" + _LanguageList[i][0] + "' onclick='RemoveLanguage(this.value)'>X</button> </td>";
   }
@@ -336,4 +332,17 @@ function RemoveLanguage(id){
 
   UpdateAdvantagesSpent();
   UpdateLanguages();
+}
+
+function UpdateEquipment(){
+  let equipPoints = _PlayerAdvantages.find( element => element.id == 2048 );
+
+  if(equipPoints == undefined) {
+    $("#EquipamentTitle").text( "Equipamentos" );
+  }
+  else {
+    let equipTitleText = "Equipamentos (" + (equipPoints.totalRanks * 5) + " pontos" ;
+    $("#EquipamentTitle").text( "Equipamentos (" + (equipPoints.totalRanks * 5) + " pontos)" );
+  }
+  
 }

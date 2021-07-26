@@ -1,5 +1,6 @@
 // usar listeners em vez de onClicks https://www.w3schools.com/js/js_htmldom_eventlistener.asp
 
+
 /******************
  * Popup itens
 ******************/
@@ -9,15 +10,19 @@ let popUpText;
 
 /* **************************************************************************************** */
 
-window.onload = function() {
-  // Get the element with id="defaultOpen" and click on it
+$(document).ready(function() {
+
   $("#defaultOpen").click();
   
   popUpItens();
+  RenderBaseSkillList();
+
+  AppendFunctionsPersonalTraits();
+  RenderPersonalTraits();
 
   UpdateTraits();
+});
 
-};
 
 /*
 ** Atualiza as características em cada item da ficha.
@@ -36,7 +41,7 @@ function UpdateTraits() {
 
 function openPage(pageName, elmnt, color) {
   // Hide all elements with class="tabcontent" by default */
-  let i, tabcontent, tablinks;
+  var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
 
   for (i = 0; i < tabcontent.length; i++) {
@@ -49,7 +54,7 @@ function openPage(pageName, elmnt, color) {
     tablinks[i].style.backgroundColor = "";
   }
 
-  let sections = document.getElementsByClassName("SectionTitle");
+  var sections = document.getElementsByClassName("SectionTitle");
   for (i = 0; i < sections.length; i++) {
     sections[i].style.backgroundColor = color;
   }
@@ -77,8 +82,8 @@ function UpdateSpent(){
 * Atualiza o total de pontos.
 ********************************/
 function UpdateTotalSpent(){
-  let sum = 0.0;
-  for(let i = 0; i < spentPoints.length; i++){
+  var sum = 0.0;
+  for(var i = 0; i < spentPoints.length; i++){
     sum += parseFloat(spentPoints[i][1]);
   }
 
@@ -99,7 +104,7 @@ function RankValidation(rank, isAbility){
   else if (rank == "" && isAbility) return -5;
 
   // Garanto um INT e retorno.
-  let _newRank = parseInt(rank);
+  var _newRank = parseInt(rank);
   return _newRank;
 
 }

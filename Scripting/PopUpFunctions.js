@@ -24,6 +24,10 @@ function showPopUp(type){
     popUpText.innerHTML = _AdvantagesPopUpContent;
   }
 
+  if(type == "Equipamentos"){
+    
+  }
+
 }
   
 /****************************

@@ -3,8 +3,8 @@
  * Variáveis
 ****************************************************/
 // Tamanho mínimo de Perícias, sem Especialidade, Combate A Distância e Combate Corpo-a-corpo.
-var _MinimalLength = 13;
-var _currentSkillID = 0;
+let _MinimalLength = 13;
+let _currentSkillID = 0;
 
 // Conteúdo do Div para Adicionar novas Perícias
 let _SkillPopUpContent = ""
@@ -14,14 +14,40 @@ let _SkillPopUpContent = ""
         + "<button name='addCloseCombat' value='CloseCombat' onclick='addSkill(this.value)'>Adicionar <i>Corpo-a-corpo</i></button> <br>"
 + "</div>";
 
+/**
+ * Renderiza todas as perícias bases. 
+ */
+function RenderBaseSkillList(){
+
+  let tableContent = "";
+  tableContent += "<table> <tr> <td colspan='4' class='SectionTitle' style='background-color: darkgoldenrod;' id='SkillsTitle'>Perícias</td> </tr>";
+
+  for (let index = 0; index < _SkillsList.length; index++) {
+    const element = _SkillsList[index];
+    
+    tableContent += "<tr>";
+    tableContent += "<td class='SkillTitleCell'> <span class='skillNameTitle'>" + element.name + "</span> </td>"
+    tableContent += "<td class='SkillCell'>"
+    tableContent += "<input autocomplete='off' type='number' value='0' min='0' onchange='onSkillRankChange(" + element.id + ", this.value)'>"
+    tableContent += "</td>";
+    tableContent += "<td class='TraitTotalCell'> <span id='" + element.name + "Total'>0</span> </td>";
+    tableContent += "</tr>";
+  }
+
+  tableContent += "</table>";
+
+  $("#BaseSkillList").html(tableContent);
+        
+}
+
 /****************************************************
  * Ao alterar o valor de graduação de Perícia.
 ****************************************************/
-function onSkillRankChange(currSkill, skillRank){
+function onSkillRankChange(skillID, skillRank){
 
     if(skillRank == "") skillRank = 0;
 
-    let desiredIndex = _SkillsList.findIndex( _SkillsList => _SkillsList.name == currSkill );
+    let desiredIndex = _SkillsList.findIndex( _SkillsList => _SkillsList.id == skillID );
     
     _SkillsList[desiredIndex].baseRank = skillRank;
     _SkillsList[desiredIndex].pointsSpent = parseInt( _SkillsList[desiredIndex].baseRank ) * parseFloat( _SkillsList[desiredIndex].baseCost );

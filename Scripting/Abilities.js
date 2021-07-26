@@ -84,7 +84,7 @@ function UpdateOtherTraits(){
   }
   else{
     _TotalCargo = 300000000 * Math.pow(2, (currentSTR - 30));
-    currentSTRCargo = _TotalCargo + " toneladas"
+    currentSTRCargo = formatCargoText(_TotalCargo) + " toneladas"
     $("#maxCargo").text(currentSTRCargo);
   }
 
@@ -95,11 +95,13 @@ function UpdateOtherTraits(){
   if( _advIniative ) { _totalInitiative += (_advIniative.totalRanks * 4); }
   // let _advIniative = _PlayerEnhancedAdvantages.find( element => element.id == 2061 );
 
-  $("#totalInitiative").text( (_totalInitiative > -1) ? ( "+" + _totalInitiative ) : _totalInitiative );
+  let _TotalText = (_totalInitiative > -1) ? ( "+" + _totalInitiative ) : _totalInitiative;
+
+  $("#totalInitiative").text( _TotalText );
 }
 
-// Cálculo de quantos Idiomas é para ter.
-function multiCargo(cargo, qtn){
-  if( qtn == 1 ) return 2;
-  return multiCargo(qtn - 1) * 2;
+
+// Retorna uma apresentação de texto mais agradável para os milhões
+function formatCargoText(number){
+  console.log(number.match('0').length); //logs 4
 }
