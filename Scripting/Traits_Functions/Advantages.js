@@ -8,7 +8,7 @@ var _GenAdvantageID = 0;
 *******************************************/
 function AddAdvantage(item){
 
-  let _toBeAddedElement = _PlayerAdvantages.find( element => element.id == item );
+  let _toBeAddedElement = _MainCharacter.Advantages.find( element => element.id == item );
 
   if (_toBeAddedElement && !( _toBeAddedElement.hasOwnProperty('additionalDescription') ) ){ return; }
   
@@ -20,10 +20,10 @@ function AddAdvantage(item){
       _GenAdvantageID++;
   }
 
-  _PlayerAdvantages.push(_newAdv);
+  _MainCharacter.Advantages.push(_newAdv);
   
   // Atualiza a lista de Vantagens pra remover as que já tem.
-  popUpText.innerHTML = AvaliableAdvantagesList();
+  $(popUpText).html(AvaliableAdvantagesList());
 
   UpdateAdvantages();
 }
@@ -32,14 +32,14 @@ function AddAdvantage(item){
  * Aumenta a graduação da Vantagem
 **************************************/
 function increaseRank(id){
-  let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id );
+  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
 
   UpdateAdvantages();
 }
 
 function increaseRank(id, advInstID){
-  let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
+  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
 
   UpdateAdvantages();
@@ -49,14 +49,14 @@ function increaseRank(id, advInstID){
  * Reduz a graduação da Vantagem
 **************************************/
 function decreaseRank(id){
-  let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id );
+  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
 
   UpdateAdvantages();
 }
 
 function decreaseRank(id, advInstID){
-  let desiredAdvantage = _PlayerAdvantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
+  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
 
   UpdateAdvantages();
@@ -66,20 +66,8 @@ function decreaseRank(id, advInstID){
  * Atualiza a quantidade de pontos gastos em Vantagens.
 **********************************************************/
 function UpdateAdvantagesSpent() {
-    let sum = 0;
-
-    for(let i = 0; i < _PlayerAdvantages.length; i++){
-      if( _PlayerAdvantages[i].ranked )
-        sum += _PlayerAdvantages[i].totalRanks;
-      else sum += 1;
-    }
-
-    // Soma Idiomas
-    sum += _LanguageRanks;
-
-    // Vantagens = 3.
-    spentPoints[3][1] = sum;
-    $("#AdvantagesTitle").html("Vantagens (" + sum + " pontos)");
+    
+    $("#AdvantagesTitle").html("Vantagens (" + _MainCharacter.totalAdvantagesSpent() + " pontos)");
 
     UpdateTotalSpent();
 }
@@ -100,7 +88,7 @@ function AvaliableAdvantagesList(){
 
     _currAdvantage = _AllAdvantagesList[i];
 
-    _isPlayerAquiredAdv = _PlayerAdvantages.find(element => element.id == _currAdvantage.id );
+    _isPlayerAquiredAdv = _MainCharacter.Advantages.find(element => element.id == _currAdvantage.id );
     
     // Pergunto se tenho a Vantagem em questão. Se tiver, mas não for de campo preenchível, continua o loop.  
     if( (_isPlayerAquiredAdv != undefined) && !_isPlayerAquiredAdv.hasOwnProperty('additionalDescription') ){ continue; }
@@ -133,9 +121,9 @@ function UpdateAdvantages(){
   
   let adv;
 
-  for (let i = 0; i < _PlayerAdvantages.length; i++) {
+  for (let i = 0; i < _MainCharacter.Advantages.length; i++) {
 
-    adv = _PlayerAdvantages[i];
+    adv = _MainCharacter.Advantages[i];
 
     tableContent += "<tr>";
     
@@ -201,13 +189,13 @@ function UpdateAdvantages(){
   // ******************************************************
   // Busco por Vantagens Aumentadas
   // ******************************************************
-  if(_PlayerEnhancedAdvantages.length > 0){
+  if(_MainCharacter.EnhancedAdvantages.length > 0){
 
     tableContent += "<br><hr><br>"
     tableContent += "<table id='PlayerEnhancedAdvTable'>";
-    for (let i = 0; i < _PlayerEnhancedAdvantages.length; i++) {
+    for (let i = 0; i < _MainCharacter.EnhancedAdvantages.length; i++) {
       
-      adv = _PlayerEnhancedAdvantages[i];
+      adv = _MainCharacter.EnhancedAdvantages[i];
 
       tableContent += "<tr>";
       tableContent += "<td class='PlayerEnhAdvName-Cell' colspan='4'>";
@@ -249,8 +237,8 @@ function UpdateAdvantages(){
  * Atualiza o texto das Perícias Extras
 ******************************************/
 function updateAdvantageText(advTraitDesc, advID, advInstID){
-  let desiredadvIndex = _PlayerAdvantages.findIndex( _advantage => _advantage.id == advID && _advantage.instanceID == advInstID );
-  _PlayerAdvantages[desiredadvIndex].additionalDescription = advTraitDesc;
+  let desiredadvIndex = _MainCharacter.Advantages.findIndex( _advantage => _advantage.id == advID && _advantage.instanceID == advInstID );
+  _MainCharacter.Advantages[desiredadvIndex].additionalDescription = advTraitDesc;
 }
 
 /************************
@@ -258,10 +246,10 @@ function updateAdvantageText(advTraitDesc, advID, advInstID){
 ************************/
 function AddLanguage(){
 
-  _LanguageList.push( [_LanguagesID++, ""]);
+  _MainCharacter.Languages.list.push( [_MainCharacter.Languages.id++, ""]);
 
-  _LanguageRanks = parseInt( Math.ceil( Math.log2(_LanguageList.length) ) );
-  $('#LanguagesTitle').text("Idiomas (" + _LanguageList.length + " Idiomas/ " + _LanguageRanks + " grads.)");
+  _MainCharacter.Languages.LanguagesRank = parseInt( Math.ceil( Math.log2( _MainCharacter.Languages.list.length ) ) );
+  $('#LanguagesTitle').text("Idiomas (" + _MainCharacter.Languages.list.length + " Idiomas/ " + _MainCharacter.Languages.LanguagesRank + " grads.)");
 
   UpdateAdvantagesSpent();
   UpdateLanguages();
@@ -273,10 +261,13 @@ function AddLanguage(){
  */
 function UpdateLanguages(){
 
+  let _LanguageList = _MainCharacter.Languages.list;
+
   let tableContent = "";
   tableContent += "<table>";
   tableContent += "<tr>";
   tableContent += "<td> <input type='text' onChange='OnLanguageTextChange(this.value, this.id)' value='" + _LanguageList[0][1] + "' id='" + _LanguageList[0][0] + "' > </td> <td width='60'></td>";
+
   for(let i = 1; i < _LanguageList.length; i++){
     if(i % 2 == 0) tableContent += "</tr> <tr>";
 
@@ -292,7 +283,7 @@ function UpdateLanguages(){
 
 // Armaze ou muda o texto de
 function OnLanguageTextChange(text, id){
-  let editLanguage = _LanguageList.find( element => element[0] == id );
+  let editLanguage = _MainCharacter.Languages.list.find( element => element[0] == id );
   editLanguage[1] = text;
 
   UpdateLanguages();
@@ -300,19 +291,20 @@ function OnLanguageTextChange(text, id){
 
 // Remove Idioma
 function RemoveLanguage(id){
-  let removeIndex = _LanguageList.findIndex( element => element[0] == id );
-  _LanguageList.splice(removeIndex, 1);
+  let removeIndex = _MainCharacter.Languages.list.findIndex( element => element[0] == id );
+  _MainCharacter.Languages.list.splice(removeIndex, 1);
 
-  _LanguageRanks = parseInt( Math.ceil( Math.log2(_LanguageList.length) ) );
+  _MainCharacter.Languages.rank = parseInt( Math.ceil( Math.log2(_MainCharacter.Languages.list.length) ) );
+
   if( _LanguageRanks == 0) $('#LanguagesTitle').text("Idiomas");
-  else $('#LanguagesTitle').text("Idiomas (" + _LanguageList.length + " Idiomas/ " + _LanguageRanks + " grads.)");
+  else $('#LanguagesTitle').text("Idiomas (" + _MainCharacter.Languages.list.length + " Idiomas/ " + _MainCharacter.Languages.rank + " grads.)");
 
   UpdateAdvantagesSpent();
   UpdateLanguages();
 }
 
 function UpdateEquipment(){
-  let equipPoints = _PlayerAdvantages.find( element => element.id == 2048 );
+  let equipPoints = _MainCharacter.Advantages.find( element => element.id == 2048 );
 
   if(equipPoints == undefined) {
     $("#EquipamentTitle").text( "Equipamentos" );

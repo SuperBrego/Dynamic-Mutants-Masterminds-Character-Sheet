@@ -1,7 +1,4 @@
-/********************
- * 
-********************/
-var otherGenderInput = "<input type='text' placeholder='Ponha detalhes aqui...' value='" + _PersonalTraits.genderSpecifics + "' id='GenderSpecifics' onChange='ChangeGenderInfo(this.value)'>";
+
 
 function AppendFunctionsPersonalTraits(){
     $("#GenderSelection").on( "change", function(){
@@ -22,41 +19,42 @@ function RenderPersonalTraits() {
  * Funções de Gênero
  */
 function RenderGender(){
-    if(_PersonalTraits.genderID == 0){   
+    if(_MainCharacter.PersonalTraits.genderID == 0){   
+        let otherGenderInput = "<input type='text' placeholder='Ponha detalhes aqui...' value='" + _MainCharacter.PersonalTraits.genderSpecifics + "' id='GenderSpecifics' onChange='ChangeGenderInfo(this.value)'>";
         $("#GenderSelectionCell").append(otherGenderInput);
     }
     else{
         $("#GenderSelectionCell #GenderSpecifics").remove();
-        _PersonalTraits.genderSpecifics = "";
+        _MainCharacter.PersonalTraits.genderSpecifics = "";
     }
 
     let _GenderItens = "";
-    for(let i = 0; i < _PersonalTraits.genders.length; i++){
-        _GenderItens += "<option value='" + i + "'> " + _PersonalTraits.genders[i] + "</option>"
+    for(let i = 0; i < _MainCharacter.PersonalTraits.genders.length; i++){
+        _GenderItens += "<option value='" + i + "'> " + _MainCharacter.PersonalTraits.genders[i] + "</option>"
     }
     
     $("#GenderSelection").html(_GenderItens);
-    $("#GenderSelection").val(_PersonalTraits.genderID);
+    $("#GenderSelection").val(_MainCharacter.PersonalTraits.genderID);
 }
 
 function changeGender(genderID){
-    _PersonalTraits.genderID = genderID;
+    _MainCharacter.PersonalTraits.genderID = genderID;
     RenderPersonalTraits();
 }
 
 function ChangeGenderInfo(text){
-    _PersonalTraits.genderSpecifics = text;
+    _MainCharacter.PersonalTraits.genderSpecifics = text;
 }
 
 /**
  * Funções de Idade
  */
 function RenderAge(){
-    $("#CharacterAge").val(_PersonalTraits.age);
+    $("#CharacterAge").val(_MainCharacter.PersonalTraits.age);
 }
 
 function ChangeAge(_newAge){
-    _PersonalTraits.age = _newAge;
+    _MainCharacter.PersonalTraits.age = _newAge;
 }
 
 /**
@@ -64,47 +62,47 @@ function ChangeAge(_newAge){
  */
 function RenderHeightWeight(){
     
-    let _stringDisplay = "" + _PersonalTraits.height;
-    _stringDisplay = (Math.floor(_PersonalTraits.height / 100)) + "," + (_PersonalTraits.height % 100) + "m";
+    let _stringDisplay = "" + _MainCharacter.PersonalTraits.height;
+    _stringDisplay = (Math.floor(_MainCharacter.PersonalTraits.height / 100)) + "," + (_MainCharacter.PersonalTraits.height % 100) + "m";
     $("#heightInMeters").text(_stringDisplay);
 
-    $("#CharacterHeight").val(_PersonalTraits.height);
-    $("#CharacterWeight").val(_PersonalTraits.weight);
+    $("#CharacterHeight").val(_MainCharacter.PersonalTraits.height);
+    $("#CharacterWeight").val(_MainCharacter.PersonalTraits.weight);
 }
 
 function ChangeHeight(_newHeight){
-    _PersonalTraits.height = _newHeight;
+    _MainCharacter.PersonalTraits.height = _newHeight;
 
-    let _stringDisplay = "" + _PersonalTraits.height;
-    _stringDisplay = (Math.floor(_PersonalTraits.height / 100)) + "," + (_PersonalTraits.height % 100) + "m";
+    let _stringDisplay = "" + _MainCharacter.PersonalTraits.height;
+    _stringDisplay = (Math.floor(_MainCharacter.PersonalTraits.height / 100)) + "," + (_MainCharacter.PersonalTraits.height % 100) + "m";
     $("#heightInMeters").text(_stringDisplay);
 }
 
 function ChangeWeight(_newWeight){
-    _PersonalTraits.weight = _newWeight;
+    _MainCharacter.PersonalTraits.weight = _newWeight;
 }
 
 function RenderCharacterBackground(){
-    $("#BackgroundDescription").text( _PersonalTraits.background );
+    $("#BackgroundDescription").text( _MainCharacter.PersonalTraits.background );
 }
 
 function ChangeCharacterBackground(_newBGInfo){
-    _PersonalTraits.background = _newBGInfo;
+    _MainCharacter.PersonalTraits.background = _newBGInfo;
 }
 
 function AddImage(){
 
-    _PersonalTraits.images.push( [_PersonalTraits.imageID, ""] );
-    _PersonalTraits.imageID++;
+    _MainCharacter.PersonalTraits.images.push( [_MainCharacter.PersonalTraits.imageID, ""] );
+    _MainCharacter.PersonalTraits.imageID++;
 
     RenderGallery();
 }
 
 function ChangeImageGallery(imgID, imgURL){
-    let _img = _PersonalTraits.images.find( element => element[0] == imgID );
+    let _img = _MainCharacter.PersonalTraits.images.find( element => element[0] == imgID );
     _img[1] = imgURL;
 
-    console.log(_PersonalTraits.images);
+    console.log(_MainCharacter.PersonalTraits.images);
 
     RenderGallery();
 }
@@ -122,9 +120,9 @@ function RenderGallery(){
     
     tableURLs += "<tr>";
     tableImages += "<tr>";
-    for(let i = 0; i < _PersonalTraits.images.length; i++){
-        _imgID = _PersonalTraits.images[i][0];
-        _imgURL = _PersonalTraits.images[i][1];
+    for(let i = 0; i < _MainCharacter.PersonalTraits.images.length; i++){
+        _imgID = _MainCharacter.PersonalTraits.images[i][0];
+        _imgURL = _MainCharacter.PersonalTraits.images[i][1];
         
         if(i % 2 == 0){
             tableURLs += "</tr>";
@@ -154,8 +152,8 @@ function RenderGallery(){
 }
 
 function RemoveImage(removeImgID){
-    let removeIndex = _PersonalTraits.images.findIndex( element => element[0] == removeImgID );
-    _PersonalTraits.images.splice(removeIndex, 1);
+    let removeIndex = _MainCharacter.PersonalTraits.images.findIndex( element => element[0] == removeImgID );
+    _MainCharacter.PersonalTraits.images.splice(removeIndex, 1);
 
     RenderGallery();
 }

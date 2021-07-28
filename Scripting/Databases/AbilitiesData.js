@@ -76,7 +76,7 @@ const taFighting = {
   name: "Luta",
   baseRank: 0, 
   enhancedValue: 0,
-baseCost: 2,
+  baseCost: 2,
   pointsSpent: function() { return (this.baseRank * this.baseCost);},
   totalRanks: function () { return (this.baseRank + this.enhancedValue)},
   description: "Luta mede a habilidade de seu personagem em combate corpo-a-corpo, desde atingir o alvo até desviar de qualquer contra-ataque. O valor de Luta se aplica a: <br>"
@@ -84,7 +84,7 @@ baseCost: 2,
     + "• Defesa Aparar, para evitar ataques corpo-a-corpo."
 };
 
-const taIntelect = {
+const taIntellect = {
   id: 1006,
   name: "Intelecto",
   baseRank: 0, 

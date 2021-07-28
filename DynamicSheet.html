@@ -15,12 +15,12 @@
       </div>
     </div>
   
-    <button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')" id="defaultOpen">Habilidades e Defesas</button>
+    <button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')">Habilidades e Defesas</button>
     <button class="tablink" onclick="openPage('Pericias', this, 'darkgoldenrod')">Perícias</button>
     <button class="tablink" onclick="openPage('Vantagens', this, 'aquamarine')">Vantagens</button>
     <button class="tablink" onclick="openPage('Poderes', this, 'orange')">Poderes</button>
     <button class="tablink" onclick="openPage('Equipamentos', this, 'limegreen')">Equipamentos</button>
-    <button class="tablink" onclick="openPage('Ofensiva', this, 'red')">Ofensiva</button>
+    <button class="tablink" onclick="openPage('Ofensiva', this, 'red')" id="defaultOpen">Ofensiva</button>
     <button class="tablink" onclick="openPage('Complicações', this, 'DarkOliveGreen')">Complicações</button>
     <button class="tablink" onclick="openPage('Pessoal', this, 'lightblue')">Pessoal</button>
   
@@ -159,7 +159,7 @@
         <!-- Ability-Item 3 -->
         <div class="Ability-Item3">
           <table>
-            <tr> <td colspan="2" class="SectionTitle" id="otherTraitsTitle">Outras Características e Pontos Gastos</td> </tr>
+            <tr> <td colspan="2" class="SectionTitle" id="otherTraitsTitle">Outras Características</td> </tr>
             <tr>
               <td class="OtherTraitsCell"><span class="OtherTraitsTitle">Tamanho</span>: </td> 
               <td class="OtherTraitsCell">Médio</td>
@@ -261,8 +261,7 @@
     <!-- --------------------------------------------------------------------------- -->
     <!-- Sexta Aba -->
     <div id="Ofensiva" class="tabcontent">
-      Especial
-      <p>Who we are and what we do.</p>
+      <div id="OffensiveList"></div>
     </div>
   
     <!-- --------------------------------------------------------------------------- -->
@@ -360,6 +359,7 @@
   <!-- Traits Functions -->
   <script src="Scripting\Traits_Functions\Personal.js"> </script>
   <script src="Scripting\Traits_Functions\Complications.js"> </script>
+  <script src="Scripting\Traits_Functions\Offensive.js"> </script>
   <script src="Scripting\Traits_Functions\Advantages.js"> </script>
   <script src="Scripting\Traits_Functions\Skills.js"> </script>
   <script src="Scripting\Traits_Functions\Defenses.js"> </script>

@@ -411,6 +411,28 @@ input[type=number] {
   font-weight: bold;
 }
 
+/********************************
+* Ofensiva
+*********************************/
+
+#OffensiveTitle{
+  max-width: 50%;
+  background-color: red;
+}
+
+#OfensiveList {
+  min-width: 800px;
+}
+
+.OffensiveItemCell{
+  background-color: lightgrey;
+  border: 1px solid black;
+  color: black;
+  text-align: center;
+  font-size: 18px;  
+  padding: 5px 10px 5px 10px;
+}
+
 /************************
  * Complicações
 ************************/
@@ -431,7 +453,7 @@ input[type=number] {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   min-width: 600px;
-  min-height: 300px;
+  height: 100px;
   background-color: lightgrey;
   padding: 3px;
 }

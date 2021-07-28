@@ -38,21 +38,9 @@ function AddComplication(itemID){
   let _NewComplication = Object.assign({}, _PlayerComplication);
 
   _NewComplication.name = complicationName;
-  _NewComplication.instanceID = _ComplicationID++;
+  _NewComplication.instanceID = _MainCharacter.Complications.id++;
 
-
-  _ComplicationList.push(_NewComplication);
-
-  UpdateComplications();
-}
-  
-/**************************************
- * Função para remover Vantagens
-**************************************/
-function RemoveComplication(itemID) {
-
-  let desiredIndex = _ComplicationList.findIndex( element => element.id == itemID );
-  _ComplicationList.splice(desiredIndex, 1);
+  _MainCharacter.Complications.list.push(_NewComplication);
 
   UpdateComplications();
 }
@@ -66,9 +54,9 @@ function UpdateComplications(){
 
   let _comp;
 
-  for(let i = 0; i < _ComplicationList.length; i++){
+  for(let i = 0; i < _MainCharacter.Complications.list.length; i++){
 
-    _comp = _ComplicationList[i];
+    _comp = _MainCharacter.Complications.list[i];
 
     tableContent += "<tr> <td class='ComplicationTitleCell'>"
     tableContent += "<input type='text' value='" + _comp.name + "' " 
@@ -91,11 +79,11 @@ function UpdateComplications(){
 }
 
 function ChangeComplicationTitle(text, itemID){
-  let _QueryComplication = _ComplicationList.find( element => element.id == itemID );
+  let _QueryComplication = _MainCharacter.Complications.list.find( element => element.id == itemID );
   _QueryComplication.name = text;
 }
 
 function ChangeComplicationText(text, itemID){
-  let _QueryComplication = _ComplicationList.find( element => element.id == itemID );
+  let _QueryComplication = _MainCharacter.Complications.list.find( element => element.id == itemID );
   _QueryComplication.description = text;
 }

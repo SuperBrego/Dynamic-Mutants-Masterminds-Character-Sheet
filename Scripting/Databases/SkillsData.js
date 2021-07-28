@@ -22,7 +22,8 @@ const tsAcrobatics = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -35,7 +36,8 @@ const tsAthletics = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -48,7 +50,8 @@ const tsDeception = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -63,7 +66,8 @@ const tsCloseCombat = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   // Preciso de uma função para encontrar ataques
 };
 
@@ -78,7 +82,8 @@ const tsExpertise = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( Math.round(this.baseRank * this.baseValue) ); },
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -93,7 +98,8 @@ const tsRangedCombat = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   // Preciso de uma função para encontrar ataques
 };
 
@@ -106,7 +112,8 @@ const tsStealth = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -119,7 +126,8 @@ const tsIntimidation = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -132,7 +140,8 @@ const tsInsight = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -145,7 +154,8 @@ const tsInvestigation = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -158,7 +168,8 @@ const tsPerception = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -171,7 +182,8 @@ const tsPersuasion = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -184,7 +196,8 @@ const tsSleightOfHand = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -197,7 +210,8 @@ const tsTechnology = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -210,7 +224,8 @@ const tsTreatment = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };
 
@@ -223,6 +238,7 @@ const tsVehicles = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 0.5,
-  pointsSpent: 0,
+  pointsSpent: function () { return parseFloat( parseFloat(this.baseCost) * parseInt(this.baseRank) )},
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: ""
 };

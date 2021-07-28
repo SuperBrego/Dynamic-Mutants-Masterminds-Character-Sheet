@@ -4,14 +4,12 @@
 function onDefenseRankChange(currDefense, defenseRank){
 
     // Atualiza o valor da Defesa em questão
-    for(let i = 0; i < _DefensesList.length; i++) {
+    for(let i = 0; i < _MainCharacter.Defenses.length; i++) {
   
       // Encontrei Defesa em questão
-      if(_DefensesList[i].name == currDefense){
+      if(_MainCharacter.Defenses[i].name == currDefense){
         // Atualizo a graduação
-        _DefensesList[i].baseRank = defenseRank;
-        // Atualizo o gasto
-        _DefensesList[i].pointsSpent = parseInt(_DefensesList[i].baseRank) * parseInt(_DefensesList[i].baseCost);
+        _MainCharacter.Defenses[i].baseRank = parseInt(defenseRank);
       }
     }// Fim de For
   
@@ -26,19 +24,19 @@ function UpdateDefenses(){
   let _curCamp;
 
   // Toughness fica por último, fazemos diferente
-  for (let i = 0; i < _DefensesList.length - 1; i++) {
-    _curCamp = document.getElementById(_DefensesList[i].name + "Total");
-    $(_curCamp).html (parseInt(_DefensesList[i].baseValue) + parseInt(_DefensesList[i].baseRank) + parseInt(_DefensesList[i].enhancedValue));
+  for (let i = 0; i < _MainCharacter.Defenses.length - 1; i++) {
+    _curCamp = document.getElementById(_MainCharacter.Defenses[i].name + "Total");
+    $(_curCamp).html( _MainCharacter.Defenses[i].totalRanks() );
   }
 
   _curCamp = $("#ResistênciaTotal");
   // Perguntar se tem Rolamento Defensivo e Proteção
 
-  let _totalToughness = taStamina.totalRanks();
+  let _totalToughness = _MainCharacter.Abilities[1].totalRanks();
   
   // Perguntar Proteção Primeiro.
 
-  let _defensiveRoll = _PlayerAdvantages.find( element => element.id == 2083 );
+  let _defensiveRoll = _MainCharacter.Advantages.find( element => element.id == 2083 );
   if( _defensiveRoll ) {
     _totalToughness = (_defensiveRoll.totalRanks + _totalToughness) + "/" + _totalToughness + "* (Vulnerável)";
   }
@@ -51,16 +49,8 @@ function UpdateDefenses(){
 ** Atualiza a quantidade de pontos gastos em Defesas.
 ****************************************************/
 function UpdateDefensesSpent() {
-  let sum = 0;
-
-  // -1 porque não pode pegar Resistência, que está por último
-  for(let i = 0; i < _DefensesList.length - 1; i++) {
-    sum += _DefensesList[i].pointsSpent;
-  }
-
-  // Defesas = 1.
-  spentPoints[1][1] = sum;
-  $("#DefensesTitle").text("Defesas (" + sum + " pontos)");
+  
+  $("#DefensesTitle").text("Defesas (" + _MainCharacter.totalDefensesSpent() + " pontos)");
 
   UpdateTotalSpent();
 }

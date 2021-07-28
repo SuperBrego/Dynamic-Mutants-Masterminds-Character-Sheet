@@ -13,7 +13,7 @@
 ********************************************************
 */
 
-const effect = {
+const effectDefault = {
 	name: "Nome",
 	baseCost: 0,
 	baseRanks: 0,
@@ -22,8 +22,23 @@ const effect = {
 	flawsModifiers: [],
 	extraFlatModifiers: [],
 	flawFlatModifiers: [],
-	alteredCost: (this.baseCost + this.extrasCosts - this.flawsCosts), // Isto não funciona
-	totalSpent: (this.alteredCost * this.baseRanks) + this.extraFlatModifiers - this.flawFlatModifiers // Nem isto
+	totalExtraPerRank: function (){
+
+	},
+	totalFlawsRank: function (){
+
+	},
+	costPerRank: function() {
+		/**
+		 * =SE( 
+				( BASE + EXTRAS - FALHAS) > 0; 
+					(BASE + EXTRAS - FALHAS) * GRAD + FIXOS;
+				(GRAD / (2 + (-1* (BASE + EXTRAS - FALHAS)) ) ) + FIXOS 
+				)
+		*/
+		this.baseCost + this.extrasCosts - this.flawsCosts
+	}, // Isto não funciona
+	totalSpent: function () {(this.alteredCost * this.baseRanks) + this.extraFlatModifiers - this.flawFlatModifiers} // Nem isto
 	// ^ Nem uma função com os dois.
 }
 

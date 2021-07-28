@@ -21,7 +21,8 @@ const tdDodge = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 1,
-  pointsSpent: 0,
+  pointsSpent: function () { return (this.baseRank * this.baseCost); },
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue)},
   description: "Defesa Esquiva é baseada no valor de Agilidade. Isso inclui tempo de reação, rapidez e coordenação em geral, usada para desviar de ataques à distância e outros perigos onde reflexos e velocidade são importantes."
 };
 
@@ -33,7 +34,8 @@ const tdParry = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 1,
-  pointsSpent: 0,
+  pointsSpent: function () { return (this.baseRank * this.baseCost); },
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue); },
   description: "Defesa Aparar é baseada no valor de Luta. É a habilidade de se abaixar, contra-atacar e desviar das tentativas de um oponente lhe acertar em combate corpo-a-corpo através de uma habilidade de luta superior. "
 };
 
@@ -45,7 +47,8 @@ const tdFortitude = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 1,
-  pointsSpent: 0,
+  pointsSpent: function () { return (this.baseRank * this.baseCost); },
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue)},
   description: "Defesa Fortitude é baseada no valor de Vigor e mede a saúde e resistência do personagem contra ameaças como venenos e doenças. Incorpora a constituição, metabolismo e imunidade. "
 };
 
@@ -57,7 +60,8 @@ const tdWill = {
   baseRank: 0,
   enhancedValue: 0,
   baseCost: 1,
-  pointsSpent: 0,
+  pointsSpent: function () { return (this.baseRank * this.baseCost); },
+  totalRanks: function () { return (this.baseRank + this.baseValue + this.enhancedValue)},
   description: "Defesa Vontade é baseada no valor de Consciência. Mede a estabilidade mental, a paciência, determinação, autoconfiança, autoconsciência e força de vontade, usadas para resistir ataques mentais ou espirituais. "
 };
 

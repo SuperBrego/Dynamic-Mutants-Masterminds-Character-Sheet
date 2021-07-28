@@ -1,5 +1,6 @@
 // usar listeners em vez de onClicks https://www.w3schools.com/js/js_htmldom_eventlistener.asp
 
+var _MainCharacter;
 
 /******************
  * Popup itens
@@ -14,6 +15,8 @@ $(document).ready(function() {
 
   $("#defaultOpen").click();
   
+  _MainCharacter = Object.assign({}, Character);
+
   SetPopUp();
 
   RenderTraits();
@@ -47,6 +50,7 @@ function UpdateTraits() {
   UpdateSkills();
   UpdateAdvantages();
   UpdateOtherTraits();
+  UpdateOffensiveTraits();
 }
 
 /*********************************************************
@@ -65,13 +69,8 @@ function UpdateSpent(){
 * Atualiza o total de pontos.
 ********************************/
 function UpdateTotalSpent(){
-  var sum = 0.0;
-  for(var i = 0; i < spentPoints.length; i++){
-    sum += parseFloat(spentPoints[i][1]);
-  }
 
-  // Update Sections
-  document.getElementById("totalSpentPoints").innerHTML = "" + sum;
+  $("#totalSpentPoints").html( parseFloat( _MainCharacter.totalSpent ) );
 }
 
 
@@ -101,28 +100,31 @@ function RemoveTrait(){
 
   switch(traitType){
     // Perícias
-    case 3: break;
+    case 3: 
+      desiredIndex = _MainCharacter.ExtraSkills.findIndex( element => element.id == traitID && element.instanceID == traitInstanceID );
+      _MainCharacter.ExtraSkills.splice(desiredIndex, 1);
+      UpdateSkills();
+    break;
     // Vantagens
     case 4: 
-      if(traitInstanceID == undefined ){
-        desiredIndex = _PlayerAdvantages.findIndex( adv => adv.id == traitID );
-      }
-      else {
-        desiredIndex = _PlayerAdvantages.findIndex( adv => adv.id == traitID && adv.instanceID == traitInstanceID );
-      }
-      _PlayerAdvantages.splice(desiredIndex,1);
+      if(traitInstanceID == undefined )
+        desiredIndex = _MainCharacter.Advantages.findIndex( adv => adv.id == traitID );
+      else 
+        desiredIndex = _MainCharacter.Advantages.findIndex( adv => adv.id == traitID && adv.instanceID == traitInstanceID );
+        
+      _MainCharacter.Advantages.splice(desiredIndex,1);
       UpdateAdvantages();
-      break;
+    break;
     // Poderes
     case 5: break;
     // Equipamentos
     case 6: break;
     // Complicações
     case 8: 
-      desiredIndex = _ComplicationList.findIndex( element => element.id == traitID );
-      _ComplicationList.splice(desiredIndex, 1);
+      desiredIndex = _MainCharacter.Complications.list.findIndex( element => element.id == traitID );
+      _MainCharacter.Complications.list.splice(desiredIndex, 1);
       UpdateComplications();
-      break;
+    break;
     default: return;
   }
 

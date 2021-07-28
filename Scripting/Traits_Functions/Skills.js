@@ -9,9 +9,9 @@ let _currentSkillID = 0;
 // Conteúdo do Div para Adicionar novas Perícias
 let _SkillPopUpContent = ""
     +"<div class='AddTraitButtons'>"
-        + "<button name='addExpertise' value='Expertise' onclick='addSkill(this.value)'>Adicionar <i>Especialidade</i></button> <br>"
-        + "<button name='addRangedCombat' value='RangedCombat' onclick='addSkill(this.value)'>Adicionar <i>Combate A Distância</i></button> <br>"
-        + "<button name='addCloseCombat' value='CloseCombat' onclick='addSkill(this.value)'>Adicionar <i>Corpo-a-corpo</i></button> <br>"
+        + "<button name='addExpertise' value='Expertise' onclick='AddSkill(this.value)'>Adicionar <i>Especialidade</i></button> <br>"
+        + "<button name='addRangedCombat' value='RangedCombat' onclick='AddSkill(this.value)'>Adicionar <i>Combate A Distância</i></button> <br>"
+        + "<button name='addCloseCombat' value='CloseCombat' onclick='AddSkill(this.value)'>Adicionar <i>Corpo-a-corpo</i></button> <br>"
 + "</div>";
 
 /**
@@ -22,8 +22,8 @@ function RenderBaseSkillList(){
   let tableContent = "";
   tableContent += "<table> <tr> <td colspan='4' class='SectionTitle' style='background-color: darkgoldenrod;' id='SkillsTitle'>Perícias</td> </tr>";
 
-  for (let index = 0; index < _SkillsList.length; index++) {
-    const element = _SkillsList[index];
+  for (let i = 0; i < _MainCharacter.Skills.length; i++) {
+    const element = _MainCharacter.Skills[i];
     
     tableContent += "<tr>";
     tableContent += "<td class='SkillTitleCell'> <span class='skillNameTitle'>" + element.name + "</span> </td>"
@@ -45,12 +45,15 @@ function RenderBaseSkillList(){
 ****************************************************/
 function onSkillRankChange(skillID, skillRank){
 
-    if(skillRank == "") skillRank = 0;
+    let desiredIndex;
 
-    let desiredIndex = _SkillsList.findIndex( _SkillsList => _SkillsList.id == skillID );
-    
-    _SkillsList[desiredIndex].baseRank = skillRank;
-    _SkillsList[desiredIndex].pointsSpent = parseInt( _SkillsList[desiredIndex].baseRank ) * parseFloat( _SkillsList[desiredIndex].baseCost );
+    desiredIndex = _MainCharacter.Skills.findIndex( element => element.id == skillID );
+
+    if (desiredIndex < 0 ){ 
+      desiredIndex = _MainCharacter.ExtraSkills.findIndex( element => element.id == skillID );
+      _MainCharacter.ExtraSkills[desiredIndex].baseRank = parseInt(skillRank);
+    }
+    else { _MainCharacter.Skills[desiredIndex].baseRank = parseInt(skillRank); }    
   
     UpdateSkills();
     UpdateSkillsSpent();
@@ -59,7 +62,7 @@ function onSkillRankChange(skillID, skillRank){
 /****************************************************
  * Adiciona uma nova perícia.
 ****************************************************/
-function addSkill(skillName){
+function AddSkill(skillName){
 
   let _currSkill;
 
@@ -68,21 +71,21 @@ function addSkill(skillName){
       _currSkill = Object.assign({}, tsExpertise);
       _currSkill.name = "Especialidade #"+_currentSkillID;
       _currSkill.instanceID = _currentSkillID;
-      _SkillsList.push( _currSkill );
+      _MainCharacter.ExtraSkills.push( _currSkill );
       _currentSkillID++;
       break;
     case "RangedCombat": 
       _currSkill = Object.assign({}, tsRangedCombat);
       _currSkill.name = "Combate A Distância #"+_currentSkillID;
       _currSkill.instanceID = _currentSkillID;
-      _SkillsList.push( _currSkill );
+      _MainCharacter.ExtraSkills.push( _currSkill );
       _currentSkillID++;
       break;
     case "CloseCombat": 
       _currSkill = Object.assign({}, tsCloseCombat);
       _currSkill.name = "Combate Corpo-a-corpo #"+_currentSkillID;
       _currSkill.instanceID = _currentSkillID;
-      _SkillsList.push( _currSkill );
+      _MainCharacter.ExtraSkills.push( _currSkill );
       _currentSkillID++;
       break;
     default: break;
@@ -93,51 +96,36 @@ function addSkill(skillName){
   
 }
     
-/****************************************************
-  * Remove uma Perícia.
-****************************************************/
-function RemoveSkill(skillID, instanceID){
-
-    let desiredIndex = _SkillsList.findIndex( _skill => _skill.id == skillID && _skill.instanceID == instanceID );
-    _SkillsList.splice(desiredIndex, 1);
-
-    // Pede para atualizar as Características
-    UpdateSkills();
-}
 
 /****************************************************
  * Atualiza os valores totais para Perícias.
 ****************************************************/
 function UpdateSkills(){
     let _curCamp;
-    for (let i = 0; i < _SkillsList.length; i++) {
-      _curCamp = document.getElementById(_SkillsList[i].name+"Total");
-      _curCamp.innerHTML = parseInt(_SkillsList[i].baseValue) + parseInt(_SkillsList[i].baseRank) + parseInt(_SkillsList[i].enhancedValue);
+    for (let i = 0; i < _MainCharacter.Skills.length; i++) {
+      _curCamp = document.getElementById(_MainCharacter.Skills[i].name+"Total");
+      $(_curCamp).html(_MainCharacter.Skills[i].totalRanks());
     }
 
+    for (let i = 0; i < _MainCharacter.ExtraSkills.length; i++) {
+      _curCamp = document.getElementById(_MainCharacter.ExtraSkills[i].name+"Total");
+      $(_curCamp).html(_MainCharacter.ExtraSkills[i].totalRanks());
+    }
+
+    DisplayExtraSkills();
     // Atualiza o Gasto em Perícias
     UpdateSkillsSpent();
 
-    // Apresenta novas Perícias
-    DisplayExtraSkills();
 }
 
 /****************************************************
  * Atualiza a quantidade de pontos gastos em Perícias.
 /****************************************************/
 function UpdateSkillsSpent() {
-    let sum = 0;
-    let skillsRanks = 0;
-    for(let i = 0; i < _SkillsList.length; i++) {
-      skillsRanks += parseInt(_SkillsList[i].baseRank);
-      sum += parseFloat(_SkillsList[i].pointsSpent);
-    }
   
-    // Perícias = 2.
-    spentPoints[2][1] = sum;
-    $("#SkillsTitle").html("Perícias (" + skillsRanks + " grads/" + sum + " pontos)");
+  $("#SkillsTitle").html("Perícias (" + _MainCharacter.totalSkillsRanks() + " grads/" + _MainCharacter.totalSkillsSpent() + " pontos)");
 
-    UpdateTotalSpent();
+  UpdateTotalSpent();
 }
 
 /****************************************************
@@ -145,37 +133,36 @@ function UpdateSkillsSpent() {
 ****************************************************/
 function DisplayExtraSkills() {
   
-  // Se não tenho perícias extras, volto
-  if( _SkillsList.length < _MinimalLength) return;
-
   // Caso eu tenha alguma coisa, crio a tabela nova.
   let tableContent = "";
   tableContent += "<table>" 
 
-  let skillName, skillID, skillInstanceID;
+  let skillName, skillID, skillInstanceID, skillTraitName, skillDisplayName;
 
-  for(let i = 0; i < _SkillsList.length; i++){
-      skillID = _SkillsList[i].id;
-      skillInstanceID = _SkillsList[i].instanceID;
-      skillName = _SkillsList[i].name;
-      
+  for(let i = 0; i < _MainCharacter.ExtraSkills.length; i++){
+
+      skillID = _MainCharacter.ExtraSkills[i].id;
+      skillInstanceID = _MainCharacter.ExtraSkills[i].instanceID;
+      skillName = _MainCharacter.ExtraSkills[i].name;
+      skillTraitName = _MainCharacter.ExtraSkills[i].skillTraitName;
+
       if ( skillID == 3004 || skillID == 3005 || skillID == 3006 ) {
 
-        skillName = skillName.split(' #')[0];
+        skillDisplayName = skillName.split(' #')[0];
         
         tableContent += "<tr>"
         + "<td class='ExtraSkillTitleCell'>"
-        + "<span class='SkillCellText'>" + skillName + ": "
+        + "<span class='SkillCellText'>" + skillDisplayName + ": "
         + "<br>"
-        + "<input type='text' value='"+ _SkillsList[i].skillTraitName +"' maxlength='10' size='40' name='"+ skillName +"' onchange='UpdateSkillText(this.value, " + skillID + ", " + skillInstanceID + ")' >"
+        + "<input type='text' value='"+ skillTraitName +"' maxlength='10' size='40' onchange='UpdateSkillText(this.value, " + skillID + ", " + skillInstanceID + ")' >"
         + "</span>"
         + "</td>";
         tableContent += "<td class='SkillCell'>"
-        + "<input autocomplete='off' type='number' name='" + _SkillsList[i].name + "' value='0' min='0' onchange='onSkillRankChange(this.name, this.value)'>"
+        + "<input autocomplete='off' type='number' value='0' min='0' onchange='onSkillRankChange("+ skillID +", this.value)'>"
         + "</td>"
-        + "<td class='TraitTotalCell'> <span name='"+ _SkillsList[i].name +"Total' id='"+ _SkillsList[i].name +"Total'>0</span> </td>";
+        + "<td class='TraitTotalCell'> <span name='"+ skillName +"Total' id='"+ skillName +"Total'>0</span> </td>";
         tableContent += "<td>"
-        + "<button class='DeleteButton' onclick='RemoveSkill("+ skillID +", "+skillInstanceID+")'>"
+        + "<button class='DeleteButton' onclick='RemoveTrait("+ skillID +", 3, " + skillInstanceID + ")'>"
         + "X"
         + "</button> </td>";
       }
@@ -191,6 +178,6 @@ function DisplayExtraSkills() {
  * Atualiza o texto das Perícias Extras
 ******************************************/
 function UpdateSkillText(skillTraitName, skillID, skillInstanceID){
-    let desiredSkillIndex = _SkillsList.findIndex( _skill => _skill.id == skillID && _skill.instanceID == skillInstanceID );
-    _SkillsList[desiredSkillIndex].skillTraitName = skillTraitName;
+    let desiredSkillIndex = _MainCharacter.Skills.findIndex( _skill => _skill.id == skillID && _skill.instanceID == skillInstanceID );
+    _MainCharacter.Skills[desiredSkillIndex].skillTraitName = skillTraitName;
 }
