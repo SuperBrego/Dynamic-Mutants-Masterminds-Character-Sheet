@@ -32,6 +32,7 @@ $(document).ready(function() {
 function RenderTraits(){
   RenderBaseSkillList();
   RenderPersonalTraits();
+  RenderOffensiveAttacks();
 }
 
 /************************************
@@ -50,7 +51,7 @@ function UpdateTraits() {
   UpdateSkills();
   UpdateAdvantages();
   UpdateOtherTraits();
-  UpdateOffensiveTraits();
+  UpdateAttacks();
 }
 
 /*********************************************************
@@ -70,7 +71,7 @@ function UpdateSpent(){
 ********************************/
 function UpdateTotalSpent(){
 
-  $("#totalSpentPoints").html( parseFloat( _MainCharacter.totalSpent ) );
+  $("#totalSpentPoints").html( parseFloat( _MainCharacter.totalSpent() ) );
 }
 
 
@@ -96,14 +97,19 @@ function RemoveTrait(){
   let traitType = arguments[1];
   let traitInstanceID = arguments[2];
 
-  let desiredIndex;
+  let desiredIndex, lineID;
 
   switch(traitType){
     // Perícias
     case 3: 
-      desiredIndex = _MainCharacter.ExtraSkills.findIndex( element => element.id == traitID && element.instanceID == traitInstanceID );
-      _MainCharacter.ExtraSkills.splice(desiredIndex, 1);
-      UpdateSkills();
+      desiredIndex = _MainCharacter.ExtraSkills.list.findIndex( element => element.id == traitID && element.instanceID == traitInstanceID );
+
+      lineID = _MainCharacter.ExtraSkills.list[desiredIndex].instanceID + "Line";
+
+      _MainCharacter.ExtraSkills.list.splice(desiredIndex, 1);
+      $('#AdditionalSkillsList tr#' + lineID).remove();
+
+      UpdateSkillsSpent();
     break;
     // Vantagens
     case 4: 
@@ -114,17 +120,20 @@ function RemoveTrait(){
         
       _MainCharacter.Advantages.splice(desiredIndex,1);
       UpdateAdvantages();
-    break;
+      break;
     // Poderes
     case 5: break;
     // Equipamentos
     case 6: break;
     // Complicações
     case 8: 
-      desiredIndex = _MainCharacter.Complications.list.findIndex( element => element.id == traitID );
+      desiredIndex = _MainCharacter.Complications.list.findIndex( element => element.instanceID == traitInstanceID );
+      
+      lineID = _MainCharacter.Complications.list[desiredIndex].instanceID + "Line";
+      
       _MainCharacter.Complications.list.splice(desiredIndex, 1);
-      UpdateComplications();
-    break;
+      $('#ComplicationListTable tr.' + lineID).remove();
+      break;
     default: return;
   }
 
@@ -138,19 +147,19 @@ function RemoveTrait(){
 function openPage(pageName, elmnt, color) {
   // Hide all elements with class="tabcontent" by default */
   var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
+  tabcontent = $(".tabcontent");
 
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
 
   // Remove the background color of all tablinks/buttons
-  tablinks = document.getElementsByClassName("tablink");
+  tablinks = $(".tablink");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].style.backgroundColor = "";
   }
 
-  var sections = document.getElementsByClassName("SectionTitle");
+  var sections = $(".SectionTitle");
   for (i = 0; i < sections.length; i++) {
     sections[i].style.backgroundColor = color;
   }

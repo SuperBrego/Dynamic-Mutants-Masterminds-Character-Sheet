@@ -15,35 +15,35 @@
 
 var _AllAdvantagesList = [];
 _AllAdvantagesList.push({
-	id: 2001,
+	id: 4001,
 	name: "Ação de Movimento", 
 	ranked: false,
 	description: "Quando tomando uma ação padrão e uma ação de movimento, você pode se mover antes e depois de sua ação, desde que a distância percorrida não seja maior que sua velocidade normal."
 });
 
 _AllAdvantagesList.push({
-	id: 2002,
+	id: 4002,
 	name: "Agarrar Aprimorado", 
 	ranked: false,
 	description: "Você pode fazer ataques de agarrar com apenas um braço, deixando o outro livre. Você também pode manter o agarrar enquanto usa a outra mão para realizar ações. Você não fica vulnerável enquanto agarra (veja <i>Agarrar</i> em Ação & Aventura)."
 });
 
 _AllAdvantagesList.push({
-	id: 2003,
+	id: 4003,
 	name: "Agarrar Preciso", 
 	ranked: false,
 	description: "Você pode usar seu bônus de Destreza, em vez do seu bônus de Força, para fazer testes de agarrar. Você não fica vulnerável enquanto agarra (veja <i>Agarrar</i>). Essa é uma boa vantagem para combatentes desarmados habilidosos que dependem mais de velocidade do que força."
 });
 
 _AllAdvantagesList.push({
-	id: 2004,
+	id: 4004,
 	name: "Agarrar Rápido", 
 	ranked: false,
 	description: "Quando acerta um ataque desarmado, você pode fazer um teste de agarrar imediatamente contra o alvo como uma ação livre. Seu ataque desarmado causa dano normal e conta como o teste de ataque inicial exigido para agarrar seu oponente."
 });
 
 _AllAdvantagesList.push({
-	id: 2005,
+	id: 4005,
 	name: "Ambiente Favorito", 
 	ranked: false, 
 	description: "Há um ambiente que você é especialmente adequado em lutar. Exemplos incluem ar, debaixo d’água, no espaço, em extremo calor ou extremo frio, na selva, nas florestas e assim em diante. Enquanto estiver no seu ambiente favorito, você ganha bônus circunstancial de +2 em testes de ataque ou sua defesa ativa. Escolha no início da rodada se o bônus se aplicará ao ataque ou à defesa. A escolha fica até o início da próxima rodada. Esse bônus circunstancial não é afetado pelo nível de poder.",
@@ -52,7 +52,7 @@ _AllAdvantagesList.push({
 });
 
 _AllAdvantagesList.push({
-	id: 2006,
+	id: 4006,
 	name: "Armação", 
 	ranked: true, 
 	totalRanks: 1,
@@ -60,7 +60,7 @@ _AllAdvantagesList.push({
 });
 
 _AllAdvantagesList.push({
-	id: 2007,
+	id: 4007,
 	name: "Armas Improvisadas", 
 	ranked: true, 
 	totalRanks: 1,
@@ -68,14 +68,14 @@ _AllAdvantagesList.push({
 });
 
 _AllAdvantagesList.push({
-	id: 2008,
+	id: 4008,
 	name: "Artífice", 
 	ranked: false,
 	description: "Você pode usar a perícia <i>Especialidade: Magia</i> para criar dispositivos mágicos temporários. Veja <b>Invenções Mágicas</b> para mais detalhes."
 })
 
 _AllAdvantagesList.push({
-	id: 2009,
+	id: 4009,
 	name: "Assistente", 
 	ranked: false,
 	description: "Quando você pega esta vantagem, escolha uma Vantagem que normalmente concede um bônus de circunstância. Você não ganha esta Vantagem, mas uma vez por rodada, como uma ação livre, você pode conceder o benefício dessa Vantagem a um aliado capaz de interagir com você. Se você tem a Vantagem normalmente, então você também ganha seu benefício normalmente."
@@ -85,14 +85,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2010,
+	id: 4010,
 	name: "Assustar", 
 	ranked: false,
 	description: "Você pode usar Intimidar em vez de Enganação para fintar em combate (veja <i>Fintar</i> na descrição da perícia <b>Enganação</b>). O alvo resiste com Intimidação, Intuição ou Vontade."
 })
 
 _AllAdvantagesList.push({
-	id: 2011,
+	id: 4011,
 	name: "Ataque A Distância", 
 	ranked: true, 
 	totalRanks: 1,
@@ -100,14 +100,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2012,
+	id: 4012,
 	name: "Ataque Acurado", 
 	ranked: false,
 	description: "Quando fizer um ataque acurado (veja em <b>Manobras</b>), você pode receber penalidade de até -5 no bônus do efeito do ataque e somar o mesmo número (no máximo até +5) no seu bônus de acerto."
 })
 
 _AllAdvantagesList.push({
-	id: 2013,
+	id: 4013,
 	name: "Ataque Corpo-a-corpo", 
 	ranked: true,
 	totalRanks: 1,
@@ -115,7 +115,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2014,
+	id: 4014,
 	name: "Ataque de Equipe", 
 	ranked: true, 
 	totalRanks: 1,
@@ -124,7 +124,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2015,
+	id: 4015,
 	name: "Ataque de Equipe Variável", 
 	ranked: false,
 	description: "Quando você contribui com sucesso para um ataque em equipe, ao invés de contribuir com um bônus de circunstância da graduação do ataque, você pode aplicar os benefícios de um Descritor Variável de 1 ponto extra ao ataque (veja <i>Descritor Variável</i> em <b>Modificadores</b>). Se seu teste de coordenação para o ataque da equipe tiver três ou mais graus de sucesso, você pode aplicar um Descritor Variável de 2 pontos ao ataque."
@@ -132,14 +132,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2016,
+	id: 4016,
 	name: "Ataque Defensivo", 
 	ranked: false,
 	description: "Quando realizar um ataque defensivo (veja <b>Manobras</b>), você pode receber penalidade de até -5 no bônus de acerto e somar o mesmo número (no máximo até +5) no seu bônus de defesas ativas (Esquiva e Aparar)."
 })
 
 _AllAdvantagesList.push({
-	id: 2017,
+	id: 4017,
 	name: "Ataque Dominó", 
 	ranked: true, 
 	maxRank: 2, 
@@ -149,49 +149,49 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2018,
+	id: 4018,
 	name: "Ataque Imprudente", 
 	ranked: false,
 	description: "Quando realizar um ataque imprudente (veja <b>Manobras</b>), você pode receber penalidade de até -5 nas suas defesas ativas (Esquiva e Aparar) e somar o mesmo número (no máximo até +5) no seu bônus de ataque."
 })
 
 _AllAdvantagesList.push({
-	id: 2019,
+	id: 4019,
 	name: "Ataque Poderoso", 
 	ranked: false,
 	description: "Quando realizar um ataque poderoso (veja <b>Manobras</b>), você pode receber penalidade de até -5 no bônus de acerto e somar o mesmo número (no máximo até +5) no bônus do efeito de seu ataque."
 })
 
 _AllAdvantagesList.push({
-	id: 2020,
+	id: 4020,
 	name: "Ataque Preciso (A Distância: Cobertura)", 
 	ranked: false,
 	description: "Quando for realizar um ataque corpo-a-corpo ou à distância (escolha um) você ignora penalidades no teste de ataque contra cobertura ou camuflagem (escolha um), apesar que cobertura total ainda previne você de realizar ataques. Cada graduação adicional permite uma opção adicional, então Ataque Preciso 4, todos seus ataques (corpo-a-corpo e à distância) ignoram penalidades tanto por cobertura quanto camuflagem."
 })
 
 _AllAdvantagesList.push({
-	id: 2021,
+	id: 4021,
 	name: "Ataque Preciso (A Distância: Camuflagem)", 
 	ranked: false,
 	description: "Quando for realizar um ataque corpo-a-corpo ou à distância (escolha um) você ignora penalidades no teste de ataque contra cobertura ou camuflagem (escolha um), apesar que cobertura total ainda previne você de realizar ataques. Cada graduação adicional permite uma opção adicional, então Ataque Preciso 4, todos seus ataques (corpo-a-corpo e à distância) ignoram penalidades tanto por cobertura quanto camuflagem."
 })
 
 _AllAdvantagesList.push({
-	id: 2022,
+	id: 4022,
 	name: "Ataque Preciso (Corpo-a-corpo: Cobertura)", 
 	ranked: false,
 	description: "Quando for realizar um ataque corpo-a-corpo ou à distância (escolha um) você ignora penalidades no teste de ataque contra cobertura ou camuflagem (escolha um), apesar que cobertura total ainda previne você de realizar ataques. Cada graduação adicional permite uma opção adicional, então Ataque Preciso 4, todos seus ataques (corpo-a-corpo e à distância) ignoram penalidades tanto por cobertura quanto camuflagem."
 })
 
 _AllAdvantagesList.push({
-	id: 2023,
+	id: 4023,
 	name: "Ataque Preciso (Corpo-a-corpo: Camuflagem)", 
 	ranked: false,
 	description: "Quando for realizar um ataque corpo-a-corpo ou à distância (escolha um) você ignora penalidades no teste de ataque contra cobertura ou camuflagem (escolha um), apesar que cobertura total ainda previne você de realizar ataques. Cada graduação adicional permite uma opção adicional, então Ataque Preciso 4, todos seus ataques (corpo-a-corpo e à distância) ignoram penalidades tanto por cobertura quanto camuflagem."
 })
 
 _AllAdvantagesList.push({
-	id: 2024,
+	id: 4024,
 	name: "Atraente", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -201,14 +201,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2025,
+	id: 4025,
 	name: "Avaliação", 
 	ranked: false,
 	description: "Você é rápido em medir as capacidades de combate do oponente. Escolha um alvo que possa perceber exatamente e tenha o Mestre fazer um teste em segredo de Intuição para você como ação livre oposta pelo teste de Enganação do alvo. <br><br> Se você vencer, o Mestre lhe informa os bônus de ataque e defesa do alvo relativo a você (menor, maior, igual). Com cada grau de sucesso adicional, você descobre um dos bônus do alvo com valores exatos. Se você perder na rolagem oposta, não descobre nada. Com mais de um grau de falha, o Mestre pode mentir ou até exagerar os bônus do alvo."
 })
 
 _AllAdvantagesList.push({
-	id: 2026,
+	id: 4026,
 	name: "Bem Equipado", 
 	ranked: true, 
 	totalRanks: 1,
@@ -217,14 +217,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2027,
+	id: 4027,
 	name: "Bem Informado", 
 	ranked: false,
 	description: "Você é excepcionalmente bem informado. Quando encontrando um individual, grupo ou organização pela primeira vez, você pode fazer imediatamente um teste de Investigação ou Persuasão para ver se seu personagem ouviu algo sobre o assunto. Use os guias de obter informações da descrição da perícia Investigação a fins de determinar o nível de informação que recebe. Você tem apenas um teste por alvo no primeiro encontro, entretanto o Mestre pode permitir outro teste se tempo significativo passou desde que se encontraram."
 })
 
 _AllAdvantagesList.push({
-	id: 2028,
+	id: 4028,
 	name: "Bem Relacionado", 
 	ranked: false,
 	description: "Você conhece pessoas que podem lhe ajudar de tempos em tempos. Pode ser um conselho, informação, ajuda com assuntos legais ou acesso a recursos. Você pode pedir tais favores fazendo um teste de Persuasão. O Mestre define a CD do teste baseado na ajuda solicitada. Um favor simples é CD 10, subindo até CD 25 ou maior para favores difíceis, perigosos ou caros."
@@ -232,7 +232,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2029,
+	id: 4029,
 	name: "Benefício (Geral)", 
 	ranked: true, 
 	totalRanks: 1,
@@ -242,7 +242,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2030,
+	id: 4030,
 	name: "Benefício (Acesso de Segurança)", 
 	ranked: false,
 	description: "Você tem acesso a informação confidenciais, instalações e possivelmente equipamentos e staff do governo.",
@@ -251,14 +251,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2031,
+	id: 4031,
 	name: "Benefício (Ambidestria)", 
 	ranked: false,
 	description: "Você é igualmente adepto a usar qualquer mal, não sofrendo nenhuma penalidade circunstancial de usar a sua mão inábil (como se não tivesse)."
 })
 
 _AllAdvantagesList.push({
-	id: 2032,
+	id: 4032,
 	name: "Benefício (Cifrado)", 
 	ranked: true, 
 	totalRanks: 1,
@@ -266,7 +266,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2033,
+	id: 4033,
 	name: "Benefício (Identidade Alternativa)", 
 	ranked: false,
 	description: "Você tem uma identidade alternativa, completa com documentação (licença de motorista, certificado de nascimento, etc.). Isso é diferente da identidade heroica, que não tem necessariamente algum status especial legal (mas pode ter dependendo do cenário).",
@@ -275,14 +275,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2034,
+	id: 4034,
 	name: "Benefício (Imunidade Diplomática)", 
 	ranked: false,
 	description: "Devido seu status diplomático, você não pode ser processado por crimes em nações além de sua própria. Tudo que as outras nações podem fazer é deportá-lo de volta para sua nação natal."
 })
 
 _AllAdvantagesList.push({
-	id: 2035,
+	id: 4035,
 	name: "Benefício (Riqueza)", 
 	ranked: false, 
 	maxRank: 5,
@@ -292,7 +292,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2036,
+	id: 4036,
 	name: "Benefício (Status)", 
 	ranked: false, 
 	maxRank: 5,
@@ -302,7 +302,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2037,
+	id: 4037,
 	name: "Capanga", 
 	ranked: true, 
 	totalRanks: 1,
@@ -310,14 +310,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2038,
+	id: 4038,
 	name: "Contatos", 
 	ranked: false,
 	description: "Você tem uma rede de contatos extensa e bem informada para que consiga fazer teste de Investigação para obter informações ocorra em apenas um minuto, assumindo que você tenha os meios de entrar em contato com seus contatos. Futuros testes de Investigação sobre o mesmo assunto vão necessitar o tempo normal de busca, uma vez que terá que ir além de sua rede de contatos imediata."
 })
 
 _AllAdvantagesList.push({
-	id: 2039,
+	id: 4039,
 	name: "Crítico Aprimorado", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -326,28 +326,28 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2040,
+	id: 4040,
 	name: "De Pé", 
 	ranked: false, 
 	description: "Você pode ir de caído para em pé como ação livre, sem necessidade do teste de Acrobacias."
 })
 
 _AllAdvantagesList.push({
-	id: 2041,
+	id: 4041,
 	name: "Defesa Aprimorada", 
 	ranked: false,
 	description: "Quando realizar uma ação de defesa (veja Defender-se em <b>Ações e Manobras</b>), recebe um bônus circunstancial de +2 nas suas defesas ativas para durante a rodada."
 })
 
 _AllAdvantagesList.push({
-	id: 2042,
+	id: 4042,
 	name: "Derrubar Aprimorado", 
 	ranked: false,
 	description: "Você não tem penalidade ao seu teste de ataque para derrubar um oponente e eles não ganham a oportunidade de derrubar a você. Quando realizar o teste de acerto de agarrar, faça um teste oposto por sua Acrobacia ou Atletismo contra o Acrobacia ou Atletismo do oponente, você escolhe qual das perícias o seu oponente usará para se defender, em vez do alvo (veja Derrubar em <b>Ações e Manobras</b>). Isso é uma boa vantagem marcial para lutadores desarmados."
 })
 
 _AllAdvantagesList.push({
-	id: 2043,
+	id: 4043,
 	name: "Desarme", 
 	ranked: true, 
 	maxRank: 10, 
@@ -358,35 +358,35 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2044,
+	id: 4044,
 	name: "Desarmar Aprimorado", 
 	ranked: false, 
 	description: "Você não tem penalidade nos seus testes quando tentar desarmar um oponente e eles não tem a oportunidade de lhe desarmar (veja <i>Desarme<i> em <b>Ações e Manobras</b>)."
 })
 
 _AllAdvantagesList.push({
-	id: 2045,
+	id: 4045,
 	name: "Destemido", 
 	ranked: false,
 	description: "Você é imune a todos os tipos de medo, essencialmente o mesmo que Imunidade a Efeitos de Medo (veja <i>Imunidade<i> em <b>Poderes</b>)."
 })
 
 _AllAdvantagesList.push({
-	id: 2046,
+	id: 4046,
 	name: "Duro de Matar", 
 	ranked: false,
 	description: "Quando sua condição se tornar moribundo (veja <b>Condições</b>), você automaticamente se estabiliza na rodada seguinte sem necessidade de testes de Vigor, entretanto, danos subsequentes – como um golpe de misericórdia – ainda pode matá-lo."
 })
 
 _AllAdvantagesList.push({
-	id: 2047,
+	id: 4047,
 	name: "Empatia com Animais", 
 	ranked: false,
 	description: "Você tem uma conexão especial com animais. Você pode usar perícias de interação normalmente com animais e não precisa falar idioma dos animais entende; você comunica sua intenção através de gestos e linguagem corporal e aprendem coisas estudando comportamento dos animais. Personagens normalmente tem penalidade circunstancial de -10 em perícias de interação com animais, dado seu Intelecto e ausência de idioma."
 })
 
 _AllAdvantagesList.push({
-	id: 2048,
+	id: 4048,
 	name: "Equipamento", 
 	ranked: true, 
 	totalRanks: 1,
@@ -394,21 +394,21 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2049,
+	id: 4049,
 	name: "Esconder-se a Plena Vista", 
 	ranked: false,
 	description: "Você consegue se esconder (veja <i>Escondendo-se</i> na descrição de <b>Furtividade</b>, em <b>Perícias</b>) sem necessidade de um teste de Enganação ou Intimidação ou qualquer tipo de distração e sem penalidade no seu teste de Furtividade. Você literalmente está ali em um momento e some no próximo. Você ainda deve ter alguma forma de cobertura ou camuflagem no alcance do seu movimento normal para se esconder."
 })
 
 _AllAdvantagesList.push({
-	id: 2050,
+	id: 4050,
 	name: "Esforço Extraordinário", 
 	ranked: false,
 	description: "Quando usando esforço extra (veja <i>Esforço Extra</i> no <b>Básico</b>), você pode ganhar dois dos benefícios listados, ou até acumulando dois do mesmo benefício. Entretanto, você também recebe o dobro do custo do esforço; você estará exausto no turno seguinte após seu esforço extraordinário. Se já estiver fatigado, você fica incapacitado. Se já estiver exausto, você não pode usar esforço extraordinário. Gastando um ponto de Vitoria no início do próximo turno reduz o custo do seu esforço extraordinário para apenas fatigado, igual ao uso comum de esforço extra."
 })
 
 _AllAdvantagesList.push({
-	id: 2051,
+	id: 4051,
 	name: "Esforço Supremo", 
 	ranked: false,
 	description: "Você pode gastar um ponto de Vitória em um teste em particular e rolar como um 20 (significando que não há necessidade de rolar o dado, apenas aplicar resultado 20 ao seu modificador). Isso não é um 20 natural, mas é tratado como 20 em outros aspectos. Você escolhe o teste em particular qual essa vantagem se aplica quando adquiri-la e o Mestre deve aprová-la. Você pode escolher Esforço Supremo várias vezes, cada vez aplicando a um teste diferente. Essa vantagem não pode ser usada depois que você rolou o dado para determinar o sucesso."
@@ -422,21 +422,21 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2052,
+	id: 4052,
 	name: "Esquiva Fabulosa", 
 	ranked: false,
 	description: "Você é especialmente sintonizado com perigo. Você não é vulnerável quando surpreso de qualquer forma. Você ainda fica vulnerável por efeitos que limitem sua mobilidade."
 })
 
 _AllAdvantagesList.push({
-	id: 2053,
+	id: 4053,
 	name: "Estrangular", 
 	ranked: false,
 	description: "Se obtiver sucesso em agarrar e imobilizar um oponente (veja <i>Agarrar</i> em <b>Ações e Manobras</b>) você pode estrangulá-lo, fazendo que seu oponente comece a sufocar enquanto mantiver a imobilização do alvo (veja <b>Sufocamento</b>)."
 })
 
 _AllAdvantagesList.push({
-	id: 2054,
+	id: 4054,
 	name: "Evasão", 
 	ranked: true, 
 	maxRank: 2, 
@@ -445,7 +445,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2055,
+	id: 4055,
 	name: "Fascinar", 
 	ranked: false, 
 	description: "Uma das suas perícias de interação é tão eficaz que você pode capturar e manter a atenção de outros com ela. Escolha entre Enganação, Intimidação ou Persuasão quando adquirir esta vantagem. Você também usar Fascinar com a perícia de Especialidade apropriada, como um músico ou cantor, ao critério do Mestre."
@@ -455,28 +455,28 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2056,
+	id: 4056,
 	name: "Faz-Tudo", 
 	ranked: false,
 	description: "Você pode usar qualquer perícia sem treinamento, até perícias ou aspectos de perícias que normalmente não podem ser usadas destreinadas, entretanto, ainda deve ter as ferramentas necessárias delas."
 })
 
 _AllAdvantagesList.push({
-	id: 2057,
+	id: 4057,
 	name: "Ferramentas Improvisadas", 
 	ranked: false, 
 	description: "Você ignora a penalidade circunstancial de usar perícias sem as ferramentas apropriadas, uma vez que consegue improvisar ferramentas suficientes do que estiver à mão. Se você é forçado a trabalhar sem ferramenta alguma, você sofre apenas uma penalidade de -2."
 })
 
 _AllAdvantagesList.push({
-	id: 2058,
+	id: 4058,
 	name: "Finta Ágil", 
 	ranked: false,
 	description: "Você pode usar seu bônus de Acrobacia ou seu valor de movimento no lugar de enganação para fazer fintas e truques em combate como seu bônus de perícia ou valor de velocidade fossem seu bônus de Enganação (veja perícia <b>Enganação</b>). Seu oponente resiste a tentativa com Acrobacias ou Intuição (o que for maior)."
 })
 
 _AllAdvantagesList.push({
-	id: 2059,
+	id: 4059,
 	name: "Idiomas", 
 	ranked: true,
 	totalRanks: 1,
@@ -488,14 +488,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2060,
+	id: 4060,
 	name: "Imobilizar Aprimorado", 
 	ranked: false,
 	description: "Seus ataques de agarrar são difíceis de escapar. Oponentes agarrados sofrem uma penalidade circunstancial de -5 em testes para escapar."
 })
 
 _AllAdvantagesList.push({
-	id: 2061,
+	id: 4061,
 	name: "Iniciativa Aprimorada", 
 	ranked: true, 
 	totalRanks: 1,
@@ -503,7 +503,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2062,
+	id: 4062,
 	name: "Inspirar", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -512,35 +512,35 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2063,
+	id: 4063,
 	name: "Interpor-se", 
 	ranked: false,
 	description: "Uma vez por rodada, quando um aliado no alcance de seu deslocamento normal é atingido por um ataque, você pode escolher de colocar você entre ele e o atacante como uma reação, fazendo com que você se torne o alvo do ataque no lugar. O ataque atinge você em vez de seu aliado e sofre os efeitos normalmente. Você não pode usar esta vantagem contra efeitos em área ou efeitos de alcance de percepção, apenas aqueles com teste de ataque."
 })
 
 _AllAdvantagesList.push({
-	id: 2064,
+	id: 4064,
 	name: "Inventor", 
 	ranked: false,
 	description: "Você pode usar a perícia Tecnologia para criar invenções. Veja <i>Inventando</i> ou <i>Inventando (Guia de Bugigangas)</i> para detalhes."
 })
 
 _AllAdvantagesList.push({
-	id: 2065,
+	id: 4065,
 	name: "Liderança", 
 	ranked: false,
 	description: "Sua presença tranquiliza e empresta coragem aos seus aliados. Com uma ação padrão, você pode gastar um ponto de Vitória para remover uma das seguintes condições de seus aliados qual consegue interagir: atordoado, fadigado e tonto."
 })
 
 _AllAdvantagesList.push({
-	id: 2066,
+	id: 4066,
 	name: "Luta no Chão", 
 	ranked: false,
 	description: "Você não sofre penalidades a testes de ataques por estar caído e oponentes adjacentes não ganham o bônus circunstancial para ataques corpo-a-corpo contra você."
 })
 
 _AllAdvantagesList.push({
-	id: 2067,
+	id: 4067,
 	name: "Maestria em Arremesso", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -548,7 +548,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2068,
+	id: 4068,
 	name: "Maestria em Perícia", 
 	ranked: false,
 	description: "Escolha uma perícia. Você pode fazer testes rotineiros com essa perícia mesmo sob pressão (veja <i>Testes Rotineiros</i> no <b>Básico</b>). Esta vantagem não permite você fazer testes rotineiros com perícias que normalmente não permitiriam. Você pode pegar esta vantagem várias vezes para perícias diferentes.",
@@ -557,14 +557,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2069,
+	id: 4069,
 	name: "Memória Eidética", 
 	ranked: false, 
 	description: "Você se lembra perfeitamente de tudo que já passou na vida. Você tem um bônus de +5 em testes para lembrar de eventos, incluindo testes de salvamento contra efeitos que alteram ou apagam memórias. Você também pode fazer testes de perícias Especialidade para responder perguntas e prover informações como se fosse treinado, significando que pode responder perguntas conhecimento difícil e obscuro mesmo sem graduação na perícia, dado a quantidade de trivialidades que você absorveu com tempo."
 })
 
 _AllAdvantagesList.push({
-	id: 2070,
+	id: 4070,
 	name: "Maneiro", 
 	ranked: false,
 	description: "Você tem um certo estilo e um método calmo para as suas ações que funciona em qualquer pessoa com menos de 20 anos de idade. Isto dá-lhe um bônus de +5 circunstâncias sobre uma perícias relacionada com a Presença quando rolar cheques (Engano, Intimidação, Persuasão, ou Perícia baseada em Prontidão) envolvendo adolescentes. Os adultos não 'percebem', e são assim imunes ao seu encanto da anca. Cada graduação nesta vantagem acrescenta uma perícia adicional relacionada com a Presença, e o bônus dado nunca pode dar a você um bônus de perícia total efetivo maior do que os limites de nível de poder da série.",
@@ -573,28 +573,28 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2071,
+	id: 4071,
 	name: "Mira Aprimorada", 
 	ranked: false,
 	description: "Você tem um olho ainda mais aguçado quando é questão de ataques à distância. Quando realizar uma ação padrão para mirar, você ganha o dobro do bônus normal: +10 para ataques corpo-a-corpo ou ataques à distância em alvos adjacentes, +5 para ataques à distância em grandes distâncias. Veja <i>Mirar</i> em <b>Ações e Manobras</b> para detalhes."
 })
 
 _AllAdvantagesList.push({
-	id: 2072,
+	id: 4072,
 	name: "Oponente Favorito", 
 	ranked: false,
 	description: "Você tem um oponente específico que estudou ou é especialmente efetivo contra. Pode ser um tipo de criatura (alienígenas, animais constructos, mortos-vivos, mutantes, etc.), uma profissão (soldados, policiais, Yakuza, etc.) ou qualquer outra categoria que o Mestre aprovar. Categorias muito amplas como 'humanos' ou 'vilões' não são permitidas. Você ganha bônus de +2 em testes de Enganação, Intimidação, Intuição e Percepção quando lidando com seu Oponente Favorito. Esse bônus não é limitado por nível de poder."
 })
 
 _AllAdvantagesList.push({
-	id: 2073,
+	id: 4073,
 	name: "Orientação", 
 	ranked: false,
 	description: "Você pode torcer ou aconselhar os aliados para a vitória. Quando você gasta um Ponto de Vitória e realiza uma ação livre para oferecer orientação, um aliado de sua escolha que pode se comunicar com você ganha uma única Vantagem de sua escolha até o final do seu próximo turno. Caso contrário, isso funciona como o benefício Feito Heroicos de um Ponto de Vitória."
 })
 
 _AllAdvantagesList.push({
-	id: 2074,
+	id: 4074,
 	name: "Parceiro", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -603,7 +603,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2075,
+	id: 4075,
 	name: "Prender Arma", 
 	ranked: false, 
 	description: ""
@@ -611,42 +611,42 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2076,
+	id: 4076,
 	name: "Prender Arma", 
 	ranked: false,
 	description: "Se tomar uma ação defensiva (veja Defender-se em <b>Ações e Manobras</b>) e se defender com sucesso de um ataque de uma arma corpo-a-corpo, você pode fazer a tentativa de desarmar automaticamente como uma reação. A tentativa de desarme é feita normalmente, incluindo o oponente ter a oportunidade de lhe desarmar."
 })
 
 _AllAdvantagesList.push({
-	id: 2077,
+	id: 4077,
 	name: "Quebrar Aprimorado", 
 	ranked: false,
 	description: "Você não tem penalidade em ataques para acertar um objeto segurado por outro personagem (veja Quebrar em <b>Ações e Manobras</b>)."
 })
 
 _AllAdvantagesList.push({
-	id: 2078,
+	id: 4078,
 	name: "Quebrar Arma", 
 	ranked: false,
 	description: "Se tomar uma ação defensiva (veja Defender-se em <b>Ações e Manobras</b>) e se defender com sucesso de um ataque de uma arma corpo-a-corpo, você pode fazer um ataque contra a arma imediatamente como uma reação. Isso requer um teste de ataque e causa dano normal na arma se atingir (veja Quebrar em <b>Ações e Manobras</b>)."
 })
 
 _AllAdvantagesList.push({
-	id: 2079,
+	id: 4079,
 	name: "Rastrear", 
 	ranked: false,
 	description: "Você pode usar a perícia Percepção para visualmente acompanhar rastros, como o efeito Sentido (Rastrear) (veja Poderes)."
 })
 
 _AllAdvantagesList.push({
-	id: 2080,
+	id: 4080,
 	name: "Redirecionar", 
 	ranked: false,
 	description: "Se conseguir enganar um oponente com sucesso (veja Trapacear na perícia Enganação), você pode redirecionar um ataque falho deste oponente contra você para outro alvo, como uma reação. O novo alvo deve estar adjacente a você, e dentro do alcance do ataque. O atacante faz uma nova rolagem de ataque com os mesmos modificadores da primeira contra o novo alvo."
 })
 
 _AllAdvantagesList.push({
-	id: 2081,
+	id: 4081,
 	name: "Retenção", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -666,14 +666,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2082,
+	id: 4082,
 	name: "Ritualista", 
 	ranked: false, 
 	description: "Você pode usar a perícia Especialidade: Magia para criar e lançar rituais mágicos (veja Rituais Mágicos ou Rituais Mágicos (Guia de Bugigangas)). Esta vantagem geralmente é um back-up ou fonte secundária de magia para alguns feiticeiros sobre-humanos e pode ser a única forma de magia disponível para alguns 'amadores'."
 })
 
 _AllAdvantagesList.push({
-	id: 2083,
+	id: 4083,
 	name: "Rolamento Defensivo", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -681,14 +681,14 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2084,
+	id: 4084,
 	name: "Saque Rápido", 
 	ranked: false,
 	description: "Você pode sacar sua arma do coldre ou da bainha como uma ação livre, em vez de uma ação de movimento."
 })
 
 _AllAdvantagesList.push({
-	id: 2085,
+	id: 4085,
 	name: "Segunda Chance", 
 	ranked: false, 
 	description: "Escolha um perigo específico, como cair, ser derrubado, ativar armadilhas, controle mental (ou outro efeito específico, como Dano com descritor de fogo) ou uma perícia com consequências falha. Se você falhar teste contra aquele perigo, pode fazer outro imediatamente e utilizar o melhor dos dois resultados. Você só tem uma segunda chance dado qualquer teste e o Mestre determina se o perigo ou perícia é um foco apropriado para esta vantagem. Você pode pegar esta vantagem várias vezes, cada uma para um perigo diferente.",
@@ -697,7 +697,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2086,
+	id: 4086,
 	name: "Sorte", 
 	ranked: true, 
 	totalRanks: 1, 
@@ -706,49 +706,49 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2087,
+	id: 4087,
 	name: "Sorte de Principiante", 
 	ranked: false,
 	description: "Gastando um ponto de Vitória, você ganha 5 pontos de graduação em uma perícia a sua escolha que tenha 4 graduações ou menos, incluindo perícias que você não possui graduação alguma, mesmo que não possam ser usadas destreinadas. Esses pontos temporários duram até o final da cena e concedem seus benefícios normais."
 })
 
 _AllAdvantagesList.push({
-	id: 2088,
+	id: 4088,
 	name: "Tolerância Maior", 
 	ranked: false, 
 	description: "Você tem um bônus de +5 para evitar ficar fatigado e testes para segurar seu ar, evitar danos de fome ou sede, evitar danos de ambientes frios e quentes e resistir sufocamento e afogamento. Veja Ameaças Ambientais para detalhes nesses testes."
 })
 
 _AllAdvantagesList.push({
-	id: 2089,
+	id: 4089,
 	name: "Tontear (Enganação)", 
 	ranked: false,
 	description: "Você pode fazer um teste de Enganação ou de Intimidação (escolha qual perícia ao comprar esta vantagem) para fazer com que seu oponente hesite em combate. Faça um teste de perícia como uma ação padrão contra o teste de salvamento do alvo (a mesma perícia, Intuição ou a defesa Vontade, o que tiver o bônus mais alto). Se você vencer, seu alvo fica tonto (capaz de realizar apenas uma ação padrão) até o fim da sua próxima rodada."
 })
 
 _AllAdvantagesList.push({
-	id: 2090,
+	id: 4090,
 	name: "Tontear (Intimidação)", 
 	ranked: false,
 	description: "Você pode fazer um teste de Enganação ou de Intimidação (escolha qual perícia ao comprar esta vantagem) para fazer com que seu oponente hesite em combate. Faça um teste de perícia como uma ação padrão contra o teste de salvamento do alvo (a mesma perícia, Intuição ou a defesa Vontade, o que tiver o bônus mais alto). Se você vencer, seu alvo fica tonto (capaz de realizar apenas uma ação padrão) até o fim da sua próxima rodada."
 })
 
 _AllAdvantagesList.push({
-	id: 2091,
+	id: 4091,
 	name: "Tomar Iniciativa", 
 	ranked: false,
 	description: "Você pode gastar um ponto de Vitória para ir automaticamente primeiro na ordem de iniciativa. Você só pode fazer isso no início do combate, onde fariam o teste de iniciativa. Se mais de um personagem usar essa vantagem, eles todos fazem testes de iniciativa e agem em ordem do seu resultado, seguido de todos outros que não possuem esta vantagem."
 })
 
 _AllAdvantagesList.push({
-	id: 2092,
+	id: 4092,
 	name: "Trabalho em Equipe", 
 	ranked: false,
 	description: "Você é eficaz em ajudar seus amigos. Quando você ajuda em testes em grupo (veja Testes em Grupo no O Básico) você tem um bônus de +5 no eu teste. Esse bônus também aplica-se a ação de Ajudar e Ataques em Time."
 })
 
 _AllAdvantagesList.push({
-	id: 2093,
+	id: 4093,
 	name: "Transe", 
 	ranked: false,
 	description: "Através do controle de sua respiração e de seu corpo, você consegue entrar em um transe profundo. Isso requer um minuto ininterrupto de meditação e uma CD 15 de um teste de Consciência. Enquanto em transe, você adiciona seu valor em Prontidão para seu Vigor para determinar quanto tempo consegue segurar seu ar e você usa o maior entre sua Fortitude ou Vontade para salvamentos contra sufocamento (veja Sufocamento)."
@@ -756,7 +756,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2094,
+	id: 4094,
 	name: "Tratamento Aprimorado", 
 	ranked: false,
 	description: "Quando você usa a perícia Tratamento para reviver um alvo, você pode fornecer benefícios adicionais. Para cada grau de sucesso em seu teste de Tratamento CD 15, você pode fazer um dos seguintes: ● Remover uma penalidade de -1 nos testes de resistência à Resistência devido a danos. <br> ● Remover uma das seguintes condições: cego, tonto, surdo, fadigado ou prejudicado. <br> ● Reduzir uma das seguintes condições: Desabilitado, Exausto ou Atordoado. A condição é reduzida a Prejudicado, Fatigado ou Tonto, respectivamente. <br> ● Restaurar uma graduação perdido para uma habilidade enfraquecida."
@@ -764,7 +764,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2095,
+	id: 4095,
 	name: "Treinamento Tático", 
 	ranked: false,
 	description: "Graças ao conhecimento tático e horas de treinamento ao lado de seus companheiros,vocês trabalham juntos no combate como uma máquina. Você pode executar as funções de Finta, Insinuar e Ludibriar da perícias de Enganação e a função Desmoralizar da perícia de Intimidação usando sua graduação de Perícia de Especialidade (Tática). Você só pode compartilhar este benefício com outros personagens (como enviar mensagens codificadas com Insinuar ou transferir os benefícios de uma   finta usando a vantagem de Armação) se esses personagens também tiverem a vantagem de treinamento tático e você tiver treinado com eles por pelo menos algumas horas."
@@ -772,7 +772,7 @@ _AllAdvantagesList.push({
 })
 
 _AllAdvantagesList.push({
-	id: 2096,
+	id: 4096,
 	name: "Zombar", 
 	ranked: false,
 	description: "Você pode desmoralizar seu oponente com Enganação em vez de Intimidação (veja Desmoralizar em Intimidação), menosprezando e minando a confiança em vez de ameaçar. Alvos resistem usando Enganação, Intuição ou Vontade."

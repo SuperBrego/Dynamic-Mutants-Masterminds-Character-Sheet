@@ -46,13 +46,30 @@ function UpdateRelatedTraits(abilityObject){
     }
   }
 
-  // Atualizar as Perícias
+  // Atualizar as Perícias Extras
   for(let i = 0; i < _MainCharacter.ExtraSkills.length; i++){
     
     if( _MainCharacter.ExtraSkills[i].keyTraitID == abilityObject.id ){ _MainCharacter.ExtraSkills[i].baseValue = ( parseInt(abilityObject.totalRanks()) ); }
 
   }
 
+  let currAttack;
+  for(let i = 0; i < _MainCharacter.Attacks.list.length; i++){
+    currAttack = _MainCharacter.Attacks.list[i];
+    
+    // Se for Destreza ou Luta, atualiza os valores bases do Ataque.
+    if(abilityObject.id == 1004 || abilityObject.id == 1005) {
+      if(currAttack.range == 1) currAttack.baseAttackBonus = parseInt( _MainCharacter.CloseRangeBonus() );
+      else if(currAttack.range == 2) currAttack.baseAttackBonus = parseInt( _MainCharacter.RangedRangeBonus() );
+    }
+
+    // Se for Força, atualiza todos baseados em Força.
+    if(abilityObject.id == 1001 && currAttack.isStrenghtBased ) 
+      currAttack.strengthRanks = abilityObject.totalRanks();
+      
+  }
+
+  UpdateAttacks();
   UpdateSkills();
 
 }
@@ -64,7 +81,7 @@ function UpdateOtherTraits(){
 
   //--------------- Carga -----------------
   // Pegar valor total de carga / 0 para Força
-  let currentSTR = _MainCharacter.Abilities[0].totalRanks();
+  let currentSTR = _MainCharacter.Abilities[0].totalRanks() + _MainCharacter.Abilities[0].enhancedCargo;
 
   // Encontrar na tabela de Graduações e Medidas o tamanho equivalente a graduação da carga.
   let currentSTRCargo = "";
@@ -85,7 +102,7 @@ function UpdateOtherTraits(){
 
   //------------ Iniciativa --------------
   let _totalInitiative = _MainCharacter.Abilities[2].baseRank;
-  let _advIniative = _MainCharacter.Advantages.find( element => element.id == 2061 );
+  let _advIniative = _MainCharacter.Advantages.list.find( element => element.id == 4061 );
   if( _advIniative ) { _totalInitiative += ( _advIniative.totalRanks * 4 ); }
   // let _advIniative = _PlayerEnhancedAdvantages.find( element => element.id == 2061 );
 
@@ -98,7 +115,7 @@ function UpdateOtherTraits(){
 // Retorna uma apresentação de texto mais agradável para os milhões
 function formatCargoText(number){
   
-  let index = (number.length-1) - 7;  
+  let index = (number.length - 1) - 7;  
 
   return ( GetFirstMillions(index, number).split( '' ).reverse().join( '' ) ) + " milhões t";
 

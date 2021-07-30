@@ -8,7 +8,7 @@ var _GenAdvantageID = 0;
 *******************************************/
 function AddAdvantage(item){
 
-  let _toBeAddedElement = _MainCharacter.Advantages.find( element => element.id == item );
+  let _toBeAddedElement = _MainCharacter.Advantages.list.find( element => element.id == item );
 
   if (_toBeAddedElement && !( _toBeAddedElement.hasOwnProperty('additionalDescription') ) ){ return; }
   
@@ -16,11 +16,11 @@ function AddAdvantage(item){
   _newAdv = Object.assign({}, _newAdv);
   
   if( _newAdv.hasOwnProperty('additionalDescription') ){
-      _newAdv.instanceID = _GenAdvantageID;
-      _GenAdvantageID++;
+      _newAdv.instanceID = _MainCharacter.Advantages.id;
+      _MainCharacter.Advantages.id++;
   }
 
-  _MainCharacter.Advantages.push(_newAdv);
+  _MainCharacter.Advantages.list.push(_newAdv);
   
   // Atualiza a lista de Vantagens pra remover as que já tem.
   $(popUpText).html(AvaliableAdvantagesList());
@@ -32,14 +32,14 @@ function AddAdvantage(item){
  * Aumenta a graduação da Vantagem
 **************************************/
 function increaseRank(id){
-  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id );
+  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
 
   UpdateAdvantages();
 }
 
 function increaseRank(id, advInstID){
-  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
+  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
 
   UpdateAdvantages();
@@ -49,14 +49,14 @@ function increaseRank(id, advInstID){
  * Reduz a graduação da Vantagem
 **************************************/
 function decreaseRank(id){
-  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id );
+  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
 
   UpdateAdvantages();
 }
 
 function decreaseRank(id, advInstID){
-  let desiredAdvantage = _MainCharacter.Advantages.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
+  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
 
   UpdateAdvantages();
@@ -88,7 +88,7 @@ function AvaliableAdvantagesList(){
 
     _currAdvantage = _AllAdvantagesList[i];
 
-    _isPlayerAquiredAdv = _MainCharacter.Advantages.find(element => element.id == _currAdvantage.id );
+    _isPlayerAquiredAdv = _MainCharacter.Advantages.list.find(element => element.id == _currAdvantage.id );
     
     // Pergunto se tenho a Vantagem em questão. Se tiver, mas não for de campo preenchível, continua o loop.  
     if( (_isPlayerAquiredAdv != undefined) && !_isPlayerAquiredAdv.hasOwnProperty('additionalDescription') ){ continue; }
@@ -121,9 +121,9 @@ function UpdateAdvantages(){
   
   let adv;
 
-  for (let i = 0; i < _MainCharacter.Advantages.length; i++) {
+  for (let i = 0; i < _MainCharacter.Advantages.list.length; i++) {
 
-    adv = _MainCharacter.Advantages[i];
+    adv = _MainCharacter.Advantages.list[i];
 
     tableContent += "<tr>";
     
@@ -237,8 +237,8 @@ function UpdateAdvantages(){
  * Atualiza o texto das Perícias Extras
 ******************************************/
 function updateAdvantageText(advTraitDesc, advID, advInstID){
-  let desiredadvIndex = _MainCharacter.Advantages.findIndex( _advantage => _advantage.id == advID && _advantage.instanceID == advInstID );
-  _MainCharacter.Advantages[desiredadvIndex].additionalDescription = advTraitDesc;
+  let desiredadvIndex = _MainCharacter.Advantages.list.findIndex( _advantage => _advantage.id == advID && _advantage.instanceID == advInstID );
+  _MainCharacter.Advantages.list[desiredadvIndex].additionalDescription = advTraitDesc;
 }
 
 /************************
@@ -296,7 +296,7 @@ function RemoveLanguage(id){
 
   _MainCharacter.Languages.rank = parseInt( Math.ceil( Math.log2(_MainCharacter.Languages.list.length) ) );
 
-  if( _LanguageRanks == 0) $('#LanguagesTitle').text("Idiomas");
+  if( _MainCharacter.Languages.rank == 0) $('#LanguagesTitle').text("Idiomas");
   else $('#LanguagesTitle').text("Idiomas (" + _MainCharacter.Languages.list.length + " Idiomas/ " + _MainCharacter.Languages.rank + " grads.)");
 
   UpdateAdvantagesSpent();
@@ -304,7 +304,7 @@ function RemoveLanguage(id){
 }
 
 function UpdateEquipment(){
-  let equipPoints = _MainCharacter.Advantages.find( element => element.id == 2048 );
+  let equipPoints = _MainCharacter.Advantages.list.find( element => element.id == 4048 );
 
   if(equipPoints == undefined) {
     $("#EquipamentTitle").text( "Equipamentos" );

@@ -37,9 +37,15 @@ const Character = {
 		Vehicles = Object.assign({}, tsVehicles)
 	],
 
-	ExtraSkills: [],
+	ExtraSkills: {
+		id: 0,
+		list: []
+	},
 
-	Advantages: [],
+	Advantages: {
+		id: 0,
+		list: []
+	},
 
 	EnhancedAdvantages: [],
 
@@ -51,12 +57,26 @@ const Character = {
 
 	Equipment: {
 		EquipmentPoints: function() {
-			let eqpAdv = Advantages.find( element => element.id == 2048 );
+			let eqpAdv = this.Advantages.find( element => element.id == 2048 );
 			if(eqpAdv) return (eqpAdv.totalRanks * 5);
 			else 0;
 		},
 		EquipmentID: 0,
 		EquipmentList: []
+	},
+
+	CloseRangeBonus: function() {
+		let totalCloseRank = this.Advantages.list.find( element => element.id == 2013 );
+		if(totalCloseRank != undefined)
+			return parseInt(this.Abilities[4].totalRanks() + parseInt( totalCloseRank.totalRanks) );
+		else return parseInt( this.Abilities[4].totalRanks() );
+	},
+
+	RangedRangeBonus: function() {
+		let totalRangedBonus = this.Advantages.list.find( element => element.id == 2011 );
+		if(totalRangedBonus != undefined)
+			return parseInt(this.Abilities[3].totalRanks() + parseInt(totalRangedBonus.totalRanks) );
+		else return parseInt(this.Abilities[3].totalRanks());
 	},
 
 	Attacks: {
@@ -65,91 +85,60 @@ const Character = {
 		list: [
 			{
 				id: 0, 
+				effectID: 5012, 
 				name: "Desarmado", 
-				effectID: 0, 
-				rank: 0, 
+				rank: 0,
 				range: 1, 
-				isDamage: true, 
+				isStrenghtBased: true,
+				strengthRanks: 0,
 				resistance: "Resistência", 
-				areaID: -1, 
+				area: {
+					isArea: false,
+					areaRank: 0
+				},
 				descriptors: "Contuso", 
 				crit: 20, 
 				enhancedRanks: 0,
-				attackBonus: function() {
-
-					if(this.range == 3 || areaID > -1) {return -1;}
-					let sum = 0;
-					switch(this.range){
-						case 1: 
-							sum += this.Fighting.totalRanks();
-							break;
-						case 2:
-							sum += this.Dexterity.totalRanks();
-							break;
-						default: break;
-					}
-					sum += this.skillBonus;
-					return parseInt(sum);
-				},
+				baseAttackBonus: 0,
+				skillBonus: 0,
 			},
 			{
 				id: 1, 
+				effectID: -1, 
 				name: "Agarrar", 
-				effectID: 0, 
 				rank: 0, 
 				range: 1, 
-				isDamage: false, 
+				isStrenghtBased: true,
+				strengthRanks: 0,
 				resistance: "Esquiva ou Força/Acrobacias ou Atletismo", 
-				areaID: -1, 
+				area: {
+					isArea: false,
+					areaRank: 0
+				},
 				crit: 20, 
 				enhancedRanks: 0,
-				attackBonus: function() {
-
-					if(this.range == 3 || areaID > -1) {return -1;}
-
-					let sum = 0;
-					switch(this.range){
-						case 1: 
-							sum += this.Fighting.totalRanks();
-							break;
-						case 2:
-							sum += this.Dexterity.totalRanks();
-							break;
-						default: break;
-					}
-					sum += this.skillBonus;
-					return parseInt(sum);
-
-				},
+				baseAttackBonus: 0,
+				skillBonus: 0,
 			},
 			{
 				id: 2, 
+				effectID: 5012, 
 				name: "Arremessar", 
-				rank: 0, 
+				rank: 0,
 				range: 2, 
-				isDamage: true, 
+				isStrenghtBased: true,
+				strengthRanks: 0,
 				resistance: "Resistência", 
-				areaID: -1, 
+				area: {
+					isArea: false,
+					areaRank: 0
+				},
 				descriptors: "Contuso", 
 				crit: 20, 
 				enhancedRanks: 0,
-				attackBonus: function() {
-
-					if(this.range == 3 || areaID > -1) {return -1;}
-					let sum = 0;
-					switch(this.range){
-						case 1: 
-							sum += this.Fighting.totalRanks();
-							break;
-						case 2:
-							sum += this.Dexterity.totalRanks();
-							break;
-						default: break;
-					}
-					sum += this.skillBonus;
-					return parseInt(sum);
-				},
-			}
+				baseAttackBonus: 0,
+				skillBonus: 0,
+			},
 		]
 	},
 
@@ -181,8 +170,8 @@ const Character = {
 			sum += this.Skills[i].baseRank;
 		}
 
-		for (var i = 0; i < this.ExtraSkills.length; i++) {
-			sum += this.ExtraSkills[i].baseRank;
+		for (var i = 0; i < this.ExtraSkills.list.length; i++) {
+			sum += this.ExtraSkills.list[i].baseRank;
 		}
 
 		return sum;
@@ -210,8 +199,8 @@ const Character = {
 			sum += this.Skills[i].pointsSpent();
 		}
 
-		for (var i = 0; i < this.ExtraSkills.length; i++) {
-			sum += this.ExtraSkills[i].pointsSpent();
+		for (var i = 0; i < this.ExtraSkills.list.length; i++) {
+			sum += this.ExtraSkills.list[i].pointsSpent();
 		}
 		
 		return parseFloat(sum);
@@ -234,7 +223,7 @@ const Character = {
 
 	totalPowersSpent: function() { return 0; },
 
-	get totalSpent(){
+	totalSpent: function() {
 		return parseFloat(parseInt(this.totalAbilitiesSpent() ) + parseFloat(this.totalSkillsSpent()) + parseInt(this.totalDefensesSpent()) + parseInt(this.totalAdvantagesSpent()));
 	}
 }

@@ -18,9 +18,9 @@
     <button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')">Habilidades e Defesas</button>
     <button class="tablink" onclick="openPage('Pericias', this, 'darkgoldenrod')">Perícias</button>
     <button class="tablink" onclick="openPage('Vantagens', this, 'aquamarine')">Vantagens</button>
-    <button class="tablink" onclick="openPage('Poderes', this, 'orange')">Poderes</button>
+    <button class="tablink" onclick="openPage('Poderes', this, 'orange')" id="defaultOpen">Poderes</button>
     <button class="tablink" onclick="openPage('Equipamentos', this, 'limegreen')">Equipamentos</button>
-    <button class="tablink" onclick="openPage('Ofensiva', this, 'red')" id="defaultOpen">Ofensiva</button>
+    <button class="tablink" onclick="openPage('Ofensiva', this, 'red')">Ofensiva</button>
     <button class="tablink" onclick="openPage('Complicações', this, 'DarkOliveGreen')">Complicações</button>
     <button class="tablink" onclick="openPage('Pessoal', this, 'lightblue')">Pessoal</button>
   
@@ -89,7 +89,7 @@
         </div>
         <!-- Fim Ability-Item 1 -->
         <!-- Ability-Item 2 -->
-        <div class="Ability-Item4">
+        <div class="Ability-Item2">
           <table>
             <tr> <td colspan="8" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
   
@@ -186,16 +186,25 @@
 
       <div class="SkillGrid-container">
         <!-- Onde é Renderizado as Perícias base. -->
-        <div class="Skill-Item" id="BaseSkillList"> </div>
+        <div class="Skill-Item"> 
+          <table id="BaseSkillList"> 
+            <tr> 
+              <td colspan='4' class='SectionTitle' style='background-color: darkgoldenrod;' id='SkillsTitle'>Perícias</td> 
+            </tr>
+          </table>
+        </div>
         <div class="Skill-Item">
           <table>
             <tr>
-              <td class='' id="ExtraSkillsTitle">Perícias Adicionais</td>
+              <td id="ExtraSkillsTitle">Perícias Adicionais</td>
               <td class='AddTraitButtons'> <button name="Adicionar Perícia" onclick="showPopUp(3)">Adicionar Perícia</button>  </td> 
             </tr>
           </table>
+          
           <!-- Onde é renderizado a lista de Perícias adicionais -->
-          <div id="AdditionalSkillsList"> </div>
+          <div> 
+            <table id="AdditionalSkillsList"></table>
+          </div>
         </div>
 
       </div>
@@ -238,8 +247,14 @@
     <!-- --------------------------------------------------------------------------- -->
     <!-- Quarta Aba -->
     <div id="Poderes" class="tabcontent">
-      Poderes
-      <p>Get in touch, or swing by for a cup of coffee.</p>
+      <div id='PowerGrid'>
+        <div id='PowerHeader'>
+          <div class='SectionTitle'><h1>Poderes</h1></div>
+          <div class="AddTraitButtons"> <button id="AddPowerButton" onclick='showPopUp(5)'>Adicionar Poder</button> </div>
+        </div>
+        <div id='LeftPowerCollum'> </div>
+        <div id='RightPowerCollum'> </div>
+      </div>
     </div>
   
     <!-- --------------------------------------------------------------------------- -->
@@ -261,7 +276,17 @@
     <!-- --------------------------------------------------------------------------- -->
     <!-- Sexta Aba -->
     <div id="Ofensiva" class="tabcontent">
-      <div id="OffensiveList"></div>
+      <table id="OffensiveList">
+        <tr> <th class='SectionTitle' colspan="6">Ofensiva</th> </tr>
+        <tr>
+          <td class='OffensiveHeaderCell'>Nome</td>
+          <td class='OffensiveHeaderCell'>Bônus</td>
+          <td class='OffensiveHeaderCell'>Efeito</td>
+          <td class='OffensiveHeaderCell'>Alcance</td>
+          <td class='OffensiveHeaderCell'>Salvamento</td>
+        </tr>
+
+      </table>
     </div>
   
     <!-- --------------------------------------------------------------------------- -->
@@ -277,7 +302,9 @@
           </td>
         </tr>
       </table>
-      <div id="ComplicationListTable"></div>
+
+      <table id="ComplicationListTable"></table>
+
     </div>
     <!-- Fim da Aba Complicações ------------------------------------------------------>
   
@@ -351,19 +378,20 @@
   <script src="Scripting\Databases\DefensesData.js"> </script>
   <script src="Scripting\Databases\SkillsData.js"> </script>
   <script src="Scripting\Databases\AdvantagesData.js"> </script>
-  <script src="Scripting\Databases\EffectsData.js"> </script>
+  <script src="Scripting\Databases\Powers\EffectsData.js"> </script>
+  <script src="Scripting\Databases\Powers\Modifiers.js"> </script>
   <script src="Scripting\Databases\ComplicationsData.js"> </script>
   <script src="Scripting\Databases\CharacterTraits.js"> </script>
   <script src="Scripting\Databases\Character.js"> </script>
   <script src="Scripting\Databases\RanksMeasures.js"> </script>
   <!-- Traits Functions -->
-  <script src="Scripting\Traits_Functions\Personal.js"> </script>
-  <script src="Scripting\Traits_Functions\Complications.js"> </script>
-  <script src="Scripting\Traits_Functions\Offensive.js"> </script>
-  <script src="Scripting\Traits_Functions\Advantages.js"> </script>
-  <script src="Scripting\Traits_Functions\Skills.js"> </script>
-  <script src="Scripting\Traits_Functions\Defenses.js"> </script>
-  <script src="Scripting\Traits_Functions\Abilities.js"> </script>
+  <script src="Scripting\TraitsFunctions\Personal.js"> </script>
+  <script src="Scripting\TraitsFunctions\Complications.js"> </script>
+  <script src="Scripting\TraitsFunctions\Offensive.js"> </script>
+  <script src="Scripting\TraitsFunctions\Advantages.js"> </script>
+  <script src="Scripting\TraitsFunctions\Skills.js"> </script>
+  <script src="Scripting\TraitsFunctions\Defenses.js"> </script>
+  <script src="Scripting\TraitsFunctions\Abilities.js"> </script>
   <!-- General Functions-->
   <script src="Scripting\PopUpFunctions.js"> </script>
   <script src="Scripting\BehaviourFunctions.js"> </script>

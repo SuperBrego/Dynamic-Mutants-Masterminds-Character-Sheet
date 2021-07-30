@@ -36,7 +36,7 @@ function UpdateDefenses(){
   
   // Perguntar Proteção Primeiro.
 
-  let _defensiveRoll = _MainCharacter.Advantages.find( element => element.id == 2083 );
+  let _defensiveRoll = _MainCharacter.Advantages.list.find( element => element.id == 4083 );
   if( _defensiveRoll ) {
     _totalToughness = (_defensiveRoll.totalRanks + _totalToughness) + "/" + _totalToughness + "* (Vulnerável)";
   }

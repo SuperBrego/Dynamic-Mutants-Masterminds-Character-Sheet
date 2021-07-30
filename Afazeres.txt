@@ -1,21 +1,3 @@
----------------------------------
-
-obj.name = "Simon";
-var name = obj.name;
-
-E
-
-obj["name"] = "Simon";
-var name = obj["name"];
-
-São iguais. Então não preciso ficar "_TudoQueTenho[0] sendo habilidade"
-Posso por
-
-"_Traits["Habilidades"]"
-
-(Acho que meu formato ta diferente)
-
-------------------------------------
 
 for (var i = 0; i < a.length; i++) {
     // Faça algo com a[i]
@@ -36,8 +18,6 @@ for (var i = 0, item; item = a[i++];) {
     // Faça algo com item
 }
 
-------------------------------------
-
 Uma outra forma de iterar é usar o laço for...in. Note que se alguém adicionou novas propriedades ao Array.prototype, elas também podem ser iteradas usando este laço:
 
 for (var i in a) {
@@ -54,26 +34,6 @@ Retorna uma string com o toString()de cada elemento separado por vírgulas.
 
 ------------------------------------
 
-Meu Slice tá cortando ruim as perícias.
-
-
-------------------------------------
-
-Pode parecer um pouco bobo, mas no corpo da função você tem acesso a uma variável adicional chamada arguments, que é um objeto parecido com um vetor que contém todos os valores passados para a função. Vamos rescrever a função add para tomarmos tantos valores quanto quisermos:
-
-function add() {
-    var sum = 0;
-    for (var i = 0, j = arguments.length; i < j; i++) {
-        sum += arguments[i];
-    }
-    return sum;
-}
-
-> add(2, 3, 4, 5)
-14
-
-------------------------------------
-
 https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/A_re-introduction_to_JavaScript#objetos_personalizados
 
 -------------------------------------
@@ -83,20 +43,6 @@ Modificador Limitado a Dano e Limitado a Carga existiram.
 
 -------------------------------------
 
-function personFullName() {
-    return this.first + ' ' + this.last;
-}
-function personFullNameReversed() {
-    return this.last + ', ' + this.first;
-}
-function Person(first, last) {
-    this.first = first;
-    this.last = last;
-    this.fullName = personFullName;
-    this.fullNameReversed = personFullNameReversed;
-}
-
---------------------------------------
 
 function Person(first, last) {
     this.first = first;

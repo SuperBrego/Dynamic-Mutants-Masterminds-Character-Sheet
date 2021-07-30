@@ -1,5 +1,4 @@
-/*
-********************************************************
+/*********************************************************
 ** Todas as Vantagens
 ** Nomenclatura: 
 ** 1 - Habilidades
@@ -9,9 +8,9 @@
 ** 5 - Poderes
 ** 6 - Equipamentos
 ** 8 - Complicações
-** 
-********************************************************
-*/
+** 10 - Extras
+** 11 - Falhas
+*********************************************************/
 
 const taStrength = {
   id: 1001,
@@ -19,6 +18,8 @@ const taStrength = {
   baseRank: 0, 
   enhancedValue: 0,
   baseCost: 2,
+  enhancedCargo: 0,
+  enhancedDamage: 0,
   pointsSpent: function() { return (this.baseRank * this.baseCost);},
   totalRanks: function () { return (this.baseRank + this.enhancedValue)},
   description: "A Força mede o poder muscular puro, e a habilidade de usá-lo. O seu modificador de Força se aplica a:<br>"
