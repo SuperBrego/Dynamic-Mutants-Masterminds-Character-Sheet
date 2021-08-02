@@ -31,6 +31,9 @@ function ShowDescription(entryID, type){
     case 4:
       content = _AllAdvantagesList.find( element => element.id == entryID ).description;
       break;
+    case 5:
+      content = _EffectsList.find( element => element.id == entryID ).description;
+      break;
     // Complicações
     case 8: 
       content = _DefaultComplicationList.find( element => element.id == entryID ).description;

@@ -35,7 +35,9 @@ function showPopUp(type){
       _PopUpContext = AvaliableAdvantagesList();
       break;
     // Poderes
-    case 5: break;
+    case 5: 
+      _PopUpContext = AvaliableEffectList();
+      break;
     // Equipamentos
     case 6: break;
     // Complicações

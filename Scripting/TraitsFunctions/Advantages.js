@@ -74,6 +74,9 @@ function UpdateAdvantagesSpent() {
 
 /******************************************************************
  * Constrói o Popup de Vantagens, com todas as vantagens
+ * Posso remodelar a forma que é feita a lista de Vantagens.
+  * Quer dizer, a forma de remover as Vantagens: ao adicionar a vantagem, a função que adiciona faz as perguntas lá e então remove da lista. 
+  * Assim não fica saltando e quando reabrir, ele já tem o IF de perguntar se já tem na lista de vantagens do jogador.
 ******************************************************************/
 function AvaliableAdvantagesList(){
   let content = "";

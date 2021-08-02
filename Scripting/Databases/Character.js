@@ -164,6 +164,11 @@ const Character = {
 		images: []
 	},
 
+	Powers: {
+		id: 0,
+		list: []
+	},
+
 	totalSkillsRanks: function (){ 
 		let sum = 0;
 		for (var i = 0; i < this.Skills.length; i++) {

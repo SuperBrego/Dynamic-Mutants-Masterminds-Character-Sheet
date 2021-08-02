@@ -58,7 +58,7 @@ function RenderOffensiveAttacks(){
         _cell = document.createElement('td');
         _cell.className = "OffensiveItemCell";        
 
-        effectName = effectsList.find( element => element.id == _Attacks[i].effectID );
+        effectName = _EffectsList.find( element => element.id == _Attacks[i].effectID );
         // Se não achou ID do efeito, põe só grad. Se não, põe nome do efeito.
         if(effectName == undefined) _cellText = "Grad. ";
         else _cellText = effectName.name + " ";              
