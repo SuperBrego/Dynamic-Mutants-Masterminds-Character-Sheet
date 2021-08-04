@@ -3,7 +3,7 @@ function AvaliableEffectList(){
     let content = "";
     content += "<div id='BiLateralListPopUp'>";
     content += "<div id='BiLateralListItem1'>";
-    content += "<table>";
+    content += "<table class='PopUpItensTable'>";
 
     for (let i = 0; i < _EffectsList.length; i++) {
 
@@ -27,7 +27,7 @@ function AvaliableEffectList(){
 
 
 function AddPower(effectID){
-    let _effect = _EffectsList.Advantages.list.find( element => element.id == effectID );
+    let _effect = _EffectsList.find( element => element.id == effectID );
 
     // Cria-se um novo poder.
     let _power = Object.assign({}, powerDefault);
@@ -37,7 +37,7 @@ function AddPower(effectID){
 
     _MainCharacter.Powers.list.push(_power);
 
-    // Append Power.
+    
 
 }
 

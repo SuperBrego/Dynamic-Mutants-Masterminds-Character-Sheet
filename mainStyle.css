@@ -315,7 +315,6 @@ input[type=number] {
   max-height: 500px;
   border: 2px solid black;
   border-radius: 10px;;
-  padding: 10px 10px;
   overflow-y: auto;
 }
 
@@ -702,10 +701,17 @@ body, html {
   margin: 5px;
 }
 
-.close:hover,
-.close:focus {
+.close:hover, .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 
+
+/******************************
+* Tabela de Conteúdo 
+******************************/
+.PopUpItensTable {
+  width: 100%;
+  border-spacing: 0;
+}

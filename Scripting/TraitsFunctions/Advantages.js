@@ -82,7 +82,7 @@ function AvaliableAdvantagesList(){
   let content = "";
   content += "<div id='BiLateralListPopUp'>";
   content += "<div id='BiLateralListItem1'>";
-  content += "<table>";
+  content += "<table class='PopUpItensTable'>";
 
   let _isPlayerAquiredAdv;
   let _currAdvantage;
