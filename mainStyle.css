@@ -347,7 +347,6 @@ input[type=number] {
 #PowerGrid {
   display: grid;
   width: 100%;
-  grid-template-rows: auto auto;
   grid-template-columns: auto auto;
   grid-template-areas:
   'header header'
@@ -364,18 +363,74 @@ input[type=number] {
 
 #PowerHeader{ 
   grid-area: header; 
-  width: 100%;
 }
 
 #LeftPowerCollum{ 
   grid-area: leftCol; 
-}
-#RightPowerCollum{ 
-  grid-area: rightCol; 
+  min-width: 50%;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
-.PowerTable{
+#RightPowerCollum{ 
+  grid-area: rightCol; 
+  min-width: 50%;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+/* Tabela de Poder */
+.PowerTable {
   width: 100%;
+  float: left;
+  margin-top: 10px;
+}
+
+.PowerTable table{
+  min-width: 800px;
+  border: 5px solid black;
+  border-radius: 10px;
+}
+
+.PowerTable td, .PowerTable th {
+  padding: 5px;
+  border-radius: 10px;
+  max-width: 50%;
+
+}
+
+.PowerTable input[type=text] {
+    padding: 3px;
+		border-radius: 10px;
+		background-color: lightgrey;
+		width: 100%;
+}
+
+.PowerTable textarea{
+    resize: none;
+		overflow-y: auto;
+		min-height: 120px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 3px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.AddPowerTrait {
+  font-size: 18px;
+  padding: 8px;
+  background-color: lightgrey;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.AddPowerTrait:hover {
+  background-color: white;
+  color: black;
+}
+
+.PowerName {
+  font-size: 18px;
 }
 
 /********************************

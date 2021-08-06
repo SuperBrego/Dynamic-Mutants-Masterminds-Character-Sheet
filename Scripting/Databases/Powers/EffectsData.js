@@ -15,15 +15,50 @@
 
 const powerDefault = {
 	name: "",
-	instanceID: 0,
+	id: 0,
 	effectID: -1,
-	baseCost: 0,
+	baseCost: 1,
 	baseRanks: 1,
 	enhancedRanks: 0,
+	
+	type: "",
+	action: -1,
+	range: -1,
+	duration: -1,
+	get actionToString(){
+		switch(this.action){
+			case 0: return "Nenhuma";
+			case 1: return "Padrão";
+			case 2: return "Movimento";
+			case 3: return "Livre";
+			case 4: return "Reação";
+			default: return "Nenhuma";
+		}
+	},
+	get rangeToString () {
+		switch(this.range){
+			case 1: return "Perto";
+			case 2: return "A Distância";
+			case 3: return "Percepção";
+			default: return "Perto";
+		}
+	},
+	get durationToString(){
+		switch(this.duration){
+			default: return "Permanente";
+			case 0: return "Permanente";
+			case 1: return "Instantâneo";
+			case 2: return "Concentração";
+			case 3: return "Sustentado";
+			case 4: return "Contínuo";
+		}
+	},
+
 	extrasModifiers: [],
 	flawsModifiers: [],
 	flatModifiers: [],
-	totalExtraPerRank: function () {
+
+	totalExtraPerRank: function() {
 		let sum = 0;
 
 		for(let i = 0; i < this.extrasModifiers.length; i++){
@@ -32,7 +67,7 @@ const powerDefault = {
 
 		return parseInt(sum);
 	},
-	totalFlawsRank: function () {
+	totalFlawsPerRank: function () {
 		let sum = 0;
 
 		for(let i = 0; i < this.flawsModifiers.length; i++){
@@ -51,36 +86,39 @@ const powerDefault = {
 		return parseInt(sum);
 	},
 	/**
-	* SE ( BASE + EXTRAS - FALHAS) > 0; 
-	* 	(BASE + EXTRAS - FALHAS) * GRAD + FIXOS;
-	* ELSE 
-	*	(GRAD / (2 + (-1* (BASE + EXTRAS - FALHAS)) ) ) + FIXOS 
+	* SE ( BASE + EXTRAS - FALHAS) > 0; ENTÃO (BASE + EXTRAS - FALHAS) * GRAD + FIXOS;
+	* SE NÃO (GRAD / (2 + (-1* (BASE + EXTRAS - FALHAS)) ) ) + FIXOS 
 	*/
 	totalPointSpent: function() {
-		let costPerRank = (this.baseCost + this.totalExtraPerRank() - this.totalFlawsRank() );
-		if( costPerRank > 0 ){
-			return parseInt( costPerRank * this.baseRanks + this.totalFlat() );
-		}
-		else{
-			return parseInt( (this.baseRanks / (2 + (-1 * costPerRank ) ) ) + this.totalFlat() );
-		}
+		let costPerRank = (this.baseCost + this.totalExtraPerRank() - this.totalFlawsPerRank() );
+		if( costPerRank > 0 ){ return parseInt( costPerRank * this.baseRanks + this.totalFlat() ); }
+		else{ return parseInt( (this.baseRanks / (2 + (-1 * costPerRank ) ) ) + this.totalFlat() ); }
 	},
+
+	element: 0,
 }
 
 const _EffectsList = [
 		{
 			id: 5042,
 			name: "- Arranjo -",
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "Arranjo é um conjunto de poderes, qual só pode ser usado um por vez."
 		},
 		{
 			id: 5043,
 			name: "- Dispositivo -",
+			action: 3, // 3- Livre
+			duration: 0, // 0- Permanente
 			description: "Um dispositivo tem um ou mais efeitos e pode ser equipado e desequipado."
 		},
 		{
 			id: 5044,
 			name: "- Defesa Impenetrável -",
+			type: 0, // 0- Geral
+			action: 3, // 3- Livre
+			duration: 4, // 4- Contínuo.
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -95,16 +133,24 @@ const _EffectsList = [
 		{
 			id: 5045,
 			name: "- Efeitos Ligados -",
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "Selecione este poder para adicionar múltiplos efeitos que são todos ativados ao mesmo tempo."
 		},
 		{
 			id: 5046,
 			name: "- Múltiplos Efeitos - ",
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "Selecione este poder para adicionar vários efeitos a um único poder."
 		},
 		{
 			id: 5001,
 			name: "Aflição",
+			type: "Ataque",
+			range: 1, // 1- Perto
+			action: 1, // 1- Padrão
+			duration: 1, // 1- Instantâneo
 			baseCost: 1,
 			conditions: [
 				["Impedido", "Fadigado", "Prejudicado", "Tonto", "Transe", "Vulnerável"],
@@ -137,6 +183,10 @@ const _EffectsList = [
 			id: 5002,
 			name: "Alongamento",
 			baseCost: 1,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			grabBonus: 1,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -154,6 +204,10 @@ const _EffectsList = [
 		{
 			id: 5003,
 			name: "Ambiente",
+			type: "Controle",
+			range: 4, // 4- Graduação
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			baseCost: 1,
 			powerOptions: [
 				"Calor",
@@ -187,6 +241,10 @@ const _EffectsList = [
 		{
 			id: 5004,
 			name: "Camuflagem",
+			type: "Sensorial",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			baseCost: 2,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -204,6 +262,10 @@ const _EffectsList = [
 		{
 			id: 5005,
 			name: "Característica",
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			baseCost: 1,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -231,6 +293,10 @@ const _EffectsList = [
 		{
 			id: 5006,
 			name: "Característica Aumentada",
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: Conforme Característica.</li>"
@@ -247,6 +313,10 @@ const _EffectsList = [
 		{
 			id: 5007,
 			name: "Compreender",
+			type: "Sensorial",
+			range: 0, // 0- Pessoal
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			baseCost: 2,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -275,6 +345,10 @@ const _EffectsList = [
 		{
 			id: 5008,
 			name: "Comunicação",
+			type:"Sensorial",
+			range: 4, // 4- Graduação
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			baseCost: 4,
 			maxRank: 5,
 			valuePerRank: [
@@ -338,6 +412,10 @@ const _EffectsList = [
 		{
 			id: 5009,
 			name: "Controle de Sorte",
+			type: "Controle",
+			range: 3, // 3- Percepção
+			action: 4, // 4- Reação
+			duration: 1, // 1- Instantânea
 			baseCost: 3,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -361,6 +439,10 @@ const _EffectsList = [
 			id: 5010,
 			name: "Crescimento",
 			baseCost: 2,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -384,6 +466,10 @@ const _EffectsList = [
 			id: 5011,
 			name: "Criar",
 			baseCost: 2,
+			type: "Controle",
+			range: 2, // 2- A Distância
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -416,6 +502,10 @@ const _EffectsList = [
 			id: 5012,
 			name: "Cura",
 			baseCost: 2,
+			type: "Geral",
+			range: 1, // 1- Perto
+			action: 1, // 1- Padrão
+			duration: 1, // 1- Instantâneo
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -434,7 +524,11 @@ const _EffectsList = [
 		{
 			id: 5013,
 			name: "Dano",
+			type: "Ataque",
 			baseCost: 1,
+			range: 1, // 1- Perto
+			action: 1, // 1- Padrão
+			duration: 1, // 1- Instantâneo
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -543,6 +637,10 @@ const _EffectsList = [
 			id: 5014,
 			name: "Deflexão",
 			baseCost: 1,
+			type: "Defesa",
+			range: 2, // 2- A Distância
+			action: 1, // 1- Padrão
+			duration: 1, // 1- Instantâneo
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -563,6 +661,10 @@ const _EffectsList = [
 			id: 5015,
 			name: "Encolhimento",
 			baseCost: 2,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -586,6 +688,10 @@ const _EffectsList = [
 			id: 5016,
 			name: "Enfraquecer",
 			baseCost: 1,
+			type: "Ataque",
+			range: 1, // 1- Perto
+			action: 1, // 1- Padrão
+			duration: 1, // 1- Instantâneo
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -620,6 +726,10 @@ const _EffectsList = [
 			id: 5017,
 			name: "Escavação",
 			baseCost: 1,
+			type: "Movimento",
+			range: 0, // 0- Pesssoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -638,6 +748,11 @@ const _EffectsList = [
 			id: 5018,
 			name: "Ilusão",
 			baseCost: 1,
+			maxBaseCost: 5,
+			type: "Sensorial",
+			range: 3, // 3- Percepção
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1-5 por graduação.</li>"
@@ -696,6 +811,10 @@ const _EffectsList = [
 			id: 5019,
 			name: "Imortalidade",
 			baseCost: 2,
+			type: "Defesa",
+			range: 0, // 0- Pessoal.
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -797,6 +916,10 @@ const _EffectsList = [
 		{
 			id: 5020,
 			name: "Imunidade",
+			type: "Defesa",
+			range: 0, // 0- Pessoal.
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -836,6 +959,10 @@ const _EffectsList = [
 			name: "Intangibilidade",
 			baseCost: 5,
 			maxRank: 4,
+			type: "Geral",
+			range: 0, // 0- Pessoal.
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 5 por graduação.</li>"
@@ -875,6 +1002,10 @@ const _EffectsList = [
 			id: 5022,
 			name: "Invocar",
 			baseCost: 2,
+			type: "Controle",
+			range: 1, // 1- Perto
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -908,6 +1039,10 @@ const _EffectsList = [
 			id: 5023,
 			name: "Leitura Mental",
 			baseCost: 2,
+			type: "Sensorial",
+			range: 3, // 3- Percepção
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -958,6 +1093,10 @@ const _EffectsList = [
 			id: 5024,
 			name: "Membros Extras",
 			baseCost: 1,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -978,6 +1117,10 @@ const _EffectsList = [
 			name: "Morfar",
 			baseCost: 5,
 			maxRank: 4,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 5 por graduação</li>"
@@ -997,6 +1140,10 @@ const _EffectsList = [
 			id: 5026,
 			name: "Mover Objetos",
 			baseCost: 2,
+			type: "Controle",
+			range: 2, // 2- A Distância
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação</li>"
@@ -1016,6 +1163,10 @@ const _EffectsList = [
 			id: 5027,
 			name: "Movimento",
 			baseCost: 2,
+			type: "Movimento",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -1091,6 +1242,10 @@ const _EffectsList = [
 			id: 5029,
 			name: "Natação",
 			baseCost: 1,
+			type: "Movimento",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1108,6 +1263,10 @@ const _EffectsList = [
 			id: 5030,
 			name: "Nulificar",
 			baseCost: 1,
+			type: "Controle",
+			range: 2, // 2- A Distância
+			action: 1, // 1-Padrão
+			duration: 1, // 1- Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1126,6 +1285,10 @@ const _EffectsList = [
 			id: 5031,
 			name: "Proteção",
 			baseCost: 1,
+			type: "Defesa",
+			range: 0, // 0- Pessoal
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1141,6 +1304,10 @@ const _EffectsList = [
 			id: 5032,
 			name: "Rapidez",
 			baseCost: 1,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1158,6 +1325,10 @@ const _EffectsList = [
 			id: 5033,
 			name: "Regeneração",
 			baseCost: 1,
+			type: "Defesa",
+			range: 0, // 0- Pessoal
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1227,6 +1398,10 @@ const _EffectsList = [
 			id: 5034,
 			name: "Salto",
 			baseCost: 1,
+			type: "Movimento",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1243,6 +1418,10 @@ const _EffectsList = [
 		{
 			id: 5035,
 			name: "Sentido Remoto",
+			type: "Sensorial",
+			range: 4, // 4- Graduação
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1-5 por graduação.</li>"
@@ -1261,6 +1440,10 @@ const _EffectsList = [
 			id: 5036,
 			name: "Sentidos",
 			baseCost: 1,
+			type: "Sensorial",
+			range: 0, // 0- Pessoal
+			action: 0, // 0- Nenhuma
+			duration: 0, // 0- Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1423,6 +1606,10 @@ const _EffectsList = [
 			id: 5037,
 			name: "Teleporte",
 			baseCost: 2,
+			type: "Movimento",
+			range: 4, // 4- Graduação
+			action: 2, // 2- Movimento
+			duration: 1, // 1- Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -1440,6 +1627,10 @@ const _EffectsList = [
 		{
 			id: 5038,
 			name: "Transformar",
+			type: "Controle",
+			range: 1, // 1- Perto
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2-5 por graduação.</li>"
@@ -1494,6 +1685,10 @@ const _EffectsList = [
 			id: 5039,
 			name: "Variável",
 			baseCost: 7,
+			type: "Geral",
+			range: 0, // 0- Pessoal
+			action: 1, // 1- Padrão
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 7 por graduação.</li>"
@@ -1513,6 +1708,10 @@ const _EffectsList = [
 			id: 5040,
 			name: "Velocidade",
 			baseCost: 1,
+			type: "Movimento",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1528,6 +1727,10 @@ const _EffectsList = [
 			id: 5041,
 			name: "Voo",
 			baseCost: 2,
+			type: "Movimento",
+			range: 0, // 0- Pessoal
+			action: 3, // 3- Livre
+			duration: 3, // 3- Sustentado
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -1540,59 +1743,3 @@ const _EffectsList = [
 			exclusiveModifiers: [],
 		},
 	];
-
-/**
- * Modelos de Poder.
- */
-
-function defaultPowersElements(power){
-
-	let tableContent = "";
-	tableContent += "<table border='1'>"
-	+ "<tr>"
-	+ "<th colspan='3'>"
-	+ "<input type='text' name=' id='titleID' placeholder='Nome do poder...'>"
-	+ "</th>"
-	+ "<th><b>Graduação:</b></th>"
-	+"<th>"
-	+ "<button>-</button>" + power.ranks + "<button>+</button>";
-	+ "</th>"
-	+ "<th> <button value='"+ power.id +"' onclick='RemovePower(this.value)'> class='DeleteButton'>X</button></th>"
-	+ "</tr>"
-	+ "<tr>"
-	+ "<td><b>EFEITO</b>:</td>"
-	+ "<td>"+ power.effectName +"</td>"
-	+ "<td><b>TIPO</b></td>"
-	+ "<td>"+ power.type +"</td>"
-	+ "<td><b>DESCRITORES</b></td>"
-	+ "<td>conteúdo</td>"
-	+ "</tr>"
-	+ "<tr>"
-	+ "<td><b>AÇÃO</b>:</td>"
-	+ "<td>"+ power.action +"</td>"
-	+ "<td><b>ALCANCE</b></td>"
-	+ "<td>"+ power.rangeString() +"</td>"
-	+ "<td><b>DURAÇÃO</b></td>"
-	+ "<td>"+ power.duration +"</td>"
-	+ "</tr>"
-	+ "<tr>"
-	+ "<td colspan='3'><b>Descrição</b>:</td>"
-	+ "<td colspan='1'><b>Custo por grad.</b></td>"
-	+ "<td>" + power.costPerRank + "</td>"
-	+ "</tr>"
-	+ "<tr>"
-	+ "<td rowspan='4' colspan='3'>"
-	+ "<textarea id='power-"+ power.id +"-description' value='"+ power.description +"'>"
-	+ "</textarea>"
-	+ "</td>"
-	+ "<td colspan='3' style='vertical-align: top;'>"
-	+ "<button class='AddTraitButtons'>Adicionar Extras ou Falhas</button>"
-	+ "</td>"
-	+ "</tr>"
-	+ "<tr>"
-	+ "<td></td>"
-	+ "<td> 250 pontos </td>"
-	+ "</tr>"
-	+ "</table>"
-
-}
