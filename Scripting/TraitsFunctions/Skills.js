@@ -16,7 +16,6 @@ let _SkillPopUpContent = ""
 *****************************************/
 function RenderBaseSkillList(){
 
-  let tableContent = "";
   let _line, _cell, _input;
 
   for (let i = 0; i < _MainCharacter.Skills.length; i++) {

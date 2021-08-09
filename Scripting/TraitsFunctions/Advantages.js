@@ -23,7 +23,7 @@ function AddAdvantage(item){
   _MainCharacter.Advantages.list.push(_newAdv);
   
   // Atualiza a lista de Vantagens pra remover as que já tem.
-  $(popUpText).html(AvaliableAdvantagesList());
+  $(popUpText).html( AvaliableAdvantagesList() );
 
   UpdateAdvantages();
 }
@@ -66,7 +66,6 @@ function decreaseRank(id, advInstID){
  * Atualiza a quantidade de pontos gastos em Vantagens.
 **********************************************************/
 function UpdateAdvantagesSpent() {
-    
     $("#AdvantagesTitle").html("Vantagens (" + _MainCharacter.totalAdvantagesSpent() + " pontos)");
 
     UpdateTotalSpent();
@@ -251,8 +250,8 @@ function AddLanguage(){
 
   _MainCharacter.Languages.list.push( [_MainCharacter.Languages.id++, ""]);
 
-  _MainCharacter.Languages.LanguagesRank = parseInt( Math.ceil( Math.log2( _MainCharacter.Languages.list.length ) ) );
-  $('#LanguagesTitle').text("Idiomas (" + _MainCharacter.Languages.list.length + " Idiomas/ " + _MainCharacter.Languages.LanguagesRank + " grads.)");
+  _MainCharacter.Languages.rank = parseInt( Math.ceil( Math.log2( _MainCharacter.Languages.list.length ) ) );
+  $('#LanguagesTitle').text("Idiomas (" + _MainCharacter.Languages.list.length + " Idiomas/ " + _MainCharacter.Languages.rank + " grads.)");
 
   UpdateAdvantagesSpent();
   UpdateLanguages();

@@ -114,17 +114,48 @@ function RemoveTrait(){
     // Vantagens
     case 4: 
       if(traitInstanceID == undefined )
-        desiredIndex = _MainCharacter.Advantages.findIndex( adv => adv.id == traitID );
+        desiredIndex = _MainCharacter.Advantages.list.findIndex( element => element.id == traitID );
       else 
-        desiredIndex = _MainCharacter.Advantages.findIndex( adv => adv.id == traitID && adv.instanceID == traitInstanceID );
+        desiredIndex = _MainCharacter.Advantages.list.findIndex( element => element.id == traitID && element.instanceID == traitInstanceID );
         
-      _MainCharacter.Advantages.splice(desiredIndex,1);
+      _MainCharacter.Advantages.list.splice(desiredIndex,1);
       UpdateAdvantages();
       break;
+    //---------------------------------------------------
     // Poderes
-    case 5: break;
-    // Equipamentos
-    case 6: break;
+    //---------------------------------------------------
+    case 5: 
+      let powerIndex = _MainCharacter.Powers.list.findIndex( element => element.id == traitID );
+      _MainCharacter.Powers.list.splice(powerIndex, 1);
+
+      $("#Power" + traitID).remove();
+      break;
+
+    // Modificadores
+    case 6: 
+      let modifierIndex;
+      let power = _MainCharacter.Powers.list.find( element => element.id == traitID );
+      let modifier = _ModifiersList.find( element => element.id == traitInstanceID);
+
+      if(modifier.flat){
+        modifierIndex = power.flats.findIndex(element => element.id == traitInstanceID);
+        power.flats.splice(modifierIndex, 1);
+      }
+      else{
+        if(modifier.extra){
+          modifierIndex = power.extras.findIndex(element => element.id == traitInstanceID);
+          power.extras.splice(modifierIndex, 1);
+        }
+        else{
+          modifierIndex = power.flaws.findIndex(element => element.id == traitInstanceID);
+          power.flaws.splice(modifierIndex, 1);
+        }
+      }
+
+      UpdateKeyTraits(power);
+      $("#Power" + traitID + " tr #Mod-"+ traitInstanceID).remove();
+
+      break;
     // Complicações
     case 8: 
       desiredIndex = _MainCharacter.Complications.list.findIndex( element => element.instanceID == traitInstanceID );

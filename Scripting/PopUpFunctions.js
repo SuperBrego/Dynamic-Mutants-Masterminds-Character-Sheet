@@ -10,7 +10,11 @@ function SetPopUp(){
 /****************************
  * Apresenta o PopUp.
 ****************************/
-function showPopUp(type){
+function showPopUp(){
+  let type = arguments[0];
+  let effectID = arguments[1];
+  let powerID = arguments[2];
+
   modal.style.display = "block";
 
   /********************
@@ -44,7 +48,13 @@ function showPopUp(type){
     case 8: 
       _PopUpContext = ComplicationsList();
       break;
-    default: return;
+    case 9: 
+      _PopUpContext = ModifiersList(effectID, powerID);
+      break;
+    case 10: 
+      _PopUpContext = PowerOptionsList(effectID);
+      break;
+    default: closePopUp();
   }
 
   $(popUpText).html(_PopUpContext);

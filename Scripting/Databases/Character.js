@@ -61,8 +61,8 @@ const Character = {
 			if(eqpAdv) return (eqpAdv.totalRanks * 5);
 			else 0;
 		},
-		EquipmentID: 0,
-		EquipmentList: []
+		id: 0,
+		list: []
 	},
 
 	CloseRangeBonus: function() {
@@ -85,7 +85,7 @@ const Character = {
 		list: [
 			{
 				id: 0, 
-				effectID: 5012, 
+				effectID: 5013, 
 				name: "Desarmado", 
 				rank: 0,
 				range: 1, 
@@ -122,7 +122,7 @@ const Character = {
 			},
 			{
 				id: 2, 
-				effectID: 5012, 
+				effectID: 5013, 
 				name: "Arremessar", 
 				rank: 0,
 				range: 2, 
@@ -214,15 +214,15 @@ const Character = {
 	totalAdvantagesSpent: function(){
 		let sum = 0;
 
-		for(let i = 0; i < this.Advantages.length; i++){
-			if( this.Advantages[i].ranked )
-			  sum += this.Advantages[i].totalRanks;
+		for(let i = 0; i < this.Advantages.list.length; i++){
+			if( this.Advantages.list[i].ranked )
+			  sum += this.Advantages.list[i].totalRanks;
 			else sum += 1;
 		}
 
 		// Soma Idiomas
 		sum += this.Languages.rank;
-
+		
 		return parseInt(sum);
 	},
 

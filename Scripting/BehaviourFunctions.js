@@ -38,6 +38,10 @@ function ShowDescription(entryID, type){
     case 8: 
       content = _DefaultComplicationList.find( element => element.id == entryID ).description;
       break;
+    // Modifiers
+    case 10:
+      content = _ModifiersList.find( element => element.id == entryID ).description;
+      break;
     default: return;
   }
   
