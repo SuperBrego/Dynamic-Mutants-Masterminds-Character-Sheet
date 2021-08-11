@@ -1,46 +1,49 @@
 /**
+	Movimento e Sentidos:
+	• Ao adicionar uma opção de poder, ChangeRank(poder, valor das graduações)
+	• Ao remover uma opção de poder, ChangeRank(poder, -valor Total das graduações)
+*/
+
+/**
  * Campos adicionais de Aflições.
  * 
  * @returns string
  */
  function AfflictionPowerStructure(power) {
 
-	let powerID = power.id;
-
 	let afflictionText = "<tr>"
 	+ 	"<td><b>Resistido por...</b></td>"
 	+	"<td colspan='2' >" 
-	+ 		"<input type='text' onchange='ChangeAfflictionResistance(this.value, "+ powerID +", 1)'>"
+	+ 		"<input type='text' onchange='ChangeResistance(this.value, "+ power.id +")'>"
 	+ 	"</td>"
 	+	"<td><b>Superado por...</b> </td>"
 	+	"<td colspan='2' >" 
-	+ 		"<input type='text' onchange='ChangeAfflictionResistance(this.value, "+ powerID +", 2)'>"
+	+ 		"<input type='text' onchange='ChangeOvercomeResistance(this.value, "+ power.id +")'>"
 	+ 	"</td>"
 	+ "</tr>"
-	+ "<tr id='Power-"+ powerID +"-Conditions' >"
+	+ "<tr id='Power-"+ power.id +"-Conditions' >"
 	+ 	"<td colspan='2'><b>Primeira(s)</b> "
-	+		"<input type='text' value='"+ power.Conditions[0] +"' " 
-	+		" onchange='AlternateEffectCondition(this.value, "+ powerID +", 1)' >"
+	+		"<input type='text' value='"+ power.conditions[0] +"' " 
+	+		" onchange='AlternateEffectCondition(this.value, "+ power.id +", 1)' >"
 	+	"</td>"
 	+ 	"<td colspan='2'><b>Segunda(s)</b> "
-	+		"<input type='text' value='"+ power.Conditions[1] +"' " 
-	+		" onchange='AlternateEffectCondition(this.value, "+ powerID +", 2)' >"
+	+		"<input type='text' value='"+ power.conditions[1] +"' " 
+	+		" onchange='AlternateEffectCondition(this.value, "+ power.id +", 2)' >"
 	+	"</td>"
 	+ 	"<td colspan='2'><b>Terceira(s)</b> "
-	+		"<input type='text' value='"+ power.Conditions[2] +"' " 
-	+		" onchange='AlternateEffectCondition(this.value, "+ powerID +", 3)' >"
+	+		"<input type='text' value='"+ power.conditions[2] +"' " 
+	+		" onchange='AlternateEffectCondition(this.value, "+ power.id +", 3)' >"
 	+	"</td>"
 	+ "</tr>";
 	return afflictionText;
 }
 
 function SensoryPowerStructure(power) {
-	let powerID = power.id;
 
 	let sensoryOptions = "<tr>"
 	+ "<td colspan='2'><b>Sentidos</b></td>"
 	+ "<td colspan='2'>"
-	+ 	"<select onchange='ChangeBaseValue(this.value, "+ powerID +")' >"
+	+ 	"<select onchange='ChangeBaseValue(this.value, "+ power.id +")' >"
 	+ 		"<option disabled>- Opções -</option>"
 	+ 		"<option value='1' selected>1 Tipo</option>"
 	+ 		"<option value='2'>2 Tipos</option>"
@@ -51,29 +54,53 @@ function SensoryPowerStructure(power) {
 	+ "</td>"
 	+ "<td colspan='2'>"
 	+ 	"<input type='text' value='' placeholder='Sentido(s)' "
-	+	"onchange='StoreSenseDescription(this.value, "+ powerID +")' >"
+	+	"onchange='StoreSenseDescription(this.value, "+ power.id +")' >"
 	+ "</td>"
 	+ "</tr>";
     
 	return sensoryOptions;
 }
 
-function BenefitsPowerStructure(power){}
+function BenefitsPowerStructure(power){
+	let benefitsText = "<tr>"
+	+ "<td colspan='2'><b>Benefícios:</b></td>"
+	+ "<td colspan='4'>"
+	+ 	"<span class='PowerBenefits' id='Power-"+ power.id +"-Benefits'></span>"
+	+ "</td>"
+	+ "</tr>";
+
+	return benefitsText;
+}
 
 function WeakenPowerStructure(power){
 
+	let nullifyText = "<tr>"
+	+ "<td><b>Salvamento:</b></td>"
+	+ "<td>"
+	+	"<select onchange='ChangeResistance(this.value, "+ power.id +")'> "
+	+		"<option value='Fortitude'>Fortitude</option>"
+	+		"<option value='Vontade'>Vontade</option>"
+	+	"</select>"
+	+ "</td>"
+	+ "<td><b>Afeta:</b>"
+	+ "<td colspan='3'>"
+	+ 	"<input type='text' onchange='ChangeAffectedTrait(this.value, "+ power.id +")' "
+	+ 	"value='"+ power.affectedTrait +"' "
+	+	" placeholder='Descritores/Efeitos afetado(s)...'>"
+	+ "</td>"
+	+ "</tr>";
+
+	return nullifyText;
 }
 
 function EnhancedTraitStructure(power){}
 
 function CommunicationStructure(power){
 
-	let powerID = power.id;
-
 	let communicationOptions = "<tr>"
 	+ "<td><b>Tipo de Sentido</b></td>"
 	+ "<td colspan='2'>"
-	+ 	"<select onchange='ChangeSense(this.value, "+ powerID +")' >"
+	+ 	"<select onchange='ChangeSense(this.value, "+ power.id +")' >"
 	+ 		"<option disabled>- Opções -</option>"
 	+ 		"<option value='Auditiva' selected>Auditiva</option>"
 	+ 		"<option value='Olfativa'>Olfativa</option>"
@@ -85,7 +112,7 @@ function CommunicationStructure(power){
 	+ "</td>"
 	+ "<td colspan='3'>"
 	+ 	"<input type='text' value='' placeholder='Descrição...' "
-	+	"onchange='StoreSenseDescription(this.value, "+ powerID +")' >"
+	+	"onchange='StoreSenseDescription(this.value, "+ power.id +")' >"
 	+ "</td>"
 	+ "</tr>";
     
@@ -94,15 +121,25 @@ function CommunicationStructure(power){
 }
 
 function PowerOptionsStructure(power){
-    let powerOptions = "";
+    let powerOptions = "<tr>"
+    + 	"<td colspan='6' style='vertical-align: top;' class='HighWidthCells'>"
+    + 		"<button class='AddPowerTrait' onclick='showPopUp(10, "+ power.effectID +", "+ power.id +")'>"
+    +			"Adicionar Opções de Poder</button>"
+    + 		"<table id='Power-Options-"+ power.id +"' class='ExtrasFlawsTable'>"
+    +		"</table>"
+    + 	"</td>"
 	return powerOptions;
+}
+
+function RenderPowerOptions(power){
+
 }
 
 function NullifyStructure(power){
 	let nullifyText = "<tr>"
 	+ "<td colspan='3'><b>Contra-Ataca:</b></td>"
 	+ "<td colspan='3'>"
-	+ 	"<input type='text' onchange='ChangeNullify(this.value, "+ power.id +")' "
+	+ 	"<input type='text' onchange='ChangeAffectedTrait(this.value, "+ power.id +")' "
 	+ 	"value='"+ power.NullifyTrait +"' "
 	+	" placeholder='Contra-ataca descritor/efeitos...'>"
 	+ "</td>"
@@ -112,12 +149,11 @@ function NullifyStructure(power){
 }
 
 function TransformStructure(power){
-	let powerID = power.id;
 
 	let transformOption = "<tr>"
 	+ "<td><b>Tipo</b></td>"
 	+ "<td colspan='2'>"
-	+ 	"<select onchange='ChangeBaseValue(this.value, "+ powerID +")' >"
+	+ 	"<select onchange='ChangeBaseValue(this.value, "+ power.id +")' >"
 	+ 		"<option disabled>- Opções -</option>"
 	+ 		"<option value='2' selected>2/grad. - Uma coisa > Uma coisa</option>"
 	+ 		"<option value='3'>3/grad. - Uma coisa > Amplo</option>"
@@ -129,12 +165,30 @@ function TransformStructure(power){
 	+ "<td colspan='3'>"
 	+ 	"<input type='text' value='"+ power.TransformField +"' "
 	+	"placeholder='Campo de transformação...' "
-	+	"onchange='StoreTransformType(this.value, "+ powerID + ")' >"
+	+	"onchange='StoreTransformType(this.value, "+ power.id + ")' >"
 	+ "</td>"
 	+ "</tr>";
 
 	return transformOption;
 }
+
+function ImperviousStructure(power){
+	let imperviousText = "<tr>"
+	+ "<td colspan='3'><b>Salvamento:</b></td>"
+	+ "<td colspan='3'>"
+	+	"<select onchange='ChangeAffectedTrait(this.value, "+ power.id +")'> "
+	+		"<option value='Aparar'>Aparar</option>"
+	+		"<option value='Esquiva'>Esquiva</option>"
+	+		"<option value='Resistência'>Resistência</option>"
+	+		"<option value='Fortitude'>Fortitude</option>"
+	+		"<option value='Vontade'>Vontade</option>"
+	+	"</select>"
+	+ "</td>"
+	+ "</tr>";
+
+	return imperviousText;
+}
+
 
 function StandardStructure(power){
 	
@@ -152,10 +206,10 @@ function StandardStructure(power){
 
 	// Se está com o mínimo de graduação, desligo o botão de reduzir grads.
 	if(power.baseRanks <= 1)
-		tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ReduceRank(this.value)' "
+		tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, -1)' "
 		+ "id='power-"+ power.id +"-GradMinus' disabled>-</button> &nbsp;";
 	else
-		tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ReduceRank(this.value)' "
+		tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, -1)' "
 		+ "id='power-"+ power.id +"-GradMinus' >-</button> &nbsp;";
 	
 	tableContent += "<span id='Power-"+ power.id +"-Ranks' >"+ power.baseRanks + "</span>";
@@ -163,10 +217,10 @@ function StandardStructure(power){
 	// Botão de Aumentar a Graduação
 	// Se é um efeito com opções de poder, então custo 0 não pode aumentar nada.
 	if(power.baseRanks == power.maxRank)
-		tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='IncreaseRank(this.value)' "
+		tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, 1)' "
 		+ "id='power-"+ power.id +"-GradPlus' disabled>+</button> &nbsp;";
 	else 
-		tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='IncreaseRank(this.value)' "
+		tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, 1)' "
 		+ "id='power-"+ power.id +"-GradPlus'>+</button> &nbsp;";
 	
 	tableContent += "</th>"
@@ -231,7 +285,21 @@ function StandardStructure(power){
 	 	case 5044: 
             tableContent += ImperviousStructure(power);
             break;
-		
+        /**
+         * Ambiente, Camuflagem
+         * Compreender, Controle de Sorte
+         * Imunidade, Movimento
+         * Sentidos
+        */
+		case 5003:
+		case 5004:
+		case 5007:
+		case 5009:
+		case 5020:
+		case 5027:
+		case 5035:
+			tableContent += PowerOptionsStructure(power);
+			break;
 	 	default:
 			tableContent += "";
 			break;

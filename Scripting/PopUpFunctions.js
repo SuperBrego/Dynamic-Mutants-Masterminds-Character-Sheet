@@ -48,9 +48,11 @@ function showPopUp(){
     case 8: 
       _PopUpContext = ComplicationsList();
       break;
+    // Modificadores
     case 9: 
       _PopUpContext = ModifiersList(effectID, powerID);
       break;
+    // Opções de Poder
     case 10: 
       _PopUpContext = PowerOptionsList(effectID);
       break;

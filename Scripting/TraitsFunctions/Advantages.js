@@ -1,21 +1,16 @@
 /*******************************************
- * Variáveis
-*******************************************/
-var _GenAdvantageID = 0;
-
-/*******************************************
  * Abre a função de adicionar Vantagens.
 *******************************************/
 function AddAdvantage(item){
 
   let _toBeAddedElement = _MainCharacter.Advantages.list.find( element => element.id == item );
 
-  if (_toBeAddedElement && !( _toBeAddedElement.hasOwnProperty('additionalDescription') ) ){ return; }
+  if (_toBeAddedElement && !( _toBeAddedElement.additionalDescription != undefined ) ){ return; }
   
   let _newAdv = _AllAdvantagesList.find( element => element.id == item );
   _newAdv = Object.assign({}, _newAdv);
   
-  if( _newAdv.hasOwnProperty('additionalDescription') ){
+  if( _newAdv.additionalDescription != undefined ){
       _newAdv.instanceID = _MainCharacter.Advantages.id;
       _MainCharacter.Advantages.id++;
   }
@@ -27,40 +22,28 @@ function AddAdvantage(item){
 
   UpdateAdvantages();
 }
+
+/**
+ * @param {int} id
+ * @param {int} rankChange
+ * @param {int} advInstID
+*/
+function ChangeAdvantageRank(){
+  let id = arguments[0];
+  let rankChange = arguments[1];
+  let advInstID = arguments[2];
+
+  let desiredAdvantage;
+  if(advInstID == undefined)
+    desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id );
+  else
+    desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
   
-/**************************************
- * Aumenta a graduação da Vantagem
-**************************************/
-function increaseRank(id){
-  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id );
-  desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
+  desiredAdvantage.totalRanks += rankChange;
 
   UpdateAdvantages();
 }
 
-function increaseRank(id, advInstID){
-  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
-  desiredAdvantage.totalRanks = desiredAdvantage.totalRanks + 1;
-
-  UpdateAdvantages();
-}
-
-/**************************************
- * Reduz a graduação da Vantagem
-**************************************/
-function decreaseRank(id){
-  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id );
-  desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
-
-  UpdateAdvantages();
-}
-
-function decreaseRank(id, advInstID){
-  let desiredAdvantage = _MainCharacter.Advantages.list.find( _Advantage => _Advantage.id == id && _Advantage.instanceID == advInstID );
-  desiredAdvantage.totalRanks = desiredAdvantage.totalRanks - 1;
-
-  UpdateAdvantages();
-}
 
 /**********************************************************
  * Atualiza a quantidade de pontos gastos em Vantagens.
@@ -93,7 +76,7 @@ function AvaliableAdvantagesList(){
     _isPlayerAquiredAdv = _MainCharacter.Advantages.list.find(element => element.id == _currAdvantage.id );
     
     // Pergunto se tenho a Vantagem em questão. Se tiver, mas não for de campo preenchível, continua o loop.  
-    if( (_isPlayerAquiredAdv != undefined) && !_isPlayerAquiredAdv.hasOwnProperty('additionalDescription') ){ continue; }
+    if( (_isPlayerAquiredAdv != undefined) && !_isPlayerAquiredAdv.additionalDescription != undefined ){ continue; }
     // Se for Idiomas, pula também. ID 2059
     if( _AllAdvantagesList[i].id == 2059 ){ continue; }
     
@@ -132,7 +115,7 @@ function UpdateAdvantages(){
     if(!adv.ranked){
       tableContent += "<td class='PlayerAdvName-Cell' colspan='2' style='width: 100%;' >";
       tableContent += adv.name;
-      if( adv.hasOwnProperty('additionalDescription') ) {
+      if( adv.additionalDescription != undefined ) {
         tableContent += "&emsp;";
         tableContent += "<input type='text' value='"+ adv.additionalDescription +"' name='"+ adv.name +"' onchange='updateAdvantageText(this.value, " + adv.id + ", " + adv.instanceID + ")' >";
       }
@@ -141,7 +124,7 @@ function UpdateAdvantages(){
     else{
       tableContent += "<td class='PlayerAdvName-Cell' style='width: 75%;' >";
       tableContent += adv.name;
-      if( adv.hasOwnProperty('additionalDescription') ) {
+      if( adv.additionalDescription != undefined ) {
         tableContent += "&emsp;";
         tableContent += "<input type='text' value='"+ adv.additionalDescription +"' name='"+ adv.name +"' onchange='updateAdvantageText(this.value, " + adv.id + ", " + adv.instanceID + ")' >";
       }
@@ -152,10 +135,10 @@ function UpdateAdvantages(){
 
       // Se o rank total é 1, então não diminuo.
       if(adv.totalRanks == 1){
-        tableContent += "<button class='minusButton' onclick='decreaseRank("+ adv.id +", "+ adv.instanceID +")' disabled>-</button> ";
+        tableContent += "<button class='minusButton' onclick='ChangeAdvantageRank("+ adv.id +", -1, "+ adv.instanceID +")' disabled>-</button> ";
       }
       else{
-        tableContent += "<button class='minusButton' onclick='decreaseRank("+ adv.id +", "+ adv.instanceID +")'>-</button>";
+        tableContent += "<button class='minusButton' onclick='ChangeAdvantageRank("+ adv.id +", -1, "+ adv.instanceID +")'>-</button>";
       }
 
       // Total de Graduações
@@ -163,10 +146,10 @@ function UpdateAdvantages(){
 
       // Botão desligado caso esteja no máximo de graduações.
       if( adv.totalRanks == adv.maxRank ){
-        tableContent += " <button class='plusButton' onclick='increaseRank("+ adv.id +", "+ adv.instanceID +")' disabled>+</button>";
+        tableContent += " <button class='plusButton' onclick='ChangeAdvantageRank("+ adv.id +", 1, "+ adv.instanceID +")' disabled>+</button>";
       }
       else{
-        tableContent += " <button class='plusButton' onclick='increaseRank("+ adv.id +", "+ adv.instanceID +")'>+</button>";
+        tableContent += " <button class='plusButton' onclick='ChangeAdvantageRank("+ adv.id +", 1, "+ adv.instanceID +")'>+</button>";
       }
     }
 
@@ -175,7 +158,7 @@ function UpdateAdvantages(){
     tableContent += "<button class='DeleteButton' value='" + adv.id + "' ";
     
     // Se tem descrição adicional, tem então tem que avisar com o ID da instância.
-    if( !adv.hasOwnProperty('additionalDescription') ) {
+    if( !adv.additionalDescription != undefined ) {
       tableContent += " onclick='RemoveTrait(this.value, 4)'>X</button>";
     }
     else {
@@ -204,11 +187,11 @@ function UpdateAdvantages(){
       tableContent += adv.name;
       
       // Se tem se tiver descrição adicional, põe ela.
-      if( !adv.ranked && adv.hasOwnProperty('additionalDescription') ){
+      if( !adv.ranked && adv.additionalDescription != undefined ){
         tableContent += adv.name + "&emsp;" + adv.additionalDescription + "";
       }
       // Se tiver graduação mas não descrição adicional, põe ela.
-      else if( adv.ranked && !adv.hasOwnProperty('additionalDescription') ){
+      else if( adv.ranked && !adv.additionalDescription != undefined ){
         tableContent += adv.name + "&emsp;" + adv.totalRanks;
       }
       // Se tiver ambos, põe ambos.

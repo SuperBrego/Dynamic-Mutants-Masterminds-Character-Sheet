@@ -71,6 +71,7 @@ function AddPower(effectID) {
 	power.action = _effect.action;
 	power.range = _effect.range;
 	power.duration = _effect.duration;
+	power.benefits = _effect.benefits;
 	if( _effect.maxRank != undefined ) power.maxRank = _effect.maxRank;
 	power.flats = [];
 	power.extras = [];
@@ -81,11 +82,7 @@ function AddPower(effectID) {
 		// Aflição.
 		case 5001:
 			power.conditions = ["", "", ""];
-			power.resistance = ["", ""];
-			break;
-		// Nulificar
-		case 5029:
-			power.NullifyTrait = "";
+			power.overcomedBy = "";
 			break;
 		// Comunicação, Ilusão, Sentido Remoto.
 		case 5008:
@@ -133,23 +130,11 @@ function ChangeBaseValue(baseValue, powerID){
 /**
  * Aumenta a graduação do poder em questão.
  * @param {int} powerID
+ * @param {int} rankRange
 */
-function IncreaseRank(powerID) {
-	
+function ChangeRank(powerID, rankChange){
 	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
-	power.baseRanks += 1;
-
-	UpdateKeyTraits(power);
-}
-
-/**
- * Reduz a graduação do poder em questão
- * * @param {int} powerID
-*/
-function ReduceRank(powerID) {
-
-	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
-	power.baseRanks -= 1;
+	power.baseRanks += rankChange;
 
 	UpdateKeyTraits(power);
 }
@@ -190,12 +175,21 @@ function AlternateEffectCondition(conditionText, powerID, conditionindex){
  * Altera os salvamentos de uma Aflição
  * @param {string} resistanceText 
  * @param {int} powerID 
- * @param {int} resistanceField 
  */
-function ChangeAfflictionResistance(resistanceText, powerID, resistanceIndex){
+function ChangeResistance(resistanceText, powerID){
 	
 	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
-	power.resistance[resistanceIndex-1] = resistanceText;
+	power.resistedBy = resistanceText;
+}
+
+/**
+ * Altera os salvamentos de uma Aflição
+ * @param {string} overcomedByText 
+ * @param {int} powerID 
+*/
+function ChangeOvercomeResistance(overcomedByText, powerID){
+	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
+	power.overcomedBy = overcomedByText;
 }
 
 /**
@@ -218,12 +212,12 @@ function StoreSenseDescription(senseText, powerID){
 
 /**
  * 
- * @param {string} nullifyText
+ * @param {string} traitText
  * @param {int} powerID
  */
-function ChangeNullify(nullifyText, powerID){
+function ChangeAffectedTrait(traitText, powerID){
 	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
-	power.NullifyTrait = nullifyText;
+	power.affectedTrait = traitText;
 }
 
 /**

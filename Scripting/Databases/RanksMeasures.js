@@ -1,6 +1,6 @@
 
 /* ******************************* Graduações e Medidas *********************************** */
-//  0    1    2    3      4
+//  0       1       2         3         4
 // Grad - Massa - Tempo - Distância - Volume
 const _RanksMeasuresTable = 
 [ 

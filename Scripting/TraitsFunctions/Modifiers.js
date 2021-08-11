@@ -4,66 +4,83 @@
 function ModifiersList(effectID, powerID){
 
 	let modifier;
-	let content = "";
-    content += "<div id='BiLateralListPopUp'>";
-    content += "<div id='BiLateralListItem1'>";
-    content += "<table class='PopUpItensTable'>";
+	let tableContent = "";
+    tableContent += "<div id='BiLateralListPopUp'>";
+    tableContent += "<div id='BiLateralListItem1'>";
+    tableContent += "<table class='PopUpItensTable'>";
 
     for(let i = 0; i < _ModifiersList.length; i++){
 		modifier = _ModifiersList[i];
 
-    	content += "<tr><td>";
-	    content += "<button class='PopUpAddItem' value='" + modifier.id + "' onclick='AddModifier(this.value, "+ powerID +")' " 
+    	tableContent += "<tr><td>";
+	    tableContent += "<button class='PopUpAddItem' value='" + modifier.id + "' onclick='AddModifier(this.value, "+ powerID +")' " 
 		+ "onmouseover='ShowDescription(this.value, 10)' ";
-		if( PowerContainsModifier(powerID, modifier.id) ) content += "disabled>";
-		else content += ">"
+		if( PowerContainsModifier(powerID, modifier.id) ) tableContent += "disabled>";
+		else tableContent += ">"
 
 		// Extra/Falha
-	    if(modifier.extra) content += "<span style='float: left;' > + </span>";
-	    else content += "<span style='float: left;' > - </span>";
-	    content += modifier.name;
+	    if(modifier.extra) tableContent += "<span style='float: left;' > + </span>";
+	    else tableContent += "<span style='float: left;' > - </span>";
+	    tableContent += modifier.name;
 
-		if(modifier.flat) content += "<span style='float: right;' > 1 fixo</span>";
-	    else content += "<span style='float: right;' > "+ modifier.ranks +"/grad. </span>";
+		if(modifier.flat) tableContent += "<span style='float: right;' > 1 fixo</span>";
+	    else tableContent += "<span style='float: right;' > "+ modifier.ranks +"/grad. </span>";
 
-	    content += "</button>";
-	    content += "</td></tr>";
+	    tableContent += "</button>";
+	    tableContent += "</td></tr>";
     }
-    content += "</table>";
-    content += "</div>"; // Fim de Item 1
+    tableContent += "</table>";
+    tableContent += "</div>"; // Fim de Item 1
 
     // Campo para descrição das Vantagens
-    content += "<div id='BiLateralListItem2'> </div>"; 
-    content += "</div>"; // Fim de Grid
-    return content;
+    tableContent += "<div id='BiLateralListItem2'> </div>"; 
+    tableContent += "</div>"; // Fim de Grid
+    return tableContent;
 }
 
-/*********************************************
- * Aumenta a graduação do poder em questão
-*********************************************/
-function IncreaseModRank(){
-	let modID = arguments[0];
-	let powerID = arguments[1];
-}
+/**
+ * Aumenta a graduação do modificador do poder em questão
+ * @param {int} modID
+ * @param {int} powerID
+ * @param {int} rankChange
+*/
+function ChangeModRank(modID, powerID, rankChange){
 
-/*********************************************
- * Aumenta a graduação do poder em questão
-*********************************************/
-function ReduceModRank(){
-	let modID = arguments[0];
-	let powerID = arguments[1];
+	let modifier = _ModifiersList.find( elem => elem.id == modID);
+	let power = _MainCharacter.Powers.list.find( elem => elem.id == powerID);
+
+	if(modifier.flat) modifier = power.flats.find( elem => elem.id == modID );
+	else if(modifier.extra) modifier = power.extras.find( elem => elem.id == modID );
+	else modifier = power.flaws.find( elem => elem.id == modID );
+
+	// Agora tenho o modificador em mãos.
+	modifier.ranks += rankChange;
+
+	// Rank Span.
+	modSpanRankID = "P-"+ power.id +"-M-"+ modifier.id +"";
+	modMinusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-M";
+	modPlusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-P";
+
+	$("#"+ modSpanRankID +"").text(modifier.ranks);
+	if(modifier.ranks == 1) document.getElementById(modMinusButtID).disabled = true;
+	else document.getElementById(modMinusButtID).disabled = false;
+
+	if(modifier.ranks == modifier.maxRank) document.getElementById(modPlusButtID).disabled = true;
+	else document.getElementById(modPlusButtID).disabled = false;
+
+	UpdateKeyTraits(power);
 }
 
 /****************************************
  * Adicionar Modificador ao Poder.
 ****************************************/
-function AddModifier(modifierID, powerID){
+function AddModifier(modID, powerID){
 	closePopUp();
 
-	let power = _MainCharacter.Powers.list.find( element => element.id == powerID);
-	let modifier = Object.assign({}, _ModifiersList.find( element => element.id == modifierID));
+	let power = _MainCharacter.Powers.list.find( elem => elem.id == powerID);
+	let modifier = Object.assign({}, _ModifiersList.find( elem => elem.id == modID));
 
-	if( PowerContainsModifier(powerID, modifierID) ) return;
+	if( PowerContainsModifier(powerID, modID) ) return;
 
 	if(modifier.flat) power.flats.push(modifier);
 	else{
@@ -81,13 +98,13 @@ function AddModifier(modifierID, powerID){
 
 }
 
-function PowerContainsModifier(powerID, modifierID){
+function PowerContainsModifier(powerID, modID){
 	
-	let power = _MainCharacter.Powers.list.find( element => element.id == powerID);
+	let power = _MainCharacter.Powers.list.find( elem => elem.id == powerID);
 	
-	if( power.flats.find(element => element.id == modifierID ) ) return true;
-	if( power.extras.find(element => element.id == modifierID ) ) return true;
-	if( power.flaws.find(element => element.id == modifierID ) ) return true;
+	if( power.flats.find( elem => elem.id == modID ) ) return true;
+	if( power.extras.find( elem => elem.id == modID ) ) return true;
+	if( power.flaws.find( elem => elem.id == modID ) ) return true;
 
 	return false;
 
@@ -104,32 +121,44 @@ function RenderModifiers(power){
 	);
 
 	for(let i = 0; i < powerModifiersList.length; i++){
-		playerMod = powerModifiersList[i];
+		modifier = powerModifiersList[i];
 
-		tableContent += "<tr id='Mod-"+playerMod.id+"'>"
-		+ "<td>" + playerMod.name + "</td>";
+		// Rank Span.
+		modSpanRankID = "P-"+ power.id +"-M-"+ modifier.id +"";
+		modMinusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-M";
+		modPlusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-P";
 
-		if(playerMod.ranked){
+		tableContent += "<tr id='Mod-"+ modifier.id +"'>"
+		+ "<td>"+ modifier.name +"</td>";
+
+		if(modifier.ranked){
 			// Abre Célula de Graduações
 			tableContent += "<td>";
 
 			// Se o rank total é 1, então não diminuo.
-			if(playerMod.ranks == 1){
-			  tableContent += "<button class='minusButton' onclick='DecreaseModRank("+ playerMod.id +", "+ power.id +")' disabled>-</button> ";
+			if(modifier.ranks == 1){
+			  tableContent += "<button class='minusButton' id='"+ modMinusButtID +"' "
+			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", -1)' disabled>-</button>";
 			}
 			else{
-			  tableContent += "<button class='minusButton' onclick='DecreaseModRank("+ playerMod.id +", "+ power.id +")'>-</button>";
+			  tableContent += "<button class='minusButton' id='"+ modMinusButtID +"' "
+			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", -1)' >-</button>";
 			}
 	  
+	  		console.log(modSpanRankID)
 			// Total de Graduações
-			tableContent += "<span>"+ playerMod.ranks +"</span>";
+			tableContent += " <span id='"+modSpanRankID+"'>"
+			+ modifier.ranks 
+			+"</span> ";
 	  
 			// Botão desligado caso esteja no máximo de graduações.
-			if( playerMod.ranks == playerMod.maxRank ){
-			  tableContent += " <button class='plusButton' onclick='IncreaseModRank("+ playerMod.id +", "+ power.id +")' disabled>+</button>";
+			if( modifier.ranks == modifier.maxRank ){
+			  tableContent += "<button class='plusButton' id='"+ modPlusButtID +"' "
+			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", 1)' disabled>+</button> ";
 			}
 			else{
-			  tableContent += " <button class='plusButton' onclick='IncreaseModRank("+ playerMod.id +", "+ power.id +")'>+</button>";
+			  tableContent += "<button class='plusButton' id='"+ modPlusButtID +"' "
+			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", 1)' >+</button> ";
 			}
 		}
 		else {
@@ -138,7 +167,7 @@ function RenderModifiers(power){
 
 		tableContent += ""
 		+ "<td>"
-		+ 		"<button class='DeleteButton' onclick='RemoveTrait(" + power.id + ", 6, " + playerMod.id + ")' >"
+		+ 		"<button class='DeleteButton' onclick='RemoveTrait(" + power.id + ", 6, " + modifier.id + ")' >"
 		+ 		"X"
 		+ 		"</button>"
 		+ 	"</td>"
@@ -146,7 +175,6 @@ function RenderModifiers(power){
 	}
 
 	return tableContent;
-
 }
 
 /**

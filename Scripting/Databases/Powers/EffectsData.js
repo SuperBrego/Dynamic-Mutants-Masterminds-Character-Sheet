@@ -20,8 +20,9 @@ const powerDefault = {
 	baseCost: 0,
 	baseRanks: 1,
 	enhancedRanks: 0,
-	resistance: "",
-	
+	resistedBy: "",
+	affectedTrait: "",
+
 	type: "",
 	action: "",
 	range: "",
@@ -34,6 +35,10 @@ const powerDefault = {
 	alternateEffects: [],
 
 	removable: 0,
+
+	totalRanks: function(){
+		return parseInt(this.baseRanks + this.enhancedRanks);
+	},
 
 	totalExtraPerRank: function() {
 		let sum = 0;
@@ -172,6 +177,9 @@ const _EffectsList = [
 			+ "<p>Alvo de Aflição faz teste de resistência ao final de cada turno para tirar condições do primeiro e segundo grau. Condições de terceiro grau requerem um minuto de recuperação ou ajuda exterior, como a perícia Tratamento ou o efeito Cura (CD 10 + graduação).</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+				return "";
+			},
 		},
 	
 		{
@@ -195,6 +203,10 @@ const _EffectsList = [
 			+ "<p>Você pode usar Alongamento para fazer ataques \"de toque\" com uma distância maior alongado seus membros. Uma vez alongados, você pode fazer ataques corpo-a-corpo dentro de seu novo alcance como uma ação padrão. Se você não pode perceber o alvo exatamente (você alongar ao redor de uma quina, por exemplo), aplique as regras de camuflagem (veja Camuflagem em Ação & Aventura). Além disso, Alongamento permite que você embrulhar e enredar oponentes, logo lhe concede um bônus de +1 por graduação em agarrar (limitado pelo NP).</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function(ranks) {
+				let distance = _RanksMeasuresTable.find( elem => elem[0] == ranks )[3];
+				return "Distância de "+ distance + " e bônus de "+ ranks +" para agarrar";
+			},
 		},
 	
 		{
@@ -214,11 +226,11 @@ const _EffectsList = [
 			],
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
-			+ "<li><b>Custo</b>: 1-2 por graduação.</li>"
-			+ "<li><b>Tipo</b>: Controle.</li>"
-			+ "<li><b>Ação</b>: Padrão.</li>"
-			+ "<li><b>Distância</b>: Graduação.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ 	"<li><b>Custo</b>: 1-2 por graduação.</li>"
+			+ 	"<li><b>Tipo</b>: Controle.</li>"
+			+ 	"<li><b>Ação</b>: Padrão.</li>"
+			+ 	"<li><b>Distância</b>: Graduação.</li>"
+			+ 	"<li><b>Duração</b>: Sustentado.</li>"
 			+ "</ul>"
 			+ "<p>Você pode mudar o ambiente: aumentar ou diminuir a temperatura, criar luz, fazer chover e assim por diante (veja Ameaças Ambientais no Ação & Aventura). Seu Ambiente afeta um raio de 8 metros ao seu redor com 1 graduação. Cada graduação adicional amplia o raio em uma graduação de distância, para um alcance de mais ou menos 3.200 quilômetros com 20 graduações, o suficiente para alterar o ambiente em um continente inteiro!</p>"
 			+ "<p>Cada um dos efeitos a seguir é um efeito Ambiente separado. Caso tenha um, você pode adquirir outros como Efeitos Alternativos, mas só pode usar um de cada vez. Para manter múltiplos efeitos simultaneamente, some seus custos para o custo total do efeito por graduação ou aplique o modificador Seletivo.</p>"
@@ -230,9 +242,12 @@ const _EffectsList = [
 			+ "<p><b>Luz</b></p> <hr>"
 			+ "<p>Você pode aumentar o nível de luminosidade na área, contra-atacando camuflagem por trevas (mas não outros tipos de camuflagem). Por 1 ponto por graduação, você cria luz suficiente para reduzir camuflagem total para parcial e parcial para nenhuma. Por 2 pontos por graduação, cria luz tão intensa quanto um dia ensolarado, eliminando toda camuflagem concedida por escuridão. Efeitos com o descritor trevas podem ser contra-atacados (veja Contra-Atacando Efeitos).</p>"
 			+ "<p><b>Visibilidade</b></p> <hr>"
-			+ "Por 1 ponto por graduação, você impõe uma penalidade de –2 em testes de Percepção. Por 2 pontos por graduação, impõe uma penalidade de –5. Para um obscurecimento mais significativo, use um efeito de Camuflagem com ataque de área (veja Camuflagem).",
+			+ "<p>Por 1 ponto por graduação, você impõe uma penalidade de –2 em testes de Percepção. Por 2 pontos por graduação, impõe uma penalidade de –5. Para um obscurecimento mais significativo, use um efeito de Camuflagem com ataque de área (veja Camuflagem).</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -255,6 +270,9 @@ const _EffectsList = [
 			+ "<p>Camuflagem contra sentidos visuais custa o dobro (2 graduações para um sentido visual, 4 graduações para todos os sentidos visuais). Você não pode ter camuflagem contra sentidos do tato, uma vez que isso exige ser intangível (veja o efeito Intangibilidade). Assim, com Camuflagem 5, você pode ter camuflagem contra todos os sentidos visuais (4 graduações) e contra audição normal (1 graduação), por exemplo. Com Camuflagem 10 você tem total Camuflagem de todos tipos de sentidos, exceto o tátil.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -287,6 +305,9 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -308,6 +329,9 @@ const _EffectsList = [
 			+ "<p>O custo por graduação de Característica Aumentada é igual ao custo por graduação da característica afetada. A diferença é que Característica Aumentada é um efeito de poder, em vez de uma característica natural e, como tal, pode ser combinada com esforço extra e outros efeitos.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -341,6 +365,9 @@ const _EffectsList = [
 			+ "<p>Você pode se comunicar com plantas, tanto as normais quando criaturas-planta. Isso exige duas graduações de Compreender. A consciência que uma planta tem de seus arredores é limitada, então ela pode não ser capaz de responder perguntas sobre eventos fora da área próxima.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -409,6 +436,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -436,6 +466,9 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -464,6 +497,9 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -501,6 +537,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -525,6 +564,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -638,6 +680,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -663,6 +708,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -691,6 +739,9 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -730,6 +781,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -753,6 +807,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -817,6 +874,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -924,6 +984,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -966,6 +1029,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -1011,6 +1077,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -1049,6 +1118,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -1104,6 +1176,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -1128,6 +1203,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -1153,6 +1231,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	
 		{
@@ -1178,6 +1259,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5027,
@@ -1258,6 +1342,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5028,
@@ -1280,6 +1367,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5029,
@@ -1303,6 +1393,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5030,
@@ -1323,6 +1416,9 @@ const _EffectsList = [
 			+ "<p>Este efeito o protege de dano, fornecendo +1 de Resistência por graduação. Assim, Proteção 4 fornece +4 de Resistência.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5031,
@@ -1345,6 +1441,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5032,
@@ -1419,6 +1518,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5033,
@@ -1441,6 +1543,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5034,
@@ -1464,6 +1569,9 @@ const _EffectsList = [
 			+ "<p>Uma vez que Sentido Remoto se sobrepõe aos seus sentidos normais, você fica vulnerável (à metade de suas defesas ativas normais) enquanto o usa, já que fica menos consciente dos seus arredores imediatos.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5035,
@@ -1631,6 +1739,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5036,
@@ -1654,6 +1765,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5037,
@@ -1713,6 +1827,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5038,
@@ -1737,6 +1854,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5039,
@@ -1757,6 +1877,9 @@ const _EffectsList = [
 			+ "<p>Você pode se mover mais rápido que o normal. Você tem uma graduação de velocidade terrestre igual à sua graduação neste efeito. Isso também melhora todas as formas de movimento baseadas na velocidade terrestre.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 		{
 			id: 5040,
@@ -1777,5 +1900,8 @@ const _EffectsList = [
 			+ "<p>Você pode voar, incluindo flutuar em um mesmo lugar. Você tem uma graduação de velocidade de voo igual à sua graduação neste efeito.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
+			benefits: function() {
+
+			},
 		},
 	];
