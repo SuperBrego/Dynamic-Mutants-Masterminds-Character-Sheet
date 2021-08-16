@@ -4,6 +4,7 @@
 // Grad - Massa - Tempo - Distância - Volume
 const _RanksMeasuresTable = 
 [ 
+  [-6, "500 g", "1/16 de segundo", "12 cm", "1/2 litros"],
   [-5, "1 kg", "1/8 de segundo", "25 cm", "1 litro"],
   [-4, "2 kg", "1/4 de segundo", "50 cm", "2 litros"],
   [-3, "4 kg", "1/2 de segundo", "1 m", "4 litros"],
@@ -41,3 +42,8 @@ const _RanksMeasuresTable =
   [29, "15 milhões t", "1 século", "4 milhões km", "15 milhões m³"],
   [30, "30 milhões t", "2 séculos", "8 milhões km", "30 milhões m³"]
 ];
+
+function FindMass(rank){ return _RanksMeasuresTable.find( elem => elem[0] == rank )[1]; }
+function FindTime(rank){ return _RanksMeasuresTable.find( elem => elem[0] == rank )[2]; }
+function FindDistance(rank){ return _RanksMeasuresTable.find( elem => elem[0] == rank )[3]; }
+function FindVolume(rank){ return _RanksMeasuresTable.find( elem => elem[0] == rank )[4]; }

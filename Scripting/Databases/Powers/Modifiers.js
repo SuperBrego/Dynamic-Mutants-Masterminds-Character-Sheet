@@ -6,7 +6,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true,
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito com este extra é especialmente acurado; você ganha +2 por graduação de Acurado nos testes de ataque feitos com ele. O nível de poder limita o bônus de ataque máximo ganho com qualquer efeito.</p>",
 	},
 	{
@@ -15,7 +15,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true,
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um ser intangível pode usar um efeito com este extra no mundo corpóreo (veja o efeito Intangibilidade). Quando um efeito é usado contra um alvo corpóreo, a graduação do efeito é igual à graduação deste extra, até um máximo igual à graduação total do efeito. Personagens com graduações baixas de Intangibilidade, como 1 a 3, não precisam deste extra para que seus efeitos funcionem no mundo físico, embora possam aplicá-lo à sua graduação de Força para poder exercer Força quando Intangíveis.</p>",
 	},
 	{
@@ -24,7 +24,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true,
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Um efeito com este extra funciona contra alvos intangíveis, além de ter seus efeitos normais contra alvos corpóreos. Com 1 graduação, o efeito funciona à metade de sua graduação normal contra alvos intangíveis (arredondado para baixo); com 2 graduações, funciona à sua graduação total contra eles.</p>",
 	},
@@ -34,7 +34,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 0,
+		totalRanks: 0,
 		description: "<p>Este modificador permite que efeitos normalmente resistidos por Fortitude funcionem em objetos não vivos (sem Vigor). No geral, este extra se aplica a efeitos como Cura ou Enfraquecer, permitindo que eles afetem objetos da mesma forma que afetam criaturas vivas. Caso o efeito Afete Apenas Objetos, funcionando em objetos mas não em criaturas vivas, tem um modificador geral de +0.</p>"
 		+ "<p>Objetos não fazem testes de salvamento; o efeito funciona no objeto alvo com seu grau máximo de sucesso. De acordo com o mestre, alguém segurando, carregando ou vestindo um objeto pode fazer um teste de salvamento de Esquiva contra o efeito, representando a retirada do objeto da linha de efeito no último momento.</p>"
 		+ "",
@@ -45,7 +45,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este modificador permite que efeitos normalmente resistidos por Fortitude funcionem em objetos não vivos (sem Vigor). No geral, este extra se aplica a efeitos como Cura ou Enfraquecer, permitindo que eles afetem objetos da mesma forma que afetam criaturas vivas. Caso o efeito Afete Apenas Objetos, funcionando em objetos mas não em criaturas vivas, tem um modificador geral de +0.</p>"
 		+ "<p>Objetos não fazem testes de salvamento; o efeito funciona no objeto alvo com seu grau máximo de sucesso. De acordo com o mestre, alguém segurando, carregando ou vestindo um objeto pode fazer um teste de salvamento de Esquiva contra o efeito, representando a retirada do objeto da linha de efeito no último momento.</p>"
 		+ "",
@@ -56,7 +56,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 0,
+		totalRanks: 0,
 		description: "<p>Este extra permite que você conceda a outra pessoa o uso de um efeito pessoal. Você deve tocar o alvo como uma ação padrão, e ele tem controle do uso do efeito, embora você possa tomá-lo de volta quando desejar, como uma ação livre. Caso você seja incapaz de manter o efeito, ele deixa de funcionar, mesmo que outra pessoa o esteja usando. Tanto você quanto seu(s) alvo(s) podem usar o efeito simultaneamente.</p>"
 		+ "<p>Caso o efeito Afeta Outros Apenas, mas não você, tem um modificador geral de +0.</p>"
 		+ "",
@@ -67,7 +67,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false,
 		ranked: false, 
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este extra permite que você conceda a outra pessoa o uso de um efeito pessoal. Você deve tocar o alvo como uma ação padrão, e ele tem controle do uso do efeito, embora você possa tomá-lo de volta quando desejar, como uma ação livre. Caso você seja incapaz de manter o efeito, ele deixa de funcionar, mesmo que outra pessoa o esteja usando. Tanto você quanto seu(s) alvo(s) podem usar o efeito simultaneamente.</p>"
 		+ "<p>Caso o efeito Afeta Outros Apenas, mas não você, tem um modificador geral de +0.</p>"
 		+ "",
@@ -78,7 +78,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Sempre que você aplicar este modificador a um efeito de alcance perto, estende seu alcance em 1,5 metros. Isso pode representar um efeito de curto alcance, como um chicote, lança ou arma semelhante.</p>"
 		+ "",
 	},
@@ -88,7 +88,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este modificador estende a distância de um efeito à distância. Cada graduação de Alcance Estendido dobra todas as categorias de alcance de um efeito. Então, 1 graduação tem alcance curto de (graduação x 15 metros), alcance médio de (graduação x 30 metros) e alcance longo de (graduação x 60 metros). Cada graduação adicional dobra o alcance mais uma vez. O mestre define o limite máximo de Alcance Estendido que um efeito pode ter; como regra geral, efeitos usados na superfície do planeta estão limitados pela distância do horizonte (além do qual a curvatura do planeta faz com que seja impossível ver qualquer coisa para mirá-los). Na Terra ao nível do mar, isso é mais ou menos 6 km (graduação de distância 10).</p>"
 		+ "",
 	},
@@ -98,7 +98,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este extra permite que um efeito que normalmente funciona em um único alvo afete uma área. Não é necessário nenhum teste de ataque; o efeito simplesmente preenche a área designada, baseado no tipo de modificador. Alvos em potencial na área pode fazer um teste de salvamento de Esquiva (CD 10 + graduação do efeito) para evitar parte do efeito (representando abaixar-se para obter cobertura, sair do caminho, e assim por diante). Um teste de salvamento bem-sucedido reduz o efeito Área para a metade de sua graduação normal contra o alvo (arredondado para baixo, mínimo 1 graduação).</p>"
 		+ "<p><h2>Forma</h2></p>"
 		+ "<p>Escolha uma das opções a seguir.</p>"
@@ -119,7 +119,7 @@ const _ModifiersList = [
 		name: "Ataque",
 		extra: true,
 		flat: false, 
-		ranks: 0,
+		totalRanks: 0,
 		description: "<p>Este extra se aplica a efeitos de alcance pessoal, transformando-os em efeitos de ataque. Exemplos incluem Encolhimento e Teleporte. Diferente da maioria dos extras, o custo do efeito não muda, mas seu funcionamento sim.</p>"
 		+ "<p>O efeito não funciona mais em você (então, um Ataque de Teleporte não pode ser usado para teleportar você mesmo, por exemplo). Ele afeta uma criatura de qualquer tamanho ou 25 kg de massa inanimada. O efeito tem alcance perto e exige uma ação padrão e um teste de ataque para tocar o alvo. O alcance pode ser melhorado com o extra À Distância, e a ação exigida, com o extra Ação. O alvo pode fazer um salvamento, determinado quando o efeito é transformado em ataque. No geral, Esquiva ou Vontade são os mais apropriados. Um teste bem-sucedido nega o efeito.</p>"
 		+ "<p>Você também deve definir uma circunstância relativamente comum que nega um efeito de Ataque por completo, como campos de força ou a habilidade de bloquear teleportes de um Ataque de Teleporte. Você controla o efeito, e o mantém, caso ele tenha duração mais longa que instantânea</p>"
@@ -132,7 +132,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked:true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este modificador pode ser aplicado a um efeito que permite que você carregue ou afete uma certa quantidade de massa, normalmente um efeito de movimento como Teleporte ou Viagem Dimensional. Cada graduação deste extra aumenta a graduação de massa que você pode carregar ou mover com o efeito em 1. Aumentar Massa 3 para Teleporte permite que você carregue até 250 kg de massa extra consigo quando se teleporta, por exemplo.</p>"
 		+ "",
 	},
@@ -143,7 +143,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>O efeito Característica também pode servir de modificador de efeito, em essência adicionando habilidades ou benefícios menores a um efeito básico. Embora listado aqui como um extra, isso é em essência o mesmo que ter Característica Ligada ao efeito básico (veja o modificador Ligado a seguir); a Característica é parte intrínseca do poder geral, em vez de algo separado.</p>"
 		+ "<p>Da mesma forma que com o efeito Característica, um extra Característica deveria ser significante o suficiente para valer pelo menos 1 ponto de personagem e não ser apenas baseado no descritor do poder. Por exemplo, um efeito de Dano À Distância não precisa de uma Característica para atear fogo; isso é parte do descritor \"fogo\" e pode ser igualmente vantajoso e problemático. Um efeito de Dano À Distância que \"marca\" de maneira duradoura seu alvo com uma marca visível e rastreável, por outro lado, é um efeito com uma Característica.</p>"
 		+ "",
@@ -155,7 +155,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Efeitos contagiosos funcionam tanto no alvo quanto em qualquer um entrando em contato com o alvo. Novos alvos resistem ao efeito normalmente. Eles também podem se tornar contagiosos, e o efeito dura até que todos os seus traços tenham sido eliminados. Um efeito Contagioso também é eliminado caso sua duração expire. Exemplos de feitos com este extra incluem Aflições \"pegajosas\" que prendem qualquer um que as toque, efeitos de Enfraquecer baseados em toxinas ou doenças, ou até mesmo um efeito Nulificar que se espalha de uma vítima para outra.</p>"
 		+ "",
 	},
@@ -165,7 +165,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Você pode mudar os descritores de um efeito com este modificador, alterando-os como uma ação livre uma vez por rodada. Com 1 graduação, você pode aplicar qualquer descritor de um grupo pequeno de descritores relacionados, como clima, eletromagnético, temperatura, e assim por diante. Com 2 graduações, você pode aplicar qualquer descritor de um grupo amplo, como qualquer descritor de metal, magia ou tecnológico. O mestre decide se determinado descritor é apropriado em conjunção com um efeito específico e este modificador.</p>"
 		+ "",
@@ -177,7 +177,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 3,
 		description: "<p>Este modificador permite que um efeito funcione em alvos em outras dimensões (caso exista alguma na série). Você afeta sua localização aproximada na outra dimensão como se estivesse lá, calculando modificadores de alcance a partir desse ponto. Para muitos efeitos, você pode precisar de um Sentido Remoto Dimensional para mirá-los. Alvos em outras dimensões que você não pode perceber têm camuflagem total contra você. Uma graduação em Dimensional afeta uma única outra dimensão. Duas graduações afetam qualquer dimensão de um grupo relacionado (dimensões místicas, planos demoníacos, etc.). Três graduações afetam qualquer dimensão do cenário.</p>"
 		+ "",
@@ -189,7 +189,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Efeitos têm um alcance padrão: pessoal, perto, à distância ou percepção. Veja Alcance em Poderes para detalhes. Este modificador aumenta o alcance de um efeito. Escolha uma das opções a seguir. Aumentar o alcance de um efeito de pessoal para perto exige o extra Afeta Outros ou o extra Ataque. Transformar um efeito perto em um efeito de percepção à distância exige duas aplicações deste extra, para um total de +2 por graduação.</p>"
 		+ "<ul>"
@@ -206,7 +206,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Efeitos têm uma duração padrão: instantâneo, sustentado, contínuo ou permanente. Veja Duração em Poderes para detalhes. Este modificador aumenta a duração de um efeito. Escolha uma das opções abaixo.</p>"
 		+ "<p>Cada graduação adicional deste modificador permite que o poder seja dividido mais uma vez, então 2 graduações permitem que um efeito seja dividido entre três alvos. Um efeito não pode ser dividido para menos de 1 graduação por alvo, e não pode se aplicar mais de uma divisão contra o mesmo alvo</p>"
 		+ "<ul>"
@@ -223,7 +223,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 3,
 		description: "<p>Um efeito com duração instantânea com este modificador afeta o alvo uma vez de imediato (quando o efeito é usado) e então de novo na rodada seguinte, no final do turno do atacante. O alvo pode fazer testes de salvamento normais contra o efeito secundário.</p>"
 		+ "<p>Os Efeitos Secundários não se somam; então, se você ataca um alvo com seu Efeito Secundário na rodada seguinte a um acerto crítico, ele não afeta o alvo duas vezes; simplesmente atrasa o segundo efeito por mais uma rodada. Você pode atacar o alvo com um efeito diferente, entretanto. Assim, por exemplo, caso você acerte um alvo com um Efeito Secundário de Dano e, na rodada seguinte, acerte com uma Aflição, o alvo sofre tanto o efeito da Aflição quanto do Dano Secundário.</p>"
@@ -236,7 +236,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Você pode \"setar\" que um efeito com duração instantânea com este modificador se ative em circunstâncias específicas, como em resposta a um perigo específico, após um determinado período de tempo, em resposta a um evento específico e assim por diante - escolhido quando você aplica o modificador. Uma vez escolhido, o gatilho não pode ser alterado.</p>"
 		+ "<p>As circunstâncias devem ser detectáveis por seus sentidos. Você pode adquirir efeitos de Sentidos Limitado e Ligado a Engatilhado, se desejar. Armar o efeito requer a mesma ação que usá-lo normalmente.</p>"
 		+ "<p>Um efeito Engatilhado em espera pode ser detectado com um teste de Percepção (CD 10 + graduação de efeito) e em alguns casos desarmado com um teste de perícia ou poder bem sucedido (como Prestidigitação, Tecnologia, Nulificar ou outro efeito de neutralização) com uma CD de (10 + graduação de efeito).</p>"
@@ -250,7 +250,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Uma defesa com este modificador é altamente resistente. Qualquer efeito com um modificador de dificuldade de salvamento igual ou menor que a metade da graduação de Impenetrável (arredondado para cima) não tem efeito. Então, por exemplo, Resistência Impenetrável 9 ignora Dano com 5 graduações ou menos. Efeitos Penetrantes podem atravessar Resistência Impenetrável (veja a descrição do extra Penetrante). Impenetrável foi pensado primariamente para salvamento de Resistência, para lidar com personagens imunes a certas quantidades de dano, mas pode ser aplicado a outras defesas com a permissão do mestre, para refletir personagens com defesas confiáveis contra perigos específicos.</p>"
 		+ "",
 	},
@@ -260,7 +260,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito com este modificador é parte inata de sua natureza e não é afetado por Nulificar. O mestre deveria ter cuidado ao permitir a aplicação de Inato; o efeito deve ser uma característica essencial ou nascida com o personagem, como o tamanho de um elefante ou a natureza intangível de um fantasma. Caso o efeito não seja algo normal à espécie ou tipo do personagem, provavelmente não é inato.</p>"
 		+ "",
 	},
@@ -270,7 +270,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Efeitos como Cura e Regeneração não podem curar o dano causado por um efeito com este modificador; o alvo deve se recuperar à razão normal. Efeitos com o extra Persistente podem curar dano Incurável.</p>"
 		+ "",
 	},
@@ -280,7 +280,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 4,
 		description: "<p>Um efeito à distância com este modificador pode se originar de um ponto que não seja o usuário, ignorando cobertura entre o usuário e o alvo, como paredes e outras barreiras, desde que o impedimento não conceda cobertura entre o ponto de origem do efeito e o alvo. Um efeito Indireto normalmente se origina de um ponto fixo longe de você. Em alguns casos, um efeito Indireto pode contar como um ataque surpresa.</p>"
 		+ "<ul>"
@@ -303,7 +303,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 0,
+		totalRanks: 0,
 		description: "<p>Este modificador se aplica a dois ou mais efeitos, ligando-os para que funcionem em conjunção como se fossem um só. Os efeitos Ligados devem operar ao mesmo alcance. A ação exigida para usar os efeitos combinados é a mais longa entre os componentes e eles usam um único teste de ataque (caso isso seja necessário) e um único teste de salvamento (caso ambos os efeitos usem o mesmo tipo de teste). Se os efeitos tiverem salvamentos diferentes, os alvos testam contra cada efeito em separado. Efeitos Alternativos diferentes não podem ser Ligados, uma vez que não podem ser usados ao mesmo tempo por definição. No geral, o mesmo efeito não pode ser Ligado a si mesmo para \"multiplicar\" os resultados de um teste de salvamento falho (como dois efeitos de Dano Ligado que causam “o dobro do dano” no caso de um teste falho).</p>"
 		+ "<p>Este modificador não muda o custo dos efeitos componentes; ele simplesmente soma seus custos juntos para obter o custo do efeito combinado.</p>"
 		+ "<p><i><b>Exemplo:</b> Capitão Trovão tem a habilidade de disparar relâmpagos que causam choque em seus alvos com eletricidade e ensurdecem com trovões poderosos. Isso é um efeito de Dano À Distância (relâmpago), que custa 2 pontos por graduação, Ligado a uma Aflição À Distância (trovão ensurdecedor), que custa 2 pontos por graduação. O efeito combinado custa 4 pontos por graduação."
@@ -317,7 +317,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 0,
+		totalRanks: 0,
 		description: "<p>Um efeito multiataque permite que você acerte múltiplos alvos, ou um único alvo múltiplas vezes, com a mesma ação padrão. Multiataque pode se aplicar a qualquer efeito que exija um teste de ataque. Há três maneiras de um efeito Multiataque ser usado.</p>"
 		+ "<p><h2>Único Alvo</h2></p>"
 		+ "<p>Para usar Multiataque contra um único alvo, faça seu teste de ataque normalmente. Caso seja bem-sucedido, aumente a CD do teste de salvamento do ataque em +2 para cada dois graus de sucesso, e +5 para três graus ou mais. Este bônus de circunstância não conta contra os limites de nível de poder.</p>"
@@ -334,7 +334,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Seu efeito ignora Resistência Impenetrável até certo grau; o alvo deve fazer um teste de salvamento contra uma graduação de efeito igual à sua graduação de Penetrante. Assim, caso um efeito de graduação 4 (Penetrante 2) acerte um alvo com Impenetrável 9, o alvo deve resistir um efeito de graduação 2 (igual à graduação de Penetrante). Se o efeito fosse de graduação 6, o alvo teria de resistir contra o efeito total de qualquer maneira, uma vez que a graduação é maior que metade da graduação de Impenetrável.</p>"
 		+ "<p>Você não pode ter uma graduação de Penetrante maior que sua graduação no próprio efeito.</p>"
 		+ "",
@@ -345,7 +345,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um extra de poder personalizado que pode ser usado para qualquer fim.</p>"
 		+ "",
 	},
@@ -355,7 +355,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um extra de poder personalizado que pode ser usado para qualquer fim.</p>"
 		+ "",
 	},
@@ -365,7 +365,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito com este modificador tem uma salvamento diferente do normal. A dificuldade do teste de salvamento continua a mesma, apenas o salvamento em si é que muda. Caso a mudança seja para um salvamento em geral mais baixa (e, assim, mais vantajosa), este extra aumenta o custo por graduação em +1. Se, na opinião do mestre, não houver aumento real na eficácia, apenas uma mudança no salvamento, ele tem modificador de +0.</p>"
 		+ "",
 		chosenRankDescription: "",
@@ -383,7 +383,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Você pode remover condições causadas por um efeito Reversível à vontade como uma ação livre, desde que o alvo esteja dentro do alcance do efeito. Exemplos incluem remover as condições de dano causadas por um efeito de Dano ou remover uma Aflição instantaneamente. Você normalmente não tem controle sobre os resultados desses efeitos.</p>"
 		+ "",
 	},
@@ -393,7 +393,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Você pode ricochetear ou desviar um efeito de ataque com este modificador de uma superfície sólida para mudar sua direção. Isso permite que você ataque dobrando esquinas, supere cobertura e possivelmente realize ataques surpresa contra um oponente. Isso não permite que você afete múltiplos alvos. O “desvio” não tem efeito além de mudar a direção do ataque.</p>"
 		+ "<p>Você deve ser capaz de definir uma trilha clara para seu ataque, que deve seguir uma linha reta entre cada ricochete. Cada graduação em Ricochetear permite que você desvie o ataque uma vez antes de ele acertar. Ricochetear pode conceder um bônus para acertar devido à surpresa, de acordo com o mestre.</p>"
 		+ "",
@@ -404,7 +404,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito resistível com este extra é discriminante, permitindo que você decida quem é ou não afetado por ele. Isso é muito útil para efeitos de área (veja o extra Área). Você deve ser capaz de perceber de maneira acurada um alvo para decidir se ele vai ou não ser afetado. Para um grau de seletividade com efeitos não resistíveis, use o modificador Preciso.</p>"
 		+ "",
 	},
@@ -414,7 +414,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: false, 
 		ranked: false,
-		ranks: 0,
+		totalRanks: 0,
 		description: "<p>Aplicado a um efeito de duração permanente, este modificador torna sua duração em sustentada, o que exige uma ação livre para ser usado (em vez de nenhuma, como outros efeitos permanentes). O benefício é que o efeito sustentado pode ser melhorado usando esforço extra, inclusive para realizar façanhas de poder. O problema é que o efeito exige uma ação livre todo turno para ser mantido, e caso você seja incapaz disso, o efeito é desligado.</p>"
 		+ "<p><i><b>Exemplo:</b> o efeito Proteção é permanente, o que significa que sempre protege o personagem, mas concentrar-se ou esforçar-se não torna o efeito mais protetor, e o personagem também não pode usá-lo para façanhas de poder. Proteção Sustentada pode ser ligado e desligado, melhorado com esforço extra e usado para façanhas de poder. Isso pode representar um poder como um campo de força ou densidade ampliada.</i></p>"
 		+ "",
@@ -425,7 +425,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Efeitos sutis não são perceptíveis. Um efeito sutil pode ser usado para pegar um alvo desatento e em alguns casos se qualifica para um ataque surpresa. Com 1 graduação, o efeito se torna difícil de ser percebido; um teste de Percepção com CD 20 é necessário, ou o efeito é perceptível apenas a certos sentidos exóticos (de acordo com o mestre). Com 2 graduações, o efeito se torna completamente não detectável.</p>"
 		+ "",
@@ -437,7 +437,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este modificador concede a um efeito de ataque à distância uma oportunidade adicional de atingir o alvo. Caso um teste de ataque com um efeito Teleguiado falhe, ele tenta acertar o alvo de novo no início do seu próximo turno, o que exige apenas uma ação livre para manter e permite que você realize outras ações, incluindo fazer outro ataque. Cada graduação em Teleguiado concede ao efeito um teste de ataque adicional, mas ainda assim ele só ganha um teste por rodada.</p>"
 		+ "<p>O efeito Teleguiado usa o mesmo sentido acurado que o ataque original para \"rastrear\" seu alvo, então camuflagem eficaz contra esse sentido pode confundir o efeito e fazer com que ele erre. Caso um ataque Teleguiado erre devido à camuflagem, ele perde a “trava” no alvo e não ganha nenhuma nova tentativa de acertar. Você pode pegar Sentidos Ligados ao efeito Teleguiado, caso desejado (para criar coisas como mísseis guiados por calor ou por radar, por exemplo). Caso um ataque Teleguiado seja contra-atacado antes de acertar, ele perde quaisquer chances de acertar. O mesmo vale caso ele acerte um alvo diferente.</p>"
 		+ "",
@@ -448,7 +448,7 @@ const _ModifiersList = [
 		extra: true,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Este modificador é parecido com o modificador Sutil (veja esta mesma seção), exceto pelo fato de que Traiçoeiro torna o resultado de um efeito mais difícil de detectar em vez de tornar o próprio efeito mais difícil de ser detectado. Por exemplo, um alvo sofrendo de Dano Traiçoeiro não está nem mesmo consciente de que foi ferido. Alguém afetado por um Enfraquecer Traiçoeiro sente-se bem até que algum tipo de deficiência deixe óbvio que o indivíduo está mais fraco, e assim por diante. O alvo de um efeito traiçoeiro pode ficar sem saber do perigo até que seja tarde demais!</p>"
 		+ "<p>Um efeito Traiçoeiro é detectável tanto por um teste de perícia de CD 20 (normalmente Percepção, embora perícias como Especialidade, Intuição e Tratamento também se apliquem em outros casos) quanto por um sentido especialmente incomum, como um efeito mágico Traiçoeiro perceptível através de Detectar Magia ou de Consciência de Magia. Perceba que Traiçoeiro não torna o efeito em si mais difícil de ser notado; aplique o modificador Sutil para isso. Então, é possível para um efeito Traiçoeiro ativo ser percebido: o alvo pode perceber o uso do efeito, mas não seus resultados: o efeito parece \"inofensivo\" ou não parece “fazer nada”, uma vez que o alvo não consegue detectar seus resultados.</p>"
 		+ "",
@@ -462,7 +462,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 3,
 		description: "<p>Usar um efeito exige um dos seguintes tipos de ação: padrão, movimento, livre ou reação. Cada aumento na ação exigida do tipo de ação básica de um efeito (livre para movimento, por exemplo) vale –1 por modificador de graduação.</p>"
 		+ "",
@@ -473,7 +473,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 3,
 		description: "<p>Cada graduação em Alcance Reduzido diminui os alcances curto, médio e longo de um efeito. Uma graduação nesta falha dá a um efeito um alcance curto de 3 metros x graduação de poder, um alcance médio de 7,5 metros x graduação de poder, e um alcance longo de 15 metros x graduação de poder. Uma segunda graduação diminui os multiplicadores para 1,5 metros, 3 metros e 7,5 metros, e uma terceira graduação os diminui para 60 centímetros, 1,5 metros e 3 metros. Três graduações é o máximo que um personagem pode ter nesta falha.</p>"
 		+ "",
@@ -484,7 +484,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Efeitos têm alcance perto, à distância ou percepção. Diminuir o alcance de um efeito em um passo (de à distância para perto, por exemplo) vale 1 ponto por graduação. Alguns efeitos têm seu alcance determinado pela graduação. Para alterar o alcance do efeito, aumente ou diminua sua graduação; esta falha então não se aplica. Efeitos que têm alcance perto como padrão não podem ter seu alcance diminuído ainda mais.</p>"
 		+ "",
@@ -495,7 +495,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Um poder com esta falha exige uma ação para ser preparado ou ativado antes que seus efeitos sejam utilizáveis. Caso o poder exija uma ação de movimento para ser ativado, a falha é de –1 ponto. Caso exija uma ação padrão, a falha é de –2 pontos. Uma Ativação que leve menos de uma ação de movimento não é uma falha, embora possa se qualificar como uma complicação (veja Perda de Poder para detalhes de complicações).</p>"
 		+ "<p>Ativação não tem outro efeito além de fazer com que todos os efeitos de um poder estejam disponíveis. Os efeitos em si mesmos ainda exigem suas ações normais para serem usados. Você pode usar os efeitos de um poder no mesmo turno em que os ativa, desde que tenha ações suficientes para fazê-lo. Caso o poder seja desativado — voluntariamente ou involuntariamente via efeitos como Nulificar — você deve ativá-lo de novo para usar qualquer um de seus efeitos.</p>"
@@ -511,7 +511,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito de ataque com esta falha exige que você agarre com sucesso um alvo antes de usar o efeito (veja Agarrar). No geral, isso se aplica a um efeito que tenha alcance perto, uma vez que você tem de estar em combate corpo-a-corpo para agarrar. Caso o alcance padrão do efeito não seja perto, aplique também o modificador Perto. Caso falhe em agarrar, você não pode usar o efeito. Se a tentativa de agarrar for bem sucedida, o efeito ocorre automaticamente como uma reação.</p>"
 		+ "<p><i><b>Exemplo:</b> Lampreia tem um toque drenador que é um efeito baseado em Agarrar com Enfraquecer Força. Assim, o monstruoso vilão tem que usar uma ação padrão para agarrar antes de usá-lo. Caso seu teste de ataque corpo-a-corpo acerte, o alvo faz um teste de salvamento de Esquiva ou de Fortitude contra o teste de Força de Lampreia. Caso falhe, o alvo então faz um teste de salvamento de Fortitude contra o efeito Enfraquecer do vilão, para ver quanta Força Lampreia consegue drenar.</i></p>"
 		+ "<p>Em essência, esta falha é uma forma de Resistível, com um teste de agarrar em vez de um teste de salvamento normal (veja a falha Resistível para mais detalhes).</p>"
@@ -523,7 +523,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito com esta falha faz com que você sofra um nível de fatiga quando o usa. Você se recupera dessa fatiga normalmente, e pode usar pontos de vitória para sobrepujá-la, gastando o ponto de vitória no início da rodada seguinte a usar o efeito cansativo. Em essência, o poder exige esforço extra para ser usado (veja Esforço Extra). Isso torna Cansativo em uma falha útil para criar um efeito que você só possa usar com esforço extra.</p>"
 		+ "<p>Cansativo é normalmente aplicado a apenas algumas graduações de um efeito, para representar um nível mais alto do efeito, utilizável apenas com esforço extra. Por exemplo, um herói pode ter um efeito de Dano com 12 graduações, mas normalmente usa apenas 8 graduações. As 4 graduações restantes são Cansativas, então usá-las deixa o herói fatigado rápido. Um efeito Cansativo pode ser combinado com esforço extra, mas a fatiga se soma, causando no mínimo dois níveis de fatiga por uso.</p>"
 		+ "",
@@ -534,7 +534,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>O alvo de um efeito Dependente de Sentido deve ser capaz de perceber o efeito para que ele funcione. O alvo ganha um teste de salvamento de Esquiva. Sucesso significa que o alvo consegue olhar para o lado, cobrir os ouvidos, etc., e o efeito não funciona. Caso contrário, o efeito funciona normalmente e o alvo faz o teste de salvamento de sempre contra o efeito, se houver algum.</p>"
 		+ "<p>Oponentes conscientes de um efeito Dependente de deliberadamente: olhar para o lado, cobrir ou bloquear os ouvidos, etc. Isso concede um bônus de +10 em testes de salvamento contra o efeito, mas também dá camuflagem parcial contra o sentido em questão. Um oponente incapaz de usar um sentido (cego, surdo, etc.) é imune a todos os efeitos dependentes dele. Oponentes podem fazer isso fechando os olhos, usando plugues nos ouvidos ou nariz, ou usando outro efeito, como Camuflagem.</p>"
 		+ "<p>Isso concede camuflagem total contra o sentido em questão. Efeitos sensoriais são Dependentes de Sentido por definição, e não podem receber esta falha. Para dar a um alvo salvamento adicional contra um efeito sensorial, use a falha Resistível Sentido também podem bloquear o sentido em questão.</p>"
@@ -547,10 +547,9 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Sempre que você usa um efeito com esta falha, ele perde 1 graduação de eficiência. Para efeitos com duração mais longa que instantâneo, cada rodada é considerada \"um uso\". Quando o efeito alcançar 0 graduações, ele deixa de funcionar. Um efeito dissipado pode ser \"recuperado\" de alguma forma, sendo recarregado, com descanso, reparos, e assim por diante. O mestre decide quando e como um efeito dissipado se recupera, mas no geral deve ser algo que ocorra fora de combate e que leve pelo menos uma hora. O mestre deve permitir que um herói recupere um efeito dissipado imediata e completamente gastando um ponto de vitória.</p>"
 		+ "",
-		additionalDescription: "",
 	},
 	{
 		id: 11008,
@@ -558,10 +557,9 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Usar um efeito com Distração exige mais concentração que o normal, fazendo com que você fique vulnerável quando usa o efeito, até o início do seu próximo turno.</p>"
 		+ "",
-		additionalDescription: "",
 	},
 	{
 		id: 11009,
@@ -569,7 +567,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Falhar no uso de um efeito com esta falha causa algum efeito colateral problemático. Falhas incluem errar um efeito de ataque, ou o alvo resistir com sucesso contra o efeito. Caso o efeito colateral ocorra sempre que você usar o efeito, seja você bem-sucedido ou não, ele vale –2 por graduação.</p>"
 		+ "<p>A natureza exata do efeito colateral fica a seu cargo e do mestre. Como regra geral, deveria ser um efeito de mais ou menos com o mesmo valor que o efeito com esta falha. Então, um efeito com um custo de 20 pontos deveria ter um efeito colateral de 20 pontos. Efeitos colaterais típicos incluem Aflição, Dano ou Enfraquecer, ou o efeito básico em si mesmo (em essência, ele rebate e afeta você). O Efeito Colateral não exige um teste de ataque e afeta apenas você, embora o mestre possa permitir alguns Efeitos Colaterais com o modificador Área, em uma avaliação caso a caso. Você pode fazer um teste de salvamento normal contra o Efeito Colateral. Caso você seja imune a seus próprios poderes, você não é imune a seus efeitos colaterais.</p>"
 		+ "<p>O mestre também pode permitir uma Complicação Efeito Colateral que, em essência, impõe uma complicação sobre você sem recompensá-lo com um ponto de vitória. Veja Complicações.</p>"
@@ -582,7 +580,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito com esta falha exige um teste de algum tipo — normalmente um teste de perícia — com uma classe de dificuldade igual a 10 + graduações em Exige Teste. Caso o teste falhe, o efeito não funciona, embora a ação exigida para usá-lo tenha sido gasta (então, tentar ativar um efeito com uma ação padrão leva uma ação padrão, tenha o teste sido bem-sucedido ou não).</p>"
 		+ "<p>Caso o teste seja bem-sucedido, o personagem ganha o uso de 1 graduação do efeito por ponto que o teste supere a CD. Assim, um teste com resultado 14 permite que o personagem use até 4 graduações do efeito. Caso uma graduação menor do efeito não faça nada, então é como se o teste tivesse falhado.</p>"
 		+ "<p>O teste exigido ocorre como parte da ação para usar o efeito e não concede outro benefício que não seja ajudar a ativá-lo. Modificadores normais se aplicam ao teste, e caso você seja incapaz de fazer o teste exigido por alguma razão, o efeito não funciona.</p>"
@@ -608,7 +606,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito Inconstante não funciona o tempo todo. Role um dado a cada rodada antes de usar ou de manter o efeito. Caso o resultado seja 10 ou menos, ele não funciona nesta rodada, mas ainda assim você gastou a ação exigida pelo efeito. Você pode rolar de novo na próxima rodada para ver se ele funciona, embora deva gastar a ação normal necessária para ativar o efeito de novo. Gastar um ponto de personagem em seu \"teste de constância\" permite que você seja bem-sucedido automaticamente (uma vez que o resultado será no mínimo 11).</p>"
 		+ "<p>Como alternativa, em vez de ter de fazer um teste de constância, você pode escolher ter cinco usos em que seu efeito funciona normalmente, então ele deixa de funcionar por completo até que você possa se \"recuperar\" de alguma forma (veja a falha Dissipação para mais sobre isso). O mestre pode permitir que você gaste um ponto de vitória para recuperar automaticamente um poder Inconstante usado.</p>"
 		+ "<table class='BehindTheMask-Table'>"
@@ -626,7 +624,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Você não tem controle de um efeito com esta falha. O mestre é quem decide quando e como seu efeito funciona (em essência, tornando-o uma ferramenta de trama). Esta falha é mais adequada para poderes misteriosos fora do controle do jogador ou para efeitos com os quais o mestre e sente mais à vontade de ter sob seu controle direto.</p>"
 		+ "",
 	},
@@ -636,7 +634,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito com esta falha é difícil de controlar ou completamente impreciso. Cada graduação impõe uma penalidade de –2 nos testes de ataque com o efeito.</p>"
 		+ "",
 	},
@@ -646,7 +644,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Um efeito com esta falha não é eficaz o tempo todo. Poderes limitados se dividem em dois tipos: aqueles utilizáveis apenas em certas situações, e aqueles utilizáveis apenas em certas coisas. Por exemplo, Utilizável Apenas Quando Cantando Alto, Apenas Quando Voando, Apenas em Homens (ou Mulheres), Apenas contra Fogo, Não Utilizável em Coisas Amarelas e assim por diante. Como regra geral, o efeito deve perder mais ou menos metade de sua utilidade para se qualificar para este modificador. Qualquer coisa menos limitante é mais bem tratada como uma complicação ocasional.</p>"
 		+ "",
@@ -657,7 +655,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>As graduações de um efeito com esta falha se limitam a aumentar a classe de dificuldade de teste de resistência do efeito apenas e não aumentam qualquer outro aspecto do efeito. Este efeito não se aplica a efeitos — como uma aflição ou Dano — onde o grau de falha de um teste de resistência determina o resultado. É destinado principalmente para efeitos não ofensivos com o modificador de Ataque, como o Teletransporte de ataque, onde os graus Limitado à Resistência aumentam a CD do teste mas não afetam o alcance do teleporte, por exemplo.</p>"
 		+ "",
 	},
@@ -667,7 +665,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: true,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Uma Peculiaridade é algum incômodo menor ligado ao efeito, em essência o reverso de uma Característica (veja Característica em Extras). Uma peculiaridade vale, no geral, 2 ou 3 pontos de personagem, e pode ser tão simples quanto uma falha de 1 ponto.</p>"
 		+ "<p>Como acontece com as Características, o mestre deve garantir que uma Peculiaridade é realmente uma falha embora uma falha menor) e não simplesmente parte dos descritores de um poder. Por exemplo, o fato de que um ataque com o descritor \"sônico\" não viaja através do vácuo não é uma Peculiaridade, mas simplesmente parte do descritor \"sônico\" (ainda mais considerando que tal ataque pode ser melhorado por um meio como a água). Por outro lado, um metamorfo incapaz de mudar de cor, ou um telepata incapaz de mentir quando usa Comunicação Mental, têm poderes com Peculiaridades.</p>"
 		+ "<p>O mestre define a graduação (e, assim, o valor) de qualquer Peculiaridade atribuída a um efeito, baseado em quão problemática ela pode ser, de maneira semelhante a definir as graduações da vantagem Benefício e do efeito Característica (vejas essas características para detalhes.</p>"
@@ -679,7 +677,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Um efeito contínuo ou permanente com este modificador é perceptível de alguma forma (veja Percebendo Efeitos de Poder em Poderes). Escolha uma forma de exibição do efeito. Por exemplo, Proteção Perceptível pode tomar a forma de placas de armadura ou de um couro grosso, deixando claro que o personagem é mais resistente que o normal.</p>"
 		+ "",
 	},
@@ -689,7 +687,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>A duração de um efeito contínuo com esta falha se torna permanente. Ele não pode ser desligado, e está sempre ligado como padrão. Caso alguma força externa — normalmente o efeito Nulificar — consiga desligá-lo, ele volta a ser ativado na próxima oportunidade. Além disso, você não pode melhorar um efeito permanente usando esforço extra.</p>"
 		+ "<p>Efeitos permanentes podem ser inconvenientes algumas vezes (incluindo-se aí coisas como ficar permanentemente intangível ou com 8 metros de altura o tempo todo); isso está incluído no valor desta falha.</p>"
@@ -701,7 +699,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: true, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Efeitos com esta falha podem ser \"tirados\" de você, impedindo seu acesso aos efeitos até que você os recupere. No geral, isso significa um poder que reside em um objeto, chamado de dispositivo, que outra pessoa pode pegar. Há duas versões diferentes desta falha cobertas nos parágrafos a seguir; o primeiro é Removível e o segundo é Facilmente Removível.</p>"
 		+ "<p>Um poder removível só pode ser removido quando você está tanto atordoado quanto indefeso, em essência incapaz de resistir, e não pode ser removido durante o tempo de ação. Isso significa que os oponentes em geral só podem remover o poder depois de derrotá-lo (deixando-o incapacitado) ou através de algum tipo de plano por trás do conflito, como uma trama para invadir seu quartel general e roubar o dispositivo mantido lá, por exemplo.</p>"
@@ -726,7 +724,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Quando aplicado a um efeito que normalmente não permite um teste de salvamento, esta falha concede um. Escolha a defesa quando a falha for aplicada. Uma vez que efeitos que funcionam sobre outras pessoas permitem um teste de salvamento por definição, isso quase sempre se aplica a efeitos pessoais que permitem que alguém interagindo com eles evite o efeito no caso de um teste bem-sucedido.</p>"
 		+ "<p>Por exemplo, um efeito de defesa Aparar Aumentado pode refletir a leitura da mente do alvo para antecipar e evitar seus ataques. Isso permite um teste de salvamento de Vontade para evitar o efeito, negando a você o bônus de defesa contra o oponente (e aplicando esta falha ao efeito). Da mesma forma, seu efeito Camuflagem pode ser ilusório em vez de uma verdadeira transformação física, permitindo um teste de salvamento de Vontade para ver através dele. Um efeito de Proteção sustentado pode ser algum tipo de \"campo cinético\" que permite que um atacante faça um teste de salvamento de Fortitude para sobrepujá-lo.</p>"
 		+ "<p>Quando aplicado a um efeito que normalmente já permite teste de salvamento, esta falha concede um teste de salvamento adicional, que pode ser o mesmo, ou outro diferente. O alvo faz os dois testes de salvamento e aplica o melhor dos dois para determinar o resultado do efeito.</p>"
@@ -739,7 +737,7 @@ const _ModifiersList = [
 		extra: false,
 		flat: false, 
 		ranked: false,
-		ranks: 1,
+		totalRanks: 1,
 		description: "<p>Você sofre dano quando uma manifestação de seu efeito sofre dano. Esta falha se aplica apenas a efeitos com manifestações físicas (ou aparentemente físicas), como Criar, Ilusão, ou Invocar, por exemplo. Caso a manifestação de seu poder sofra dano, faça um teste de salvamento contra a graduação de dano do ataque, usando a graduação de seu efeito como bônus no teste de salvamento. Por exemplo, caso a manifestação de um efeito de graduação 10 seja atacado por dano 12, você deve fazer um teste de salvamento contra dano 12 com um bônus de 10 (a graduação do efeito) no lugar de sua Resistência normal.</p>"
 		+ "",
 	},

@@ -77,8 +77,8 @@ input[type=number] {
 .NoBGCells{padding: 10px; border-radius: 8px;}
 .CustomTables{border: 2px solid black; border-radius: 15px;}
 .BehindTheMask-Table{border-radius: 10px; padding: 5px;}
-.BehindTheMask-Header{background-color: black; color: white; padding: 5px; border-radius: 10px;}
-.BehindTheMask-Body{background-color: lightgrey; padding: 5px; border-radius: 10px;}
+.BehindTheMask-Table th{background-color: black; color: white; padding: 5px; border-radius: 10px;}
+.BehindTheMask-Table td{background-color: lightgrey; padding: 5px; border-radius: 10px;}
 
 /*******************************************
 * Habilidades, Defesas e Traços Adicionais
@@ -446,7 +446,7 @@ input[type=number] {
 }
 
 .DeleteButton {
-  font-size: 20px;
+  font-size: 16px;
   padding: 10px;
   width: 50px;
   border-radius: 10px;

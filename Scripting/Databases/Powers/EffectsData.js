@@ -28,6 +28,8 @@ const powerDefault = {
 	range: "",
 	duration: "",
 
+	powerOptions: [],
+
 	// Modificadores
 	extras: [],
 	flaws: [],
@@ -151,6 +153,7 @@ const _EffectsList = [
 			action: "Padrão",
 			duration: "Instantânea",
 			baseCost: 1,
+			baseRanks: 1,
 			conditions: [
 				["Impedido", "Fadigado", "Prejudicado", "Tonto", "Transe", "Vulnerável"],
 				["Atordoado", "Caído", "Compelido", "Desabilitado", "Exausto", "Imóvel", "Indefeso"],
@@ -177,15 +180,14 @@ const _EffectsList = [
 			+ "<p>Alvo de Aflição faz teste de resistência ao final de cada turno para tirar condições do primeiro e segundo grau. Condições de terceiro grau requerem um minuto de recuperação ou ajuda exterior, como a perícia Tratamento ou o efeito Cura (CD 10 + graduação).</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-				return "";
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5002,
 			name: "Alongamento",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Pessoal",
 			action: "Livre",
@@ -204,8 +206,8 @@ const _EffectsList = [
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
 			benefits: function(ranks) {
-				let distance = _RanksMeasuresTable.find( elem => elem[0] == ranks )[3];
-				return "Distância de "+ distance + " e bônus de "+ ranks +" para agarrar";
+				let distance = FindDistance(ranks);
+				return "Distância de "+ distance + " e bônus de "+ ranks +" para agarrar.";
 			},
 		},
 	
@@ -216,14 +218,8 @@ const _EffectsList = [
 			range: "Graduação",
 			action: "Livre",
 			duration: "Sustentado",
-			baseCost: 1,
-			powerOptions: [
-				"Calor",
-				"Frio",
-				"Impedir Movimento",
-				"Luz",
-				"Visibilidade"
-			],
+			baseCost: 0,
+			baseRanks: 0,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ 	"<li><b>Custo</b>: 1-2 por graduação.</li>"
@@ -245,8 +241,9 @@ const _EffectsList = [
 			+ "<p>Por 1 ponto por graduação, você impõe uma penalidade de –2 em testes de Percepção. Por 2 pontos por graduação, impõe uma penalidade de –5. Para um obscurecimento mais significativo, use um efeito de Camuflagem com ataque de área (veja Camuflagem).</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks);
+				return "Afeta uma distância de "+ distance + ".";
 			},
 		},
 	
@@ -258,6 +255,7 @@ const _EffectsList = [
 			action: "Livre",
 			duration: "Sustentado",
 			baseCost: 2,
+			baseRanks: 0,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -270,9 +268,7 @@ const _EffectsList = [
 			+ "<p>Camuflagem contra sentidos visuais custa o dobro (2 graduações para um sentido visual, 4 graduações para todos os sentidos visuais). Você não pode ter camuflagem contra sentidos do tato, uma vez que isso exige ser intangível (veja o efeito Intangibilidade). Assim, com Camuflagem 5, você pode ter camuflagem contra todos os sentidos visuais (4 graduações) e contra audição normal (1 graduação), por exemplo. Com Camuflagem 10 você tem total Camuflagem de todos tipos de sentidos, exceto o tátil.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
@@ -283,6 +279,7 @@ const _EffectsList = [
 			action: "Nenhuma",
 			duration: "Permanente",
 			baseCost: 1,
+			baseRanks: 1,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -305,9 +302,7 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
@@ -329,9 +324,7 @@ const _EffectsList = [
 			+ "<p>O custo por graduação de Característica Aumentada é igual ao custo por graduação da característica afetada. A diferença é que Característica Aumentada é um efeito de poder, em vez de uma característica natural e, como tal, pode ser combinada com esforço extra e outros efeitos.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
@@ -342,6 +335,7 @@ const _EffectsList = [
 			action: "Nenhuma",
 			duration: "Permanente",
 			baseCost: 2,
+			baseRanks: 0,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -365,9 +359,7 @@ const _EffectsList = [
 			+ "<p>Você pode se comunicar com plantas, tanto as normais quando criaturas-planta. Isso exige duas graduações de Compreender. A consciência que uma planta tem de seus arredores é limitada, então ela pode não ser capaz de responder perguntas sobre eventos fora da área próxima.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
@@ -378,14 +370,8 @@ const _EffectsList = [
 			action: "Livre",
 			duration: "Sustentado",
 			baseCost: 4,
+			baseRanks: 1,
 			maxRank: 5,
-			valuePerRank: [
-				"Perto: até 30 metros", 
-				"Próximo: dentro de 1,5 quilômetros",
-				"Longo: Dentro do mesmo Estado (ou de uma nação pequena)",
-				"Mundial: qualquer lugar da Terra (ou planeta de tamanho parecido)",
-				"Ilimitado: na prática, qualquer lugar"
-			],
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 4 por graduação.</li>"
@@ -436,8 +422,15 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				switch(ranks){
+					case 1: return "Perto: até 30 metros";
+					case 2: return "Próximo: dentro de 1,5 quilômetros";
+					case 3: return "Longo: Dentro do mesmo Estado (ou de uma nação pequena)";
+					case 4: return "Mundial: qualquer lugar da Terra (ou planeta de tamanho parecido)";
+					case 5: return "Ilimitado: na prática, qualquer lugar";
+					default: return "";
+				}				
 			},
 		},
 	
@@ -449,6 +442,7 @@ const _EffectsList = [
 			action: "Reação",
 			duration: "Instantânea",
 			baseCost: 3,
+			baseRanks: 1,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 3 por graduação.</li>"
@@ -466,15 +460,14 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5010,
 			name: "Crescimento",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Pessoal",
 			action: "Livre",
@@ -497,8 +490,14 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks, isConstruct) {
+				let itens = "• Tamanho +" + (ranks/4) + " Massa +"+ (ranks) +"\n";
+				itens += "• Força +" + (ranks) + " ";
+				itens += (isConstruct) ? "Proteção" : "Vigor";
+				itens += " " + (ranks) + " Intimidação " + (ranks/2) + "\n";
+				itens += "• Defesas Ativas -" (ranks/2) + " Furtividade -" (ranks) + "\n";
+				itens += "• Velocidade +"+ (ranks/8);
+				return itens;
 			},
 		},
 	
@@ -506,6 +505,7 @@ const _EffectsList = [
 			id: 5011,
 			name: "Criar",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Controle",
 			range: "A Distância",
 			action: "Padrão",
@@ -538,7 +538,8 @@ const _EffectsList = [
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
 			benefits: function() {
-
+				let distance = FindVolume(ranks);
+				return "Total de volume igual a "+ distance + ".";
 			},
 		},
 	
@@ -546,6 +547,7 @@ const _EffectsList = [
 			id: 5012,
 			name: "Cura",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Perto",
 			action: "Padrão",
@@ -564,9 +566,7 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
@@ -574,6 +574,7 @@ const _EffectsList = [
 			name: "Dano",
 			type: "Ataque",
 			baseCost: 1,
+			baseRanks: 1,
 			range: "Perto",
 			action: "Padrão",
 			duration: "Instantânea",
@@ -680,15 +681,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5014,
 			name: "Deflexão",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Defesa",
 			range: "A Distância",
 			action: "Padrão",
@@ -708,15 +708,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5015,
 			name: "Encolhimento",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Pessoal",
 			action: "Livre",
@@ -739,8 +738,12 @@ const _EffectsList = [
 			+ "</ul>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let itens = "• Tamanho/Força -" + (ranks/4) + " Massa -"+ (ranks) +"\n";
+				itens += "• Defesas Ativas +" (ranks/2) + " Furtividade +" (ranks) + "\n";
+				itens += "• Intimidação -"+ (ranks/2) +"\n";
+				itens += "• Velocidade -"+ (ranks/8);
+				return itens;
 			},
 		},
 	
@@ -748,6 +751,7 @@ const _EffectsList = [
 			id: 5016,
 			name: "Enfraquecer",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Ataque",
 			range: "Perto",
 			action: "Padrão",
@@ -781,15 +785,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5017,
 			name: "Escavação",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Pessoal",
 			action: "Livre",
@@ -816,7 +819,9 @@ const _EffectsList = [
 			id: 5018,
 			name: "Ilusão",
 			baseCost: 1,
+			baseRanks: 1,
 			maxBaseCost: 5,
+			baseRanks: 1,
 			type: "Sensorial",
 			range: "Percepção",
 			action: "Padrão",
@@ -847,8 +852,8 @@ const _EffectsList = [
 			+ "<p>Manter uma ilusão estática (que não se move ou interage) é uma ação livre. Manter uma ilusão ativa (como uma criatura em combate) exige uma ação padrão por rodada.</p>"
 			+ "<br>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'> <h2>Por Trás da Máscara</h2> </td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th> <h2>Por Trás da Máscara</h2> </th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Ilusão é um efeito bastante amplo, útil para um bom número de coisas diferentes. A seguir estão algumas considerações sobre Ilusão.</p>"
 			+ "<p><b>Ilusões que causam Dano</b></p>"
 			+ "<hr>"
@@ -874,8 +879,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindVolume(ranks);
+				return "Área num total de volume igual a "+ distance + ".";
 			},
 		},
 	
@@ -883,6 +889,8 @@ const _EffectsList = [
 			id: 5019,
 			name: "Imortalidade",
 			baseCost: 2,
+			baseRanks: 1,
+			maxRank: 20,
 			type: "Defesa",
 			range: "Pessoal",
 			action: "Nenhuma",
@@ -984,8 +992,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let time = FindTime(ranks);
+				return "Volta a vida em "+ time + ".";
 			},
 		},
 	
@@ -1020,8 +1029,8 @@ const _EffectsList = [
 			+ "<hr>"
 			+ "<p>Alguns efeitos de Imunidade são uma questão de grau. Por exemplo, \"imunidade ao frio\" pode variar de efeitos ambientais de frio (descritos em \"O Ambiente\") a dano por frio, à imunidade completa a todos os efeitos com o descritor “frio”. O primeiro exige apenas 1 graduação, e não concede salvamento a outros tipos de efeito de frio. O segundo exige 5 graduações e concede apenas imunidade a efeitos de Dano por frio. O terceiro exige 10 graduações e concede imunidade completa a todos os efeitos com o descritor \"frio\", sejam eles quais forem.</p>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'><h2>Por Trás da Máscara</h2></td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th><h2>Por Trás da Máscara</h2></th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Certos personagens nas histórias em quadrinhos são completamente imunes a certas coisas. Imunidade foi pensada para conceder esta opção aos personagens de Mutantes & Malfeitores. Chega um ponto em que é mais simples dizer que um personagem é imune a alguma coisa do que perder tempo rolando os dados. Imunidade também encoraja a criatividade: caso você não possa vencer um inimigo batendo nele, o que você vai fazer? Encoraje os jogadores a usarem táticas, malandragem, façanhas de poder, e pontos de vitória para lidar com inimigos imunes a seus ataques mais convencionais.</p>"
 			+ "<p>Se você achar que imunidade é um problema no seu jogo — especialmente as imunidades amplas das graduações mais altas —, sinta-se livre para restringi-la (talvez para não mais de 10 graduações) ou elimine-a por completo, substituindo-a por Proteção e bônus de defesa com os modificadores apropriados. Para imunidade a Dano, veja o extra Impenetrável em Modificadores.</p>"
 			+ "</td> </tr>"
@@ -1029,15 +1038,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5021,
 			name: "Intangibilidade",
 			baseCost: 5,
+			baseRanks: 1,
 			maxRank: 4,
 			type: "Geral",
 			range: "Pessoal",
@@ -1077,8 +1085,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				switch(ranks){
+					default: return "Fluido";
+					case 1: return "Fluido";
+					case 2: return "Gasoso";
+					case 3: return "Energia";
+					case 4: return "Espectral";
+				}
 			},
 		},
 	
@@ -1086,6 +1100,7 @@ const _EffectsList = [
 			id: 5022,
 			name: "Invocar",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Controle",
 			range: "Perto",
 			action: "Padrão",
@@ -1107,8 +1122,8 @@ const _EffectsList = [
 			+ "<p>Alguns poderes podem parecer Invocação, trazendo capangas para fazer coisas para o personagem, mas na verdade são mais bem representados por outros efeitos. Por exemplo, um xamã capaz de \"invocar\" espíritos para realizar tarefas mágicas. Invocando um espírito do vento, o xamã pode atacar um inimigo com uma Aflição que \"rouba\" seu fôlego. O espírito do vento é um capanga? Tecnicamente, não. Uma vez que o espírito não pode fazer qualquer outra coisa além de criar o efeito Aflição, não pode ser atacado e não pode interagir com outros, é na prática apenas um efeito com um descritor diferente. O mesmo é verdadeiro para um personagem capaz de invocar um \"capanga\" que age como escudo, concedendo os efeitos Deflexão ou Proteção, mas nada além disso.</p>"
 			+ "<p>Pense bem se um efeito desejado por um jogador precisa mesmo de Invocar ou não, ou se o \"capanga\" em questão é apenas um descritor para outro efeito! Neste caso, o efeito Invocar não é necessário</p>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'>Por Trás da Máscara</td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th>Por Trás da Máscara</th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Invocar é um efeito útil; uma gangue de capangas não custa muito e concede um monte de ações por rodada! O mestre pode permitir números muito grandes de capangas (invocados ou não) apenas para PdMs. Capangas de PJs estão sujeitos aos limites de nível de poder. Também há questões práticas que limitam o que os capangas podem fazer.</p>"
 			+ "<p>Primeiro, comandar seus capangas é uma ação de movimento. Caso queira dar diferentes comandos para diferentes capangas, então é uma ação de movimento por capanga. Assim, é mais fácil dizer a todos \"Ataquem!\" do que dar comandos complexos para cada um no meio do combate.</p>"
 			+ "<p>Segundo, o mestre pode preferir que grupos de capangas usem testes de equipe em vez de rolar suas ações em separado. Por exemplo, em vez de fazer oito ataques para oito capangas diferentes, o mestre faz com que sete capangas ajudem o oitavo, concedendo um bônus de +5 a esse capanga. Isso faz com que grupos de capangas sejam mais eficientes no geral, além de limitar as rolagens de dado.</p>"
@@ -1118,8 +1133,8 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				return "Capanga com "+ (ranks * 15) +" pontos de poder.";
 			},
 		},
 	
@@ -1127,6 +1142,7 @@ const _EffectsList = [
 			id: 5023,
 			name: "Leitura Mental",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Sensorial",
 			range: "Percepção",
 			action: "Padrão",
@@ -1176,15 +1192,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5024,
 			name: "Membros Extras",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Pessoal",
 			action: "Nenhuma",
@@ -1203,8 +1218,9 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let bonus = (ranks > 5) ? 5 : ranks;
+				return "Bônus de "+ bonus +" para agarrar com todos braços.";
 			},
 		},
 	
@@ -1212,6 +1228,7 @@ const _EffectsList = [
 			id: 5025,
 			name: "Morfar",
 			baseCost: 5,
+			baseRanks: 1,
 			maxRank: 4,
 			type: "Geral",
 			range: "Pessoal",
@@ -1231,8 +1248,14 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				switch(ranks){
+					default: return "";
+					case 1: return "Uma única aparência.";
+					case 2: return "Grupo Restrito.";
+					case 3: return "Grupo Amplo.";
+					case 4: return "Qualquer forma.";
+				}
 			},
 		},
 	
@@ -1240,6 +1263,7 @@ const _EffectsList = [
 			id: 5026,
 			name: "Mover Objetos",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Controle",
 			range: "A Distância",
 			action: "Padrão",
@@ -1259,14 +1283,16 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let mass = FindMass(ranks);
+				return "Levanta um total de "+ mass + ".";
 			},
 		},
 		{
 			id: 5027,
 			name: "Movimento",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Pessoal",
 			action: "Livre",
@@ -1331,8 +1357,8 @@ const _EffectsList = [
 			+ "<p>Você pode se mover através do tempo! Com 1 graduação, pode se mover entre o presente e outro ponto fixo no tempo (como 100 anos no passado, ou 1.000 anos no futuro). Com 2 graduações, pode se mover a qualquer ponto no passado ou a qualquer ponto no futuro (mas não os dois). Com 3 graduações, pode viajar para qualquer ponto no tempo. Alcançar linhas de tempo alternativas ou mundos paralelos exige pelo menos 2 graduações de Viagem Dimensional. Você pode carregar até 30 kg (graduação de massa 0) com você quando viaja no tempo. Caso aplique o modificador Aumentar Massa, pode carregar massa adicional até seu modificador de graduação.</p>"
 			+ "<br>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'>Por Trás da Máscara: Tempo, Espaço e Viagem Dimensional</td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th>Por Trás da Máscara: Tempo, Espaço e Viagem Dimensional</th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Os efeitos Viagem Temporal, Viagem Espacial e Viagem Dimensional de Movimento são baratos, considerando o que podem fazer, primariamente porque essas capacidades especiais de movimento são altamente dependentes da trama e da natureza do cenário, e sujeitas ao julgamento do mestre. Assim, eles são quase que Características \"turbinadas\", que permitem que os heróis visitem locais exóticos.</p>"
 			+ "<p>As mecânicas temporais e os efeitos de viagem no tempo são deixados inteiramente a cargo do mestre, que pode decidir tornar Viagem do Tempo Limitada, Incontrolável, ou Inconstante para os personagens jogadores, ou proibi-las por completo, tratando-as apenas como uma ferramenta de trama do cenário.</p>"
 			+ "<p>Nos quadrinhos, a viagem espacial raramente envolve as leis da física e tende a ocorrer \"na velocidade da trama\". Os personagens e veículos (como naves alienígenas) capazes de atravessar o vácuo do espaço o fazem primeiramente para facilitar aventuras entre as estrelas. A velocidade exata em que os personagens viajam através do vácuo do espaço normalmente não interessa muito; o importante é quanto tempo leva para eles chegarem onde estão indo. Assim, Viagem Espacial é amplamente definida em termos de \"qual a distância que você pode percorrer entre as cenas?\". O mesmo é verdade para os mecanismos de viagem, sejam eles hiperespaço, motores de salto, \"velocidade warp\" mais rápida que a luz, ou o que você quiser.</p>"
@@ -1342,14 +1368,13 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 		{
 			id: 5028,
 			name: "Natação",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Pessoal",
 			action: "Livre",
@@ -1362,22 +1387,24 @@ const _EffectsList = [
 			+ "<li><b>Distância</b>: Pessoal.</li>"
 			+ "<li><b>Duração</b>: Sustentado.</li>"
 			+ "</ul>"
-			+ "<p>Você nada rápido. Você tem uma velocidade aquática igual à sua graduação em Natação –2, sujeita as regras normais para nadar (veja a perícia Atletismo). Você pode fazer testes de Atletismo para nadar como testes de rotina.</p>"
+			+ "<p>Você nada rápido. Você tem uma velocidade aquática igual à sua graduação em Natação menos 2, sujeita as regras normais para nadar (veja a perícia Atletismo). Você pode fazer testes de Atletismo para nadar como testes de rotina.</p>"
 			+ "<p>Este poder não permite que você respire embaixo da água (para isso, veja Imunidade).</p>"
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks - 2);
+				return "Velocidade aquática de "+ distance + ".";
 			},
 		},
 		{
 			id: 5029,
 			name: "Nulificar",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Controle",
 			range: "A Distância",
-			action: 1, // 1-Padrão
+			action: 1,
 			duration: "Instantânea",
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -1393,14 +1420,13 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 		{
 			id: 5030,
 			name: "Proteção",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Defesa",
 			range: "Pessoal",
 			action: "Nenhuma",
@@ -1416,14 +1442,13 @@ const _EffectsList = [
 			+ "<p>Este efeito o protege de dano, fornecendo +1 de Resistência por graduação. Assim, Proteção 4 fornece +4 de Resistência.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 		{
 			id: 5031,
 			name: "Rapidez",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Pessoal",
 			action: "Livre",
@@ -1441,14 +1466,13 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 		{
 			id: 5032,
 			name: "Regeneração",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Defesa",
 			range: "Pessoal",
 			action: "Nenhuma",
@@ -1518,14 +1542,13 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 		{
 			id: 5033,
 			name: "Salto",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Pessoal",
 			action: "Livre",
@@ -1543,14 +1566,16 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks - 2);
+				return "Salta um total de "+ distance + ".";
 			},
 		},
 		{
 			id: 5034,
 			name: "Sentido Remoto",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Sensorial",
 			range: "Graduação",
 			action: "Livre",
@@ -1569,14 +1594,16 @@ const _EffectsList = [
 			+ "<p>Uma vez que Sentido Remoto se sobrepõe aos seus sentidos normais, você fica vulnerável (à metade de suas defesas ativas normais) enquanto o usa, já que fica menos consciente dos seus arredores imediatos.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks);
+				return "Expande sentido em um local dentro de "+ distance + ".";
 			},
 		},
 		{
 			id: 5035,
 			name: "Sentidos",
 			baseCost: 1,
+			baseRanks: 0,
 			type: "Sensorial",
 			range: "Pessoal",
 			action: "Nenhuma",
@@ -1592,8 +1619,8 @@ const _EffectsList = [
 			+ "<p>Seus sentidos são melhores, ou você tem sentidos adicionais além dos cinco básicos. Pegue graduações em Sentidos para ter os efeitos abaixo. Alguns efeitos exigem mais de uma graduação, como apresentado na descrição. Por exemplo, se tiver Sentidos 5, você pode ter visão no escuro (2 graduações), senso de direção (1 graduação), senso de distância (1 graduação) e ultra-audição (1 graduação), ou qualquer outra combinação que some 5 graduações.</p>"
 			+ "<p>Como todos os efeitos sensoriais, Sentidos usa os tipos de sentidos do abaixo, como descritores.</p>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'>Por Trás da Máscara: Sentidos Normais</td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th>Por Trás da Máscara: Sentidos Normais</th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Em Mutantes & Malfeitores, os sentidos são divididos em tipos, usados como descritores de efeitos sensoriais. Aqui vão as características de sentidos humanos normais, para você modificá-las com as opções do efeito Sentidos.</p>"
 			+ "<br>"
 			+ "<p><b>Audição</b></p>"
@@ -1678,8 +1705,8 @@ const _EffectsList = [
 			+ "<p>A Precognição não se aplica a efeitos sensoriais como Leitura Mental ou a outras habilidades que exijam interação.</p>"
 			+ "<br>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'>Por Trás da Máscara: Sentidos Normais</td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th>Por Trás da Máscara: Sentidos Normais</th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Precognição e póscognição podem ser habilidades problemáticas, uma vez que concedem aos jogadores informações consideráveis. Tenha em mente que informações précognitivas e póscognitivas são muitas vezes enigmáticas ou obscuras, e mudanças nas circunstâncias podem levar a mudanças em visões do futuro. Caso os jogadores abusem dessas habilidades, sinta-se livre para tornar suas visões menos e menos claras, uma vez que as linhas de tempo vão se enrolando devido a vigilância e intervenções constantes.</p>"
 			+ "<p>No geral, a precognição é mais bem tratada como uma ferramenta de trama para o mestre dar aos jogadores informações adequadas à aventura, semelhante a um uso livre das habilidades de inspiração dos pontos heroicos. De fato, um mestre que deseje limitar a precognição e a póscognição pode exigir esforço extra ou pontos de vitória para usá-las, ou exigir o modificador Incontrolável.</p>"			
 			+ "</td> </tr>"
@@ -1739,14 +1766,13 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
-			},
+			benefits: function() { return ""; },
 		},
 		{
 			id: 5036,
 			name: "Teleporte",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Graduação",
 			action: "Movimento",
@@ -1765,14 +1791,17 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks);
+				let extended = _RanksMeasuresTable.find( elem => elem[0] == (ranks + 8) )[3];
+				return "Teleporta dentro de "+ distance + ".";
 			},
 		},
 		{
 			id: 5037,
 			name: "Transformar",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Controle",
 			range: "Perto",
 			action: "Padrão",
@@ -1797,8 +1826,8 @@ const _EffectsList = [
 			+ "<p>A transformação dura como um efeito sustentado. Quando você parar de mantê-la, o alvo reverte ao normal. Transformação Contínua é irreversível, exceto ao usar outro efeito de Transformação para transformar o alvo de volta em sua forma anterior. Transformar os dispositivos ou equipamento de alguém exige mirá-los primeiro: os personagens podem fazer testes de Esquiva para itens que estejam segurando ou vestindo, com um bônus de +5 para itens portáteis e objetos de tamanho semelhante.</p>"
 			+ "<p>Assim, transformar uma arma portátil como uma pistola exige um teste de ataque e permite que o usuário faça um teste de Esquiva com um bônus de +5. Mirar uma armadura vestida exige um teste de ataque e permite que o usuário faça um teste de Esquiva (sem bônus, por se tratar de um item grande).</p>"
 			+ "<table class='BehindTheMask-Table'>"
-			+ "<tr> <td class='BehindTheMask-Header'>Por Trás da Máscara</td> </tr>"
-			+ "<tr> <td class='BehindTheMask-Body'>"
+			+ "<tr> <th>Por Trás da Máscara</th> </tr>"
+			+ "<tr> <td>"
 			+ "<p>Transformação é um efeito poderoso, especialmente nas mãos de um jogador esperto. Até certo grau, Transformação pode duplicar outros efeitos, como transformar ar em material sólido para prender um inimigo ou transformar oxigênio em gás sufocante para sufocá-lo (ambos Aflições). Isso é permitido; use as regras para outros efeitos como diretrizes sobre como lidar com essas situações, usando a graduação de Transformação para determinar a CDs dos testes de salvamento..</p>"
 			+ "<p>Tenha em mente, no entanto, que Transformação tem duração sustentada, o que pode afetar como esses \"truques\" funcionam (uma armadilha desaparece caso o personagem seja atordoado, o gás sufocante se dissipa a menos que o personagem se concentre em todas as rodadas para continuar transformando-o, etc.). Como sempre, o mestre deve usar o bom senso. Você pode exigir que personagens usando Transformação para conseguir dinheiro (ouro, pedras preciosas, etc.) ou outros bens materiais permanentes gastem pontos de poder em graduações da vantagem Benefício para refletir essa nova riqueza; caso contrário, os bens desaparecem ou de alguma forma deixam de ser permanentes (assumindo que riqueza faça diferença na série).</p>"
 			+ "<br>"
@@ -1827,14 +1856,16 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let mass = FindMass(ranks - 7);
+				return "Afeta uma massa de "+ mass + ".";
 			},
 		},
 		{
 			id: 5038,
 			name: "Variável",
 			baseCost: 7,
+			baseRanks: 1,
 			type: "Geral",
 			range: "Pessoal",
 			action: "Padrão",
@@ -1854,14 +1885,15 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				return "Efeitos até um total de "+ (ranks * 5) +".";
 			},
 		},
 		{
 			id: 5039,
 			name: "Velocidade",
 			baseCost: 1,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Pessoal",
 			action: "Livre",
@@ -1877,14 +1909,16 @@ const _EffectsList = [
 			+ "<p>Você pode se mover mais rápido que o normal. Você tem uma graduação de velocidade terrestre igual à sua graduação neste efeito. Isso também melhora todas as formas de movimento baseadas na velocidade terrestre.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks);
+				return "Velocidade de "+ distance + ".";
 			},
 		},
 		{
 			id: 5040,
 			name: "Voo",
 			baseCost: 2,
+			baseRanks: 1,
 			type: "Movimento",
 			range: "Pessoal",
 			action: "Livre",
@@ -1900,8 +1934,9 @@ const _EffectsList = [
 			+ "<p>Você pode voar, incluindo flutuar em um mesmo lugar. Você tem uma graduação de velocidade de voo igual à sua graduação neste efeito.</p>",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
-
+			benefits: function(ranks) {
+				let distance = FindDistance(ranks);
+				return "Velocidade de Voo de "+ distance + ".";
 			},
 		},
 	];

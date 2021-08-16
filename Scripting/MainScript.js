@@ -98,6 +98,7 @@ function RemoveTrait(){
   let traitInstanceID = arguments[2];
 
   let desiredIndex, lineID;
+  let power;
 
   switch(traitType){
     // Perícias
@@ -134,7 +135,7 @@ function RemoveTrait(){
     // Modificadores
     case 6: 
       let modifierIndex;
-      let power = _MainCharacter.Powers.list.find( element => element.id == traitID );
+      power = _MainCharacter.Powers.list.find( element => element.id == traitID );
       let modifier = _ModifiersList.find( element => element.id == traitInstanceID);
 
       if(modifier.flat){
@@ -164,6 +165,30 @@ function RemoveTrait(){
       
       _MainCharacter.Complications.list.splice(desiredIndex, 1);
       $('#ComplicationListTable tr.' + lineID).remove();
+      break;
+    // Opções de Poder.
+    case 9:
+      power = _MainCharacter.Powers.list.find( element => element.id == traitID );
+      desiredIndex = power.powerOptions.findIndex( element => element.id == traitInstanceID );
+      let powerOption = power.powerOptions[desiredIndex];
+
+      let effectID = power.effectID;
+      // Se é Ambiente, tem que mudar o custo por graduação.
+      if(effectID == 5003){ 
+        power.baseCost -= powerOption.totalRanks; 
+        if(power.baseCost == 0) power.baseRanks = 0;
+      }
+      // Qualquer outro.
+      else{
+        if(powerOption.totalRanks == undefined) ChangeRank(traitID, -1);
+        else ChangeRank(traitID, -powerOption.totalRanks);
+      }
+
+      power.powerOptions.splice(desiredIndex, 1);
+
+      UpdateKeyTraits(power);
+      $("#Power" + traitID + " tr #Option-"+ traitInstanceID).remove();
+
       break;
     default: return;
   }

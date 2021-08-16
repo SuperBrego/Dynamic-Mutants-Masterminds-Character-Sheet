@@ -54,7 +54,7 @@ function showPopUp(){
       break;
     // Opções de Poder
     case 10: 
-      _PopUpContext = PowerOptionsList(effectID);
+      _PopUpContext = PowerOptionsList(powerID);
       break;
     default: closePopUp();
   }

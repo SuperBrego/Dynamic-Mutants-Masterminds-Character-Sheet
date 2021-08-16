@@ -15,8 +15,9 @@ function ModifiersList(effectID, powerID){
     	tableContent += "<tr><td>";
 	    tableContent += "<button class='PopUpAddItem' value='" + modifier.id + "' onclick='AddModifier(this.value, "+ powerID +")' " 
 		+ "onmouseover='ShowDescription(this.value, 10)' ";
-		if( PowerContainsModifier(powerID, modifier.id) ) tableContent += "disabled>";
-		else tableContent += ">"
+		if( PowerContainsModifier(powerID, modifier.id) || ValidModifier(powerID, modifier.id) ) tableContent += " disabled ";
+		
+		tableContent += ">"
 
 		// Extra/Falha
 	    if(modifier.extra) tableContent += "<span style='float: left;' > + </span>";
@@ -24,7 +25,7 @@ function ModifiersList(effectID, powerID){
 	    tableContent += modifier.name;
 
 		if(modifier.flat) tableContent += "<span style='float: right;' > 1 fixo</span>";
-	    else tableContent += "<span style='float: right;' > "+ modifier.ranks +"/grad. </span>";
+	    else tableContent += "<span style='float: right;' > "+ modifier.totalRanks +"/grad. </span>";
 
 	    tableContent += "</button>";
 	    tableContent += "</td></tr>";
@@ -54,18 +55,18 @@ function ChangeModRank(modID, powerID, rankChange){
 	else modifier = power.flaws.find( elem => elem.id == modID );
 
 	// Agora tenho o modificador em mãos.
-	modifier.ranks += rankChange;
+	modifier.totalRanks += rankChange;
 
 	// Rank Span.
 	modSpanRankID = "P-"+ power.id +"-M-"+ modifier.id +"";
 	modMinusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-M";
 	modPlusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-P";
 
-	$("#"+ modSpanRankID +"").text(modifier.ranks);
-	if(modifier.ranks == 1) document.getElementById(modMinusButtID).disabled = true;
+	$("#"+ modSpanRankID +"").text(modifier.totalRanks);
+	if(modifier.totalRanks == 1) document.getElementById(modMinusButtID).disabled = true;
 	else document.getElementById(modMinusButtID).disabled = false;
 
-	if(modifier.ranks == modifier.maxRank) document.getElementById(modPlusButtID).disabled = true;
+	if(modifier.totalRanks == modifier.maxRank) document.getElementById(modPlusButtID).disabled = true;
 	else document.getElementById(modPlusButtID).disabled = false;
 
 	UpdateKeyTraits(power);
@@ -110,6 +111,12 @@ function PowerContainsModifier(powerID, modID){
 
 }
 
+function ValidModifier(powerID, modID){
+
+	
+	return false;
+}
+
 /****************************************
  * Cria tabela com Modificadores de Poder.
 ****************************************/
@@ -134,35 +141,38 @@ function RenderModifiers(power){
 		if(modifier.ranked){
 			// Abre Célula de Graduações
 			tableContent += "<td>";
-
-			// Se o rank total é 1, então não diminuo.
-			if(modifier.ranks == 1){
-			  tableContent += "<button class='minusButton' id='"+ modMinusButtID +"' "
-			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", -1)' disabled>-</button>";
-			}
-			else{
-			  tableContent += "<button class='minusButton' id='"+ modMinusButtID +"' "
-			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", -1)' >-</button>";
-			}
+			
+			tableContent += "<button class='minusButton' id='"+ modMinusButtID +"' "
+			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", -1)' ";
+			
+			  // Se o rank total é 1, então não diminuo.
+			if(modifier.totalRanks == 1){ tableContent += " disabled "; }
+			else{ tableContent += ""; }
+			tableContent += ">-</button>";
 	  
-	  		console.log(modSpanRankID)
 			// Total de Graduações
 			tableContent += " <span id='"+modSpanRankID+"'>"
-			+ modifier.ranks 
+			+ modifier.totalRanks 
 			+"</span> ";
 	  
 			// Botão desligado caso esteja no máximo de graduações.
-			if( modifier.ranks == modifier.maxRank ){
-			  tableContent += "<button class='plusButton' id='"+ modPlusButtID +"' "
-			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", 1)' disabled>+</button> ";
-			}
-			else{
-			  tableContent += "<button class='plusButton' id='"+ modPlusButtID +"' "
-			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", 1)' >+</button> ";
-			}
+			tableContent += "<button class='plusButton' id='"+ modPlusButtID +"' "
+			  +" onclick='ChangeModRank("+ modifier.id +", "+ power.id +", 1)' ";
+			
+			  // Se o rank total é 1, então não diminuo.
+			if(modifier.totalRanks == modifier.maxRank ){ tableContent += " disabled "; }
+			else{ tableContent += ""; }
+			tableContent += ">+</button>";
+
 		}
 		else {
 			tableContent += "<td></td>";
+		}
+
+		// Texto adicional, se necessário
+		if(modifier.additionalDescription != undefined){
+			tableContent += "<input type='text' value='"+ modifier.additionalDescription +"' "
+			+ " onchange='ChangeModifierText(this.value, "+ power.id +", "+ modifier.id +")' >"
 		}
 
 		tableContent += ""
@@ -185,4 +195,16 @@ function RenderModifiers(power){
  */
 function ModifierTreatment(power, modifier){
 
+}
+
+function ChangeModifierText(textValue, powerID, modID){
+
+	let modifier = _ModifiersList.find( elem => elem.id == modID);
+	let power = _MainCharacter.Powers.list.find( elem => elem.id == powerID);
+
+	if(modifier.flat) modifier = power.flats.find( elem => elem.id == modID );
+	else if(modifier.extra) modifier = power.extras.find( elem => elem.id == modID );
+	else modifier = power.flaws.find( elem => elem.id == modID );
+
+	modifier.additionalDescription = textValue;
 }

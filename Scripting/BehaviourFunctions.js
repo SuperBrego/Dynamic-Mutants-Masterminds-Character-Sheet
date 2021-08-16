@@ -28,19 +28,17 @@ function ShowDescription(entryID, type){
   switch(type){
     case 3: break;
     // Vantagens
-    case 4:
-      content = _AllAdvantagesList.find( element => element.id == entryID ).description;
+    case 4: content = _AllAdvantagesList.find( element => element.id == entryID ).description;
       break;
-    case 5:
-      content = _EffectsList.find( element => element.id == entryID ).description;
+    case 5: content = _EffectsList.find( element => element.id == entryID ).description;
       break;
     // Complicações
-    case 8: 
-      content = _DefaultComplicationList.find( element => element.id == entryID ).description;
+    case 8: content = _DefaultComplicationList.find( element => element.id == entryID ).description;
       break;
     // Modifiers
-    case 10:
-      content = _ModifiersList.find( element => element.id == entryID ).description;
+    case 10: content = _ModifiersList.find( element => element.id == entryID ).description;
+      break;
+    case 11: content = _CurrentPowerOptions.find( element => element.id == entryID ).description;
       break;
     default: return;
   }
