@@ -15,7 +15,7 @@
       </div>
     </div>
   
-    <button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')">Habilidades e Defesas</button>
+    <button class="tablink" onclick="openPage('HabilidadesDefesas', this, 'purple')">Habilidades</button>
     <button class="tablink" onclick="openPage('Pericias', this, 'darkgoldenrod')">Perícias</button>
     <button class="tablink" onclick="openPage('Vantagens', this, 'aquamarine')">Vantagens</button>
     <button class="tablink" onclick="openPage('Poderes', this, 'orange')" id="defaultOpen">Poderes</button>
@@ -23,6 +23,7 @@
     <button class="tablink" onclick="openPage('Ofensiva', this, 'red')">Ofensiva</button>
     <button class="tablink" onclick="openPage('Complicações', this, 'DarkOliveGreen')">Complicações</button>
     <button class="tablink" onclick="openPage('Pessoal', this, 'lightblue')">Pessoal</button>
+    <button class="tablink" onclick="openPage('Outros', this, 'black')">Outros</button>
   
     <!-- The Modal -->
     <div class="PopUp" id="myPopUp">
@@ -92,7 +93,6 @@
         <div class="Ability-Item2">
           <table>
             <tr> <td colspan="8" class="SectionTitle" id="DefensesTitle">Defesas</td> </tr>
-  
             <!-- Esquiva -->
             <tr>
               <td class="DefenseTitleCell" colspan="4">  <span class="DefenseText">Esquiva</span> </td>
@@ -146,7 +146,7 @@
               <!-- Graduação da Defesa -->
               <td class="DefenseCell"> <span class="DefenseText">Grad.</span> </td>
               <td class="DefenseCell">
-                <input autocomplete="off" type="number" name="Vontade" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
+                  <input autocomplete="off" type="number" name="Vontade" value="0" min="0" onchange="onDefenseRankChange(this.name, this.value)">
               </td>
               <!-- Total da Defesa -->
               <td class="DefenseCell"> <span class="DefenseText">Total</span> </td>
@@ -354,6 +354,8 @@
           <table>
             <tr>
               <td colspan="2" class="SectionTitle">Galeria</td>
+            </tr>
+            <tr>
               <td class="AddTraitButtons"> <button name="Adicionar Imagem" onclick="AddImage()">Adicionar Imagem</button>  </td> 
             </tr>
           </table>

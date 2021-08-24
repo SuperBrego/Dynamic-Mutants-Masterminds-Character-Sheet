@@ -1,7 +1,90 @@
+/**
+ * Adiciona um poder a partir de seu efeito.
+ * @param {int} effectID 
+*/
+function AddPower() {
+	let effectID = arguments[0];
+	// Caso seja em um Arranjo, Dispositivo ou Múltiplos efeitos, não vai estar undefined
+	let containerID = arguments[1];
+
+    closePopUp();
+
+	effectID = parseInt(effectID);
+
+    let _effect = _EffectsList.find( element => element.id == effectID );
+
+    // Cria-se um novo poder.
+    let power = Object.assign({}, powerDefault);
+	
+    power.id = _MainCharacter.Powers.id++;
+    power.effectName = _effect.name;
+    power.effectID = effectID;
+    power.baseCost = _effect.baseCost;
+	power.baseRanks = _effect.baseRanks;
+
+	power.typeID = _effect.type;
+	power.actionID = _effect.action;
+	power.rangeID = _effect.range;
+	power.durationID = _effect.duration;
+
+	power.benefits = _effect.benefits;
+	power.maxRank = _effect.maxRank;
+	power.flats = [];
+	power.extras = [];
+	power.flaws = [];
+	power.powerOptions = [];
+
+	// Adiciona campos extras conforme Efeito.
+	switch(effectID){
+		// Aflição.
+		case 5001:
+			power.conditions = ["", "", ""];
+			power.overcomedBy = "";
+			break;
+		// Comunicação, Ilusão, Sentido Remoto.
+		case 5008:
+		case 5018:
+		case 5034:
+			power.RelatedSenses = {
+				AffectedSenses: "",
+				SensesDescription: "",
+			}
+			break;
+		// Transformar
+		case 5037:
+			power.affectedTrait = "";
+			break;
+		default: break;
+	}
+
+	// Div do poder.
+	let divDocument = document.createElement('div');
+	divDocument.id = "Power" + power.id;
+	divDocument.className = 'PowerTable';
+	divDocument.innerHTML = StandardStructure(power);
+
+	power.element = divDocument;
+
+	if(containerID == undefined) {
+		_MainCharacter.Powers.list.push(power);
+		$('#PowerGrid').append(power.element);
+	}
+	else {
+		let container = _MainCharacter.Powers.list.find( element => element.id == containerID);
+		container.Powers.list.push(power);
+		UpdateMultipleEffectsDisplay(containerID);
+	}
+
+    UpdatePowersSpent();
+}
+
 /*
  * Lista de Efeitos.
 */
 function AvaliableEffectList() {
+	// Se vier da solicitação de container.
+	let containerID = arguments[0];
+
     let content = "";
     content += "<div id='BiLateralListPopUp'>";
     content += "<div id='BiLateralListItem1'>";
@@ -12,7 +95,10 @@ function AvaliableEffectList() {
         curEffect = _EffectsList[i];
 
         content += "<tr><td>";
-        content += "<button class='PopUpAddItem' value=" + curEffect.id + " onclick='AddPower(this.value)' onmouseover='ShowDescription(this.value, 5)'>";
+		if(containerID != undefined)
+        	content += "<button class='PopUpAddItem' value=" + curEffect.id + " onclick='AddPower(this.value)' onmouseover='ShowDescription(this.value, 5)'>";
+		else
+		content += "<button class='PopUpAddItem' value=" + curEffect.id + " onclick='AddPower(this.value, "+ containerID +")' onmouseover='ShowDescription(this.value, 5)'>";
         content += curEffect.name;
         content += "</button>";
         content += "</td></tr>";
@@ -86,72 +172,6 @@ function PowerOptionsList(powerID){
 }
 
 
-/**
- * Adiciona um poder a partir de seu efeito.
- * @param {int} effectID 
-*/
-function AddPower(effectID) {
-
-    closePopUp();
-
-	effectID = parseInt(effectID);
-
-    let _effect = _EffectsList.find( element => element.id == effectID );
-
-    // Cria-se um novo poder.
-    let power = Object.assign({}, powerDefault);
-	
-    power.id = _MainCharacter.Powers.id++;
-    power.effectName = _effect.name;
-    power.effectID = effectID;
-    power.baseCost = _effect.baseCost;
-	power.baseRanks = _effect.baseRanks;
-	power.type = _effect.type;
-	power.action = _effect.action;
-	power.range = _effect.range;
-	power.duration = _effect.duration;
-	power.benefits = _effect.benefits;
-	power.maxRank = _effect.maxRank;
-	power.flats = [];
-	power.extras = [];
-	power.flaws = [];
-	power.powerOptions = [];
-
-	// Adiciona campos extras conforme Efeito.
-	switch(effectID){
-		// Aflição.
-		case 5001:
-			power.conditions = ["", "", ""];
-			power.overcomedBy = "";
-			break;
-		// Comunicação, Ilusão, Sentido Remoto.
-		case 5008:
-		case 5018:
-		case 5034:
-			power.RelatedSenses = {
-				AffectedSenses: "",
-				SensesDescription: "",
-			}
-			break;
-		// Transformar
-		case 5037:
-			power.affectedTrait = "";
-			break;
-		default: break;
-	}
-
-	// Div do poder.
-	let divDocument = document.createElement('div');
-	divDocument.id = "Power" + power.id;
-	divDocument.className = 'PowerTable';
-	divDocument.innerHTML = StandardStructure(power);
-
-	power.element = divDocument;
-
-    _MainCharacter.Powers.list.push(power);
-
-    $('#PowerGrid').append(power.element);
-}
 
 /**
  * Adiciona opções de poder.
@@ -160,7 +180,9 @@ function AddPower(effectID) {
  * 
  */
 function AddPowerOption(optionID, powerID){
+
 	closePopUp();
+	
 	let power = _MainCharacter.Powers.list.find( elem => elem.id == powerID );
 	let effectID = parseInt(power.effectID);
 	let powerOption = Object.assign({}, _CurrentPowerOptions.find( elem => elem.id == optionID));
@@ -313,7 +335,7 @@ function UpdateKeyTraits(power){
 	let powerMath = "(Base " + power.baseCost + " + Extras " + power.totalExtraPerRank() + " - Falhas " 
 	+ power.totalFlawsPerRank() + ") * Grads. " + power.baseRanks + "  + Fixos " + power.totalFlat();
 
-	$('#Power-' + power.id + '-Math').html(powerMath)
+	$('#Power-' + power.id + '-Math').html( power.spentMathToString() );
 	$('#Power-' + power.id + '-Spent').html( power.totalPointSpent() );
 	$('#Power-' + power.id + '-Ranks').html( power.baseRanks );
 	$('#Power-' + power.id + '-Benefits').html( power.benefits( power.baseRanks ) );
@@ -327,6 +349,8 @@ function UpdateKeyTraits(power){
 		document.getElementById("power-"+ power.id +"-GradPlus").disabled = true;
 	else 
 		document.getElementById("power-"+ power.id +"-GradPlus").disabled = false;
+
+	UpdatePowersSpent();
 }
 
 /**
@@ -398,4 +422,15 @@ function ChangeAffectedTrait(traitText, powerID){
 function StoreTransformType(transField, powerID){
 	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
 	power.affectedTrait = transField;
+}
+
+function UpdatePowersSpent(){
+	$("#PowerHeader").html("Poderes (" + _MainCharacter.totalPowersSpent() + " pontos)");
+
+	UpdateTotalSpent();
+}
+
+function UpdateMultipleEffectsDisplay(containerID){
+	let power = _MainCharacter.Powers.list.find( element => element.id == containerID );
+	console.log(power.Powers.list);
 }

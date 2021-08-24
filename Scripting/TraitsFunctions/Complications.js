@@ -4,7 +4,7 @@ function ComplicationsList(){
   let content = "";
   content += "<div id='BiLateralListPopUp'>";
   content += "<div id='BiLateralListItem1'>";
-  content += "<table>";
+  content += "<table width='100%'>";
 
   let _currComp;
 
@@ -13,7 +13,7 @@ function ComplicationsList(){
 
   	content += "<tr><td>";
     	content += "<button class='PopUpAddItem' value=" + _currComp.id;
-      content += " ondblclick='AddComplication(this.value)' onmouseover='ShowDescription(this.value, 8)'>";
+      content += " onclick='AddComplication(this.value)' onmouseover='ShowDescription(this.value, 8)'>";
     	content += _currComp.name;
     	content += "</button>";
     	content += "</td></tr>";

@@ -62,6 +62,7 @@ function UpdateSpent(){
   UpdateDefensesSpent();
   UpdateSkillsSpent();
   UpdateAdvantagesSpent();
+  UpdatePowersSpent();
 
   UpdateTotalSpent();
 }
@@ -70,7 +71,6 @@ function UpdateSpent(){
 * Atualiza o total de pontos.
 ********************************/
 function UpdateTotalSpent(){
-
   $("#totalSpentPoints").html( parseFloat( _MainCharacter.totalSpent() ) );
 }
 
@@ -130,6 +130,8 @@ function RemoveTrait(){
       _MainCharacter.Powers.list.splice(powerIndex, 1);
 
       $("#Power" + traitID).remove();
+
+      UpdatePowersSpent();
       break;
 
     // Modificadores
@@ -137,6 +139,7 @@ function RemoveTrait(){
       let modifierIndex;
       power = _MainCharacter.Powers.list.find( element => element.id == traitID );
       let modifier = _ModifiersList.find( element => element.id == traitInstanceID);
+      RemovedModifierTreatment(power, modifier);
 
       if(modifier.flat){
         modifierIndex = power.flats.findIndex(element => element.id == traitInstanceID);
@@ -156,6 +159,7 @@ function RemoveTrait(){
       UpdateKeyTraits(power);
       $("#Power" + traitID + " tr #Mod-"+ traitInstanceID).remove();
 
+      UpdatePowersSpent();
       break;
     // Complicações
     case 8: 
@@ -189,6 +193,7 @@ function RemoveTrait(){
       UpdateKeyTraits(power);
       $("#Power" + traitID + " tr #Option-"+ traitInstanceID).remove();
 
+      UpdatePowersSpent();
       break;
     default: return;
   }

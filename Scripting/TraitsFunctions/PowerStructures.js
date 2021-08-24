@@ -131,10 +131,6 @@ function PowerOptionsStructure(power){
 	return powerOptions;
 }
 
-function RenderPowerOptions(power){
-	
-}
-
 function NullifyStructure(power){
 	let nullifyText = "<tr>"
 	+ "<td colspan='3'><b>Contra-Ataca:</b></td>"
@@ -211,6 +207,25 @@ function RankByOptionsStructure(power){
 
 }
 
+
+function MultiplePowerStruct(power){
+
+	let multiplePowers = "<tr>"
+    + 	"<td colspan='6' style='vertical-align: top;' class='HighWidthCells'>";
+	// Aqui faço outro tipo de PopUp 
+    multiplePowers = ""
+	+	"<button class='AddPower' onclick='showPopUp(10, 0, "+ power.id +")'>"
+    +			"Adicionar Poder"
+    +		"</button>"
+    + 		"<table id='Multiple-Powers-"+ power.id +"' class='ExtrasFlawsTable'>"
+    +		"</table>"
+    + 	"</td>"
+	+ "</tr>"
+	return multiplePowers;
+
+}
+
+
 function StandardStructure(power){
 	
     let effectID = parseInt(power.effectID);
@@ -221,34 +236,46 @@ function StandardStructure(power){
 	+ "<tr>"
 	+ 	"<th colspan='3'>"
 	+ 		"<input type='text' placeholder='Nome do poder...' class='PowerName'>"
-	+	"</th>"
-	+ 	"<th><b>Graduação</b>: </th>"
-	+ 	"<th>";
+	+	"</th>";
 
-	// Se for Camuflagem ou Sentidos, não pode colocar os botões.
-	if(effectID == 5004 || effectID == 5007 || effectID == 5035){
-		tableContent += "<span id='Power-"+ power.id +"-Ranks' >"+ power.baseRanks + "</span>";
-	}
-	// Se for outro efeito, põe botões.
-	else{
-		// Se está com o mínimo de graduação, desligo o botão de reduzir grads.
-		if(power.baseRanks <= 1)
-			tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, -1)' "
-			+ "id='power-"+ power.id +"-GradMinus' disabled>-</button> &nbsp;";
-		else
-			tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, -1)' "
-			+ "id='power-"+ power.id +"-GradMinus' >-</button> &nbsp;";
-	
-		tableContent += "<span id='Power-"+ power.id +"-Ranks' >"+ power.baseRanks + "</span>";
+	switch(effectID){
+		// Se for Camuflagem ou Sentidos, não pode colocar os botões.
+		case 5004:
+		case 5007:
+		case 5035:
+			tableContent += "<th><b>Graduação</b>: </th>"
+			+ 	"<th>"
+			+ 		"<span id='Power-"+ power.id +"-Ranks' >"+ power.baseRanks + "</span>";
+			break;
+		// Efeitos Múltiplos
+		case 5042:
+		case 5043:
+		case 5045:
+		case 5046:
+			tableContent += "";
+			break;
+		default:
+			tableContent += "<th><b>Graduação</b>: </th>"
+			+ 	"<th>"
+			// Se está com o mínimo de graduação, desligo o botão de reduzir grads.
+			if(power.baseRanks <= 1)
+				tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, -1)' "
+				+ "id='power-"+ power.id +"-GradMinus' disabled>-</button> &nbsp;";
+			else
+				tableContent += "<button class='minusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, -1)' "
+				+ "id='power-"+ power.id +"-GradMinus' >-</button> &nbsp;";
+		
+			tableContent += "<span id='Power-"+ power.id +"-Ranks' >"+ power.baseRanks + "</span>";
 
-		// Botão de Aumentar a Graduação
-		// Se é um efeito com opções de poder, então custo 0 não pode aumentar nada.
-		if(power.baseRanks == power.maxRank || power.baseRanks == 0)
-			tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, 1)' "
-			+ "id='power-"+ power.id +"-GradPlus' disabled>+</button> &nbsp;";
-		else 
-			tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, 1)' "
-			+ "id='power-"+ power.id +"-GradPlus'>+</button> &nbsp;";
+			// Botão de Aumentar a Graduação
+			// Se é um efeito com opções de poder, então custo 0 não pode aumentar nada.
+			if(power.baseRanks == power.maxRank || power.baseRanks == 0)
+				tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, 1)' "
+				+ "id='power-"+ power.id +"-GradPlus' disabled>+</button> &nbsp;";
+			else 
+				tableContent += "&nbsp; <button class='plusButton' value='"+ power.id +"' onclick='ChangeRank(this.value, 1)' "
+				+ "id='power-"+ power.id +"-GradPlus'>+</button> &nbsp;";
+			break;
 	}
 
 	tableContent += "</th>"
@@ -266,16 +293,17 @@ function StandardStructure(power){
 	+ 	"<td colspan='2'><input type='text' placeholder='Descritores...'></td>"
 	+ "</tr>";
 
+
 	// Alcance e Duração
 	tableContent += ""
 	+ "<tr>"
 	+ 	"<td><b>ALCANCE</b>:</td>"
-	+ 	"<td id='Power-"+ power.id +"-Range' >"+ power.range +"</td>"
+	+ 	"<td id='Power-"+ power.id +"-Range' >"+ power.range() +"</td>"
 	+ 	"<td colspan='2'><b>DURAÇÃO</b>:</td>"
-	+ 	"<td colspan='2' id='Power-"+ power.id +"-Duration' >"+ power.duration +"</td>"
+	+ 	"<td colspan='2' id='Power-"+ power.id +"-Duration' >"+ power.duration() +"</td>"
 	+ "</tr>";
 
-	if( !(power.benefits(power.baseRanks) == "") ){
+	if( power.benefits != undefined && !(power.benefits(power.baseRanks) == "") ){
 		// Benefícios
 		let powerRanks = parseInt(power.baseRanks);
 		
@@ -290,7 +318,7 @@ function StandardStructure(power){
 	tableContent += "<tr>"
 	+ 	"<td colspan='1'><b>Cálculo</b>: </td>"
 	+ 	"<td colspan='3' id='Power-"+ power.id + "-Math'>"
-	+ 	    "(Base "+ power.baseCost + "+ Extras "+ power.totalExtraPerRank() + " - Falhas "+ power.totalFlawsPerRank() + ") * Grads. "+ power.baseRanks + "  + Fixos "+ power.totalFlat()
+	+ 	    power.spentMathToString()
 	+ "</td>"
 	+ 	"<td><b>TotalGasto</b>:</td>"
 	+ 	"<td id='Power-"+ power.id + "-Spent'> "+ power.totalPointSpent() +"</td>"
@@ -348,6 +376,17 @@ function StandardStructure(power){
 		case 5035:
 			tableContent += PowerOptionsStructure(power);
 			break;
+		/*
+		 * Arranjo, Dispositivo
+		 * Ligados, Múltiplos Efeitos.
+		*/
+		case 5042:
+		case 5043:
+		case 5045:
+		case 5046:
+			tableContent += MultiplePowerStruct(power);
+			tableContent += "</table>"
+			return tableContent;
 	 	default:
 			tableContent += "";
 			break;

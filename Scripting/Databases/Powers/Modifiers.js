@@ -188,7 +188,7 @@ const _ModifiersList = [
 		name: "Distância Aumentada",
 		extra: true,
 		flat: false, 
-		ranked: false,
+		ranked: true,
 		totalRanks: 1,
 		maxRank: 2,
 		description: "<p>Efeitos têm um alcance padrão: pessoal, perto, à distância ou percepção. Veja Alcance em Poderes para detalhes. Este modificador aumenta o alcance de um efeito. Escolha uma das opções a seguir. Aumentar o alcance de um efeito de pessoal para perto exige o extra Afeta Outros ou o extra Ataque. Transformar um efeito perto em um efeito de percepção à distância exige duas aplicações deste extra, para um total de +2 por graduação.</p>"
@@ -480,17 +480,6 @@ const _ModifiersList = [
 	},
 	{
 		id: 11002,
-		name: "Alcance Reduzido",
-		extra: false,
-		flat: false, 
-		ranked: true,
-		totalRanks: 1,
-		maxRank: 2,
-		description: "<p>Efeitos têm alcance perto, à distância ou percepção. Diminuir o alcance de um efeito em um passo (de à distância para perto, por exemplo) vale 1 ponto por graduação. Alguns efeitos têm seu alcance determinado pela graduação. Para alterar o alcance do efeito, aumente ou diminua sua graduação; esta falha então não se aplica. Efeitos que têm alcance perto como padrão não podem ter seu alcance diminuído ainda mais.</p>"
-		+ "",
-	},
-	{
-		id: 11003,
 		name: "Ativação",
 		extra: false,
 		flat: true, 
@@ -506,7 +495,7 @@ const _ModifiersList = [
 		+ "",
 	},
 	{
-		id: 11004,
+		id: 11003,
 		name: "Baseado em Agarrar",
 		extra: false,
 		flat: false, 
@@ -518,7 +507,7 @@ const _ModifiersList = [
 		+ "",
 	},
 	{
-		id: 11005,
+		id: 11004,
 		name: "Cansativo",
 		extra: false,
 		flat: false, 
@@ -529,7 +518,7 @@ const _ModifiersList = [
 		+ "",
 	},
 	{
-		id: 11006,
+		id: 11005,
 		name: "Dependente de Sentido",
 		extra: false,
 		flat: false, 
@@ -542,7 +531,7 @@ const _ModifiersList = [
 		additionalDescription: "",
 	},
 	{
-		id: 11007,
+		id: 11006,
 		name: "Dissipação",
 		extra: false,
 		flat: false, 
@@ -552,13 +541,24 @@ const _ModifiersList = [
 		+ "",
 	},
 	{
-		id: 11008,
-		name: "Distração",
+		id: 11007,
+		name: "Distância Reduzida",
 		extra: false,
 		flat: false, 
 		ranked: true,
 		totalRanks: 1,
-		description: "<p>Usar um efeito com Distração exige mais concentração que o normal, fazendo com que você fique vulnerável quando usa o efeito, até o início do seu próximo turno.</p>"
+		maxRank: 2,
+		description: "<p>Efeitos têm alcance perto, à distância ou percepção. Diminuir o alcance de um efeito em um passo (de à distância para perto, por exemplo) vale 1 ponto por graduação. Alguns efeitos têm seu alcance determinado pela graduação. Para alterar o alcance do efeito, aumente ou diminua sua graduação; esta falha então não se aplica. Efeitos que têm alcance perto como padrão não podem ter seu alcance diminuído ainda mais.</p>"
+		+ "",
+	},
+	{
+		id: 11008,
+		name: "Distrativo",
+		extra: false,
+		flat: false, 
+		ranked: true,
+		totalRanks: 1,
+		description: "<p>Usar um efeito com Distrativo exige mais concentração que o normal, fazendo com que você fique vulnerável quando usa o efeito, até o início do seu próximo turno.</p>"
 		+ "",
 	},
 	{
@@ -688,9 +688,28 @@ const _ModifiersList = [
 		flat: true, 
 		ranked: false,
 		totalRanks: 1,
-		maxRank: 2,
 		description: "<p>A duração de um efeito contínuo com esta falha se torna permanente. Ele não pode ser desligado, e está sempre ligado como padrão. Caso alguma força externa — normalmente o efeito Nulificar — consiga desligá-lo, ele volta a ser ativado na próxima oportunidade. Além disso, você não pode melhorar um efeito permanente usando esforço extra.</p>"
 		+ "<p>Efeitos permanentes podem ser inconvenientes algumas vezes (incluindo-se aí coisas como ficar permanentemente intangível ou com 8 metros de altura o tempo todo); isso está incluído no valor desta falha.</p>"
+		+ "",
+	},
+	{
+		id: 10022,
+		name: "Personalizado",
+		extra: true,
+		flat: false, 
+		ranked: true,
+		totalRanks: 1,
+		description: "<p>Uma falha de poder personalizado que pode ser usado para qualquer fim.</p>"
+		+ "",
+	},
+	{
+		id: 10023,
+		name: "Personalizado",
+		extra: true,
+		flat: true, 
+		ranked: true,
+		totalRanks: 1,
+		description: "<p>Uma falha de poder personalizado que pode ser usado para qualquer fim.</p>"
 		+ "",
 	},
 	{
@@ -741,4 +760,8 @@ const _ModifiersList = [
 		description: "<p>Você sofre dano quando uma manifestação de seu efeito sofre dano. Esta falha se aplica apenas a efeitos com manifestações físicas (ou aparentemente físicas), como Criar, Ilusão, ou Invocar, por exemplo. Caso a manifestação de seu poder sofra dano, faça um teste de salvamento contra a graduação de dano do ataque, usando a graduação de seu efeito como bônus no teste de salvamento. Por exemplo, caso a manifestação de um efeito de graduação 10 seja atacado por dano 12, você deve fazer um teste de salvamento contra dano 12 com um bônus de 10 (a graduação do efeito) no lugar de sua Resistência normal.</p>"
 		+ "",
 	},
-]
+];
+
+const _AttackMods = [10001, 10002, 10003, 10008, 10009, 10010, 10016, 10018, 10023, 10025, 10026, 10029, 10030, 10031, 10035, 10036, 11001, 11005, 11013, 11015, 11020];
+
+const _AffectOthers = [10001, 10002, 10003, 10004, 10005, 10006, 10007, 10008, 10009, 10010, 10023, 10035, 10036, 11001, 11005, 11013]

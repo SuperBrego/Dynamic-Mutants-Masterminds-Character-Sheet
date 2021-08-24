@@ -57,17 +57,9 @@ function ChangeModRank(modID, powerID, rankChange){
 	// Agora tenho o modificador em mãos.
 	modifier.totalRanks += rankChange;
 
-	// Rank Span.
-	modSpanRankID = "P-"+ power.id +"-M-"+ modifier.id +"";
-	modMinusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-M";
-	modPlusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-P";
+	ModifierTreatment(power, modifier);
 
-	$("#"+ modSpanRankID +"").text(modifier.totalRanks);
-	if(modifier.totalRanks == 1) document.getElementById(modMinusButtID).disabled = true;
-	else document.getElementById(modMinusButtID).disabled = false;
-
-	if(modifier.totalRanks == modifier.maxRank) document.getElementById(modPlusButtID).disabled = true;
-	else document.getElementById(modPlusButtID).disabled = false;
+	ButtonConfiguration(power, modifier);
 
 	UpdateKeyTraits(power);
 }
@@ -95,6 +87,8 @@ function AddModifier(modID, powerID){
 
 	$("#ExtraFlaws-Power-" + power.id + "").html( RenderModifiers(power) );
 
+	ButtonConfiguration(power, modifier);
+
 	UpdateKeyTraits(power);
 
 }
@@ -112,9 +106,36 @@ function PowerContainsModifier(powerID, modID){
 }
 
 function ValidModifier(powerID, modID){
+	let power = _MainCharacter.Powers.list.find( element => element.id == powerID );
+	let effect = _EffectsList.find( element => element.id == power.effectID );
+	if( effect.unavaliableModifiers.find(element => element == modID) != undefined ) return true;
+	
+	// Se for Geral, Defesa ou Sensorial, tenho que ver se tem Ataque ou Afeta Outros.
+	// if( power.type == "Geral" || power.type == "Defesa" ){}
+	/*
+		Se for do Afeta Outros ou 
+	*/
 
+	// Se tá disponível, ainda tem que verificar conforme itens.
+	switch(modID){
+
+	}
 	
 	return false;
+}
+
+function ButtonConfiguration(power, modifier){
+	// Rank Span.
+	modSpanRankID = "P-"+ power.id +"-M-"+ modifier.id +"";
+	modMinusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-M";
+	modPlusButtID = "P-"+ power.id +"-M-"+ modifier.id +"-P";
+
+	$("#"+ modSpanRankID +"").text( modifier.totalRanks );
+	if(modifier.totalRanks == 1) document.getElementById( modMinusButtID ).disabled = true;
+	else document.getElementById( modMinusButtID ).disabled = false;
+
+	if(modifier.totalRanks == modifier.maxRank) document.getElementById( modPlusButtID ).disabled = true;
+	else document.getElementById( modPlusButtID ).disabled = false;
 }
 
 /****************************************
@@ -151,7 +172,7 @@ function RenderModifiers(power){
 			tableContent += ">-</button>";
 	  
 			// Total de Graduações
-			tableContent += " <span id='"+modSpanRankID+"'>"
+			tableContent += " <span id='"+ modSpanRankID +"'>"
 			+ modifier.totalRanks 
 			+"</span> ";
 	  
@@ -187,16 +208,6 @@ function RenderModifiers(power){
 	return tableContent;
 }
 
-/**
- * Faz tratamento no poder e nos campos necessários
- * ao Modificador fazer novas alterações.
- * @param {Object} power 
- * @param {Object} modifier 
- */
-function ModifierTreatment(power, modifier){
-
-}
-
 function ChangeModifierText(textValue, powerID, modID){
 
 	let modifier = _ModifiersList.find( elem => elem.id == modID);
@@ -207,4 +218,36 @@ function ChangeModifierText(textValue, powerID, modID){
 	else modifier = power.flaws.find( elem => elem.id == modID );
 
 	modifier.additionalDescription = textValue;
+}
+
+
+/**
+ * Faz tratamento no poder e nos campos necessários
+ * ao Modificador fazer novas alterações.
+ * @param {Object} power 
+ * @param {Object} modifier 
+ */
+function ModifierTreatment(power, modifier){
+
+	let _effect = _EffectsList.find( element => element.id == power.effectID );
+
+	switch(modifier.id){
+		case 10016:
+			if(power.rangeID == 2) modifier.maxRank = 1;
+			power.rangeID = _effect.range + modifier.totalRanks;
+			$('#Power-' + power.id + '-Range').html( power.range() );
+			break;
+	}
+
+}
+
+function RemovedModifierTreatment(power, modifier){
+
+	switch(modifier.id){
+		case 10016:
+			power.rangeID -= modifier.totalRanks;
+			$('#Power-' + power.id + '-Range').html( power.range() );
+			break;
+	}
+
 }

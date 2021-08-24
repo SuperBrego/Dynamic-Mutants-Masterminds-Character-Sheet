@@ -1,3 +1,14 @@
+/**
+ APP.
+	Characters
+		Magnetu.
+			Display
+			Sheet
+		Batatinha 
+			Display
+			Sheet
+ */
+
 const Character = {
 	PowerLevel: 10,
 	PointsPerLevel: 15,
@@ -226,9 +237,22 @@ const Character = {
 		return parseInt(sum);
 	},
 
-	totalPowersSpent: function() { return 0; },
+	totalPowersSpent: function() { 
+		let sum = 0;
+
+		for (var i = 0; i < this.Powers.list.length; i++) 
+			sum += parseInt(this.Powers.list[i].totalPointSpent());
+
+		return sum;
+	},
 
 	totalSpent: function() {
-		return parseFloat(parseInt(this.totalAbilitiesSpent() ) + parseFloat(this.totalSkillsSpent()) + parseInt(this.totalDefensesSpent()) + parseInt(this.totalAdvantagesSpent()));
+		return parseFloat(
+			parseInt(this.totalAbilitiesSpent() ) 
+			+ parseFloat(this.totalSkillsSpent()) 
+			+ parseInt(this.totalDefensesSpent()) 
+			+ parseInt(this.totalAdvantagesSpent()) 
+			+ parseInt(this.totalPowersSpent())
+		);
 	}
 }

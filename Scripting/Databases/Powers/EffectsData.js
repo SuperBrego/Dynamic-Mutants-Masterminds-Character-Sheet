@@ -23,10 +23,54 @@ const powerDefault = {
 	resistedBy: "",
 	affectedTrait: "",
 
-	type: "",
-	action: "",
-	range: "",
-	duration: "",
+	typeID: -1,
+	type: function(){
+		switch(this.typeID){
+			default: return "Geral";
+			case 0: return "Geral";
+			case 1: return "Ataque";
+			case 2: return "Controle";
+			case 3: return "Defesa";
+			case 4: return "Movimento";
+			case 5: return "Sensorial";
+		}
+	},
+
+	actionID: -1,
+	action: function(){
+		switch(this.actionID){
+			default: return "Nenhuma";
+			case 0: return "Nenhuma";
+			case 1: return "Padrão";
+			case 2: return "Movimento";
+			case 3: return "Livre";
+			case 4: return "Reação";
+		}
+	},
+	
+	rangeID: -1,
+	range: function(){
+		switch(this.rangeID){
+			default: return "Pessoal";
+			case 0: return "Pessoal";
+			case 1: return "Perto";
+			case 2: return "A Distância";
+			case 3: return "Percepção";
+			case 4: return "Graduação";
+		}
+	},
+
+	durationID: -1,
+	duration: function(){
+		switch(this.durationID){
+			default: return "Nenhuma";
+			case 0: return "Nenhuma";
+			case 1: return "Instantânea";
+			case 2: return "Concentração";
+			case 3: return "Sustentada";
+			case 4: return "Contínua";
+		}
+	},
 
 	powerOptions: [],
 
@@ -38,6 +82,36 @@ const powerDefault = {
 
 	removable: 0,
 
+	spentMathToString: function(){
+		let mathSpent = "";
+
+		if(this.removable == 0)
+			mathSpent = "(Base "
+				+ this.baseCost 
+				+ "+ Extras "+ this.totalExtraPerRank() 
+				+" - Falhas "+ this.totalFlawsPerRank() 
+				+") * Grads. "+ this.baseRanks 
+				+"  + Fixos "+ this.totalFlat();
+		else if(this.removable == 1)
+			mathSpent = "(Base "
+				+ this.baseCost 
+				+ "+ Extras "+ this.totalExtraPerRank() 
+				+" - Falhas "+ this.totalFlawsPerRank() 
+				+") * Grads. "+ this.baseRanks 
+				+"  + Fixos "+ this.totalFlat()
+				+ ") - Removível 1 "+ (this.totalPointSpent/5);
+		else
+			mathSpent = "(Base "
+				+ this.baseCost 
+				+ "+ Extras "+ this.totalExtraPerRank() 
+				+" - Falhas "+ this.totalFlawsPerRank() 
+				+") * Grads. "+ this.baseRanks 
+				+"  + Fixos "+ this.totalFlat()
+				+ ") - Removível 2 "+ 2*(this.totalPointSpent/5);
+
+		return mathSpent;
+	},
+
 	totalRanks: function(){
 		return parseInt(this.baseRanks + this.enhancedRanks);
 	},
@@ -46,28 +120,28 @@ const powerDefault = {
 		let sum = 0;
 
 		for(let i = 0; i < this.extras.length; i++){
-			sum += this.extras[i].ranks;
+			sum += parseInt(this.extras[i].totalRanks);
 		}
 
-		return parseInt(sum);
+		return sum;
 	},
 	totalFlawsPerRank: function () {
 		let sum = 0;
 
 		for(let i = 0; i < this.flaws.length; i++){
-			sum += this.flaws[i].ranks;
+			sum += parseInt(this.flaws[i].totalRanks);
 		}
 
-		return parseInt(sum);
+		return sum;
 	},
 	totalFlat: function() {
 		let sum = 0;
 
 		for(let i = 0; i < this.flats.length; i++){
-			sum += this.flats[i].ranks;
+			sum += parseInt(this.flats[i].totalRanks);
 		}
 
-		return parseInt(sum);
+		return sum;
 	},
 	/**
 	* SE ( BASE + EXTRAS - FALHAS) > 0; ENTÃO (BASE + EXTRAS - FALHAS) * GRAD + FIXOS;
@@ -99,27 +173,90 @@ const powerDefault = {
 	element: 0,
 }
 
+const multipleEffects = {
+	name: "",
+	id: 0,
+	flats: [],
+	alternateEffects: [],
+	removable: 0,
+	Powers: {
+		id: 0, // Vai pegar do personagem atual.
+		list: [],
+	},
+	
+	totalPowersSpent: function() { 
+		let sum = 0;
+
+		for (var i = 0; i < this.Powers.list.length; i++) 
+			sum += parseInt(this.Powers.list[i].totalPointSpent());
+
+		return sum;
+	},
+}
+
+const arrayDefault = {
+	name: "",
+	id: 0,
+	flats: [],
+	alternateEffects: [],
+	removable: 0,
+	Powers: {
+		id: 0, // Vai pegar do personagem atual.
+		list: [],
+	},
+	
+	totalPowersSpent: function() { 
+		let sum = 0;
+
+		for (var i = 0; i < this.Powers.list.length; i++) 
+			sum += parseInt(this.Powers.list[i].totalPointSpent());
+
+		return sum;
+	},
+}
+
+const multipleDefault = {
+	name: "",
+	id: 0,
+	flats: [],
+	alternateEffects: [],
+	removable: 0,
+	Powers: {
+		id: 0, // Vai pegar do personagem atual.
+		list: [],
+	},
+	
+	totalPowersSpent: function() { 
+		let sum = 0;
+
+		for (var i = 0; i < this.Powers.list.length; i++) 
+			sum += parseInt(this.Powers.list[i].totalPointSpent());
+
+		return sum;
+	},
+}
+
 const _EffectsList = [
 		{
 			id: 5042,
 			name: "- Arranjo -",
-			action: "Livre",
-			duration: "Sustentado",
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "Arranjo é um conjunto de poderes, qual só pode ser usado um por vez."
 		},
 		{
 			id: 5043,
 			name: "- Dispositivo -",
-			action: "Livre",
-			duration: "Permanente",
+			action: 3, // Livre
+			duration: 0, // Permanente
 			description: "Um dispositivo tem um ou mais efeitos e pode ser equipado e desequipado."
 		},
 		{
 			id: 5044,
 			name: "- Defesa Impenetrável -",
-			type: "Geral",
-			action: "Livre",
-			duration: "Contínuo",
+			type: 0, // Geral
+			action: 3, // Livre
+			duration: 4, // Contínuo
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -134,24 +271,24 @@ const _EffectsList = [
 		{
 			id: 5045,
 			name: "- Efeitos Ligados -",
-			action: "Livre",
-			duration: "Sustentado",
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "Selecione este poder para adicionar múltiplos efeitos que são todos ativados ao mesmo tempo."
 		},
 		{
 			id: 5046,
 			name: "- Múltiplos Efeitos - ",
-			action: "Livre",
-			duration: "Sustentado",
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "Selecione este poder para adicionar vários efeitos a um único poder."
 		},
 		{
 			id: 5001,
 			name: "Aflição",
-			type: "Ataque",
-			range: "Perto",
-			action: "Padrão",
-			duration: "Instantânea",
+			type: 1, // Ataque
+			range: 1, // Perto
+			action: 1, // Padrão
+			duration: 1, // Instantânea
 			baseCost: 1,
 			baseRanks: 1,
 			conditions: [
@@ -179,7 +316,7 @@ const _EffectsList = [
 			+ "</table><br>"
 			+ "<p>Alvo de Aflição faz teste de resistência ao final de cada turno para tirar condições do primeiro e segundo grau. Condições de terceiro grau requerem um minuto de recuperação ou ajuda exterior, como a perícia Tratamento ou o efeito Cura (CD 10 + graduação).</p>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10011, 10012, 10020, 10022, 10029, 11000, 11015, 11017, 11018],
 			benefits: function() { return ""; },
 		},
 	
@@ -188,10 +325,10 @@ const _EffectsList = [
 			name: "Alongamento",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			grabBonus: 1,
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
@@ -199,12 +336,12 @@ const _EffectsList = [
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode esticar seu corpo e/ou membros. Some sua graduação neste efeito ao seu tamanho normal para determinar o quão longe você consegue se esticar; para um humano de tamanho normal (graduação de tamanho -2) isso significa 4 metros com 1 graduação, 8 metros com 2 graduações, e assim por diante. Com 20 graduações em Alongamento, você pode se esticar 1.600 quilômetros! </p>"
 			+ "<p>Você pode usar Alongamento para fazer ataques \"de toque\" com uma distância maior alongado seus membros. Uma vez alongados, você pode fazer ataques corpo-a-corpo dentro de seu novo alcance como uma ação padrão. Se você não pode perceber o alvo exatamente (você alongar ao redor de uma quina, por exemplo), aplique as regras de camuflagem (veja Camuflagem em Ação & Aventura). Além disso, Alongamento permite que você embrulhar e enredar oponentes, logo lhe concede um bônus de +1 por graduação em agarrar (limitado pelo NP).</p>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10001, 10003, 10004, 10005, 10008, 10009, 10010, 10011, 10012, 10013, 10015, 10016, 10018, 10020, 10022, 10023, 10025, 10026, 10029, 10030, 10031, 10032, 10035, 10036, 11000, 11001, 11002, 11004, 11006, 11008, 11013, 11015, 11017, 11020],
 			benefits: function(ranks) {
 				let distance = FindDistance(ranks);
 				return "Distância de "+ distance + " e bônus de "+ ranks +" para agarrar.";
@@ -214,10 +351,10 @@ const _EffectsList = [
 		{
 			id: 5003,
 			name: "Ambiente",
-			type: "Controle",
-			range: "Graduação",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 2, // Controle
+			range: 4, // Graduação
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			baseCost: 0,
 			baseRanks: 0,
 			description: "<b>Efeito de Poder</b>"
@@ -226,7 +363,7 @@ const _EffectsList = [
 			+ 	"<li><b>Tipo</b>: Controle.</li>"
 			+ 	"<li><b>Ação</b>: Padrão.</li>"
 			+ 	"<li><b>Distância</b>: Graduação.</li>"
-			+ 	"<li><b>Duração</b>: Sustentado.</li>"
+			+ 	"<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode mudar o ambiente: aumentar ou diminuir a temperatura, criar luz, fazer chover e assim por diante (veja Ameaças Ambientais no Ação & Aventura). Seu Ambiente afeta um raio de 8 metros ao seu redor com 1 graduação. Cada graduação adicional amplia o raio em uma graduação de distância, para um alcance de mais ou menos 3.200 quilômetros com 20 graduações, o suficiente para alterar o ambiente em um continente inteiro!</p>"
 			+ "<p>Cada um dos efeitos a seguir é um efeito Ambiente separado. Caso tenha um, você pode adquirir outros como Efeitos Alternativos, mas só pode usar um de cada vez. Para manter múltiplos efeitos simultaneamente, some seus custos para o custo total do efeito por graduação ou aplique o modificador Seletivo.</p>"
@@ -240,7 +377,7 @@ const _EffectsList = [
 			+ "<p><b>Visibilidade</b></p> <hr>"
 			+ "<p>Por 1 ponto por graduação, você impõe uma penalidade de –2 em testes de Percepção. Por 2 pontos por graduação, impõe uma penalidade de –5. Para um obscurecimento mais significativo, use um efeito de Camuflagem com ataque de área (veja Camuflagem).</p>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10001, 10004, 10005, 10008, 10009, 10010, 10011, 10012, 10013, 10016, 10018, 10020, 10022, 10023, 10025, 10026, 10029, 10030, 10031, 10035, 10036, 11000, 11002, 11004, 11006, 11013, 11017],
 			benefits: function(ranks) {
 				let distance = FindDistance(ranks);
 				return "Afeta uma distância de "+ distance + ".";
@@ -250,10 +387,10 @@ const _EffectsList = [
 		{
 			id: 5004,
 			name: "Camuflagem",
-			type: "Sensorial",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 5, // Sensorial
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			baseCost: 2,
 			baseRanks: 0,
 			description: "<b>Efeito de Poder</b>"
@@ -262,22 +399,22 @@ const _EffectsList = [
 			+ "<li><b>Tipo</b>: Sensorial.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você ganha camuflagem total contra um sentido específico, embora ainda seja detectável por outros sentidos (incluindo outros sentidos do mesmo tipo; assim, você pode ter camuflagem contra visão normal, mas não contra qualquer outro sentido visual). Cada graduação adicional concede camuflagem contra outro sentido; duas graduações concedem camuflagem contra um tipo inteiro de sentido.</p>"
 			+ "<p>Camuflagem contra sentidos visuais custa o dobro (2 graduações para um sentido visual, 4 graduações para todos os sentidos visuais). Você não pode ter camuflagem contra sentidos do tato, uma vez que isso exige ser intangível (veja o efeito Intangibilidade). Assim, com Camuflagem 5, você pode ter camuflagem contra todos os sentidos visuais (4 graduações) e contra audição normal (1 graduação), por exemplo. Com Camuflagem 10 você tem total Camuflagem de todos tipos de sentidos, exceto o tátil.</p>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10003, 10012, 10013, 10018, 10020, 10022, 10025, 10026, 10029, 10030, 10031, 10033, 11000, 11002, 11004, 11006],
 			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5005,
 			name: "Característica",
-			type: "Geral",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			baseCost: 1,
 			baseRanks: 1,
 			description: "<b>Efeito de Poder</b>"
@@ -301,39 +438,39 @@ const _EffectsList = [
 			+ "<li><b>Pelo Protetor:</b> Você tem uma cobertura de pelos que o protege do calor e frio intenso, dando-lhe imunidade a esses ambientes.</li>"
 			+ "</ul>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10012, 10013, 10014, 10017, 10020, 10022, 10025, 10026, 10029, 11000],
 			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5006,
 			name: "Característica Aumentada",
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: Conforme Característica.</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode melhorar uma de suas características, escolhida quando compra este efeito. Enquanto este efeito estiver ativo, você aumenta a característica escolhida em sua graduação. Assim, por exemplo, Força Aumentada 5 aumenta sua Força em +5 enquanto estiver ativa. A característica aumentada ainda está sujeita aos limites do nível de poder.</p>"
 			+ "<p>O custo por graduação de Característica Aumentada é igual ao custo por graduação da característica afetada. A diferença é que Característica Aumentada é um efeito de poder, em vez de uma característica natural e, como tal, pode ser combinada com esforço extra e outros efeitos.</p>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10001, 10003, 10011, 10012, 10018, 10020, 10022, 10025, 10026, 10029, 11000, 11007, 11015, 11017, 11020],
 			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5007,
 			name: "Compreender",
-			type: "Sensorial",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 5, // Sensorial
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			baseCost: 2,
 			baseRanks: 0,
 			description: "<b>Efeito de Poder</b>"
@@ -358,17 +495,17 @@ const _EffectsList = [
 			+ "<p><b>Plantas</b></p> <hr>"
 			+ "<p>Você pode se comunicar com plantas, tanto as normais quando criaturas-planta. Isso exige duas graduações de Compreender. A consciência que uma planta tem de seus arredores é limitada, então ela pode não ser capaz de responder perguntas sobre eventos fora da área próxima.</p>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10001, 10003, 10004, 10005, 10011, 10012, 10013, 10015, 10018, 10019, 10020, 10022, 10025, 10026, 10029, 10030, 10031, 10034, 10035, 10036, 11000, 11002, 11015],
 			benefits: function() { return ""; },
 		},
 	
 		{
 			id: 5008,
 			name: "Comunicação",
-			type:"Sensorial",
-			range: "Graduação",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 5, // Sensorial
+			range: 4, // Graduação
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			baseCost: 4,
 			baseRanks: 1,
 			maxRank: 5,
@@ -378,7 +515,7 @@ const _EffectsList = [
 			+ "<li><b>Tipo</b>: Sensorial.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Graduação.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "Você pode se comunicar usando um meio que não seja sua voz normal. Escolha um sentido como seu meio de Comunicação (veja a lista para exemplos). Você também pode usar um sentido especial (como neutrinos, grávitons, mensagens mágicas, e assim por diante) perceptível apenas a uma forma apropriada do efeito Detecção (veja Sentidos), de acordo com o mestre."
 			+ "<ul>"
@@ -421,15 +558,15 @@ const _EffectsList = [
 			+ "<p>Outros indivíduos com sentidos aguçados capazes de detectar seu meio de Comunicação podem perceber suas transmissões com um teste de Percepção (CD 10 + sua graduação de Comunicação). O bisbilhoteiro deve estar dentro do seu alcance sensorial, ou do recipiente. Com dois graus de sucesso, ele pode compreender sua transmissão. Efeitos como Camuflagem que mirem seu meio de comunicação podem “interferir” em sua transmissão.</p>"
 			+ "",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10001, 10003, 10004, 10005, 10011, 10012, 10013, 10017, 10018, 10019, 10020, 10022, 10025, 10026, 10029, 10030, 10033, 10036, 11000, 11001, 11003, 11007, 11015, 11017, 11018, 11020],
 			benefits: function(ranks) {
 				switch(ranks){
+					default: return "";
 					case 1: return "Perto: até 30 metros";
 					case 2: return "Próximo: dentro de 1,5 quilômetros";
 					case 3: return "Longo: Dentro do mesmo Estado (ou de uma nação pequena)";
 					case 4: return "Mundial: qualquer lugar da Terra (ou planeta de tamanho parecido)";
 					case 5: return "Ilimitado: na prática, qualquer lugar";
-					default: return "";
 				}				
 			},
 		},
@@ -437,10 +574,10 @@ const _EffectsList = [
 		{
 			id: 5009,
 			name: "Controle de Sorte",
-			type: "Controle",
-			range: "Percepção",
-			action: "Reação",
-			duration: "Instantânea",
+			type: 2, // Controle
+			range: 3, // Percepção
+			action: 4, // Reação
+			duration: 1, // Instantânea
 			baseCost: 3,
 			baseRanks: 1,
 			description: "<b>Efeito de Poder</b>"
@@ -459,7 +596,7 @@ const _EffectsList = [
 			+ "<li>Você pode gastar um ponto de vitória ou uso de Sorte para forçar outra pessoa a refazer uma rolagem e ficar com o pior resultado. O alvo deste efeito pode gastar um ponto de vitória ou uso de Sorte para evitá-lo.</li>"
 			+ "</ul>",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10016],
 			benefits: function() { return ""; },
 		},
 	
@@ -468,17 +605,17 @@ const _EffectsList = [
 			name: "Crescimento",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode aumentar de tamanho temporariamente, ganhando Força e Vigor ao custo de se tornar um alvo maior, mais pesado, menos ágil e incapaz de manobrar através de espaços pequenos. Os modificadores de Crescimento são limitados pelo nível de poder.</p>"
 			+ "<p>Crescimento aplica os seguintes modificadores: </p>"
@@ -506,17 +643,17 @@ const _EffectsList = [
 			name: "Criar",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Controle",
-			range: "A Distância",
-			action: "Padrão",
-			duration: "Sustentado",
+			type: 2, // Controle
+			range: 2, // A Distância
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Controle.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: A Distância.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "<li><b>Salvamento</b>: Esquiva.</li>"
 			+ "</ul>"
 			+ "<p>Você pode formar objetos sólidos a partir do nada. Eles podem ser feitos de pedra, gelo, energia solidificada ou algum outro tipo de meio, dependendo dos descritores.</p>"
@@ -537,7 +674,7 @@ const _EffectsList = [
 			+ "",
 			exclusiveModifiers: [],
 			unavaliableModifiers: [],
-			benefits: function() {
+			benefits: function(ranks) {
 				let distance = FindVolume(ranks);
 				return "Total de volume igual a "+ distance + ".";
 			},
@@ -548,10 +685,10 @@ const _EffectsList = [
 			name: "Cura",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Perto",
-			action: "Padrão",
-			duration: "Instantânea",
+			type: 0, // Geral
+			range: 1, // Perto
+			action: 1, // Padrão
+			duration: 1, // Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -572,12 +709,12 @@ const _EffectsList = [
 		{
 			id: 5013,
 			name: "Dano",
-			type: "Ataque",
+			type: 1, // Ataque
 			baseCost: 1,
 			baseRanks: 1,
-			range: "Perto",
-			action: "Padrão",
-			duration: "Instantânea",
+			range: 1, // Perto
+			action: 1, // Padrão
+			duration: 1, // Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -689,10 +826,10 @@ const _EffectsList = [
 			name: "Deflexão",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Defesa",
-			range: "A Distância",
-			action: "Padrão",
-			duration: "Instantânea",
+			type: 3, // Defesa
+			range: 2, // A Distância
+			action: 1, // Padrão
+			duration: 1, // Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -716,17 +853,17 @@ const _EffectsList = [
 			name: "Encolhimento",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode diminuir de tamanho temporariamente, tornando-se menor e mais difícil de ver — e acertar — ao custo de perder Força e velocidade.</p>"
 			+ "<p>Encolhimento aplica os seguintes modificadores: </p>"
@@ -752,10 +889,10 @@ const _EffectsList = [
 			name: "Enfraquecer",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Ataque",
-			range: "Perto",
-			action: "Padrão",
-			duration: "Instantânea",
+			type: 1, // Ataque
+			range: 1, // Perto
+			action: 1, // Padrão
+			duration: 1, // Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -793,17 +930,17 @@ const _EffectsList = [
 			name: "Escavação",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 4, // Movimento
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Movimento.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode escavar através do solo. Você se move através de terra e da areia a uma graduação de velocidade igual à sua graduação de Escavação –5. Então, com Escavação 8, você pode se mover através do chão com graduação de velocidade 3 (mais ou menos 30 km/h). Escavar através de barro duro ou de terra compacta reduz a velocidade em uma graduação. Escavar através de rocha sólida reduz a velocidade em duas graduações. O túnel que você deixa pode ser permanente ou desabar atrás de você imediatamente (você escolhe quando começa a escavar um novo túnel).</p>"
 			+ "<p>Perceba que Escavação é diferente do efeito de Movimento Permear, que permite que você passe através de um obstáculo como o chão à sua velocidade normal sem perturbá-lo (veja Movimento para detalhes).</p>"
@@ -822,17 +959,17 @@ const _EffectsList = [
 			baseRanks: 1,
 			maxBaseCost: 5,
 			baseRanks: 1,
-			type: "Sensorial",
-			range: "Percepção",
-			action: "Padrão",
-			duration: "Sustentado",
+			type: 5, // Sensorial
+			range: 3, // Percepção
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1-5 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Controle.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: Percepção.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "<li><b>Salvamento</b>: Vontade.</li>"
 			+ "</ul>"
 			+ "<br>"
@@ -878,7 +1015,7 @@ const _EffectsList = [
 			+ "</table>"
 			+ "",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10016],
 			benefits: function(ranks) {
 				let distance = FindVolume(ranks);
 				return "Área num total de volume igual a "+ distance + ".";
@@ -891,10 +1028,10 @@ const _EffectsList = [
 			baseCost: 2,
 			baseRanks: 1,
 			maxRank: 20,
-			type: "Defesa",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 3, // Defesa
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -1001,10 +1138,10 @@ const _EffectsList = [
 		{
 			id: 5020,
 			name: "Imunidade",
-			type: "Defesa",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 3, // Defesa
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1047,17 +1184,17 @@ const _EffectsList = [
 			baseCost: 5,
 			baseRanks: 1,
 			maxRank: 4,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 5 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode assumir uma forma menos sólida. Você pode alternar entre a forma normal e a Intangível uma vez por rodada, como uma ação livre. Por padrão sua forma tangível é sua forma \"normal\", mas o mestre pode permitir que você faça de sua forma Intangível sua forma \"normal\"; nesse caso, permanecer sólido tem duração sustentada para você!</p>"
 			+ "<p>Intangibilidade oferece quatro graus de efeito. Você não ganha a habilidade de assumir formas Intangibilidade de graduação menor em graduações mais altas, mas pode comprar as formas de graduação menores como um Efeito Alternativo de uma graduação mais alta.</p>"
@@ -1101,17 +1238,17 @@ const _EffectsList = [
 			name: "Invocar",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Controle",
-			range: "Perto",
-			action: "Padrão",
-			duration: "Sustentado",
+			type: 2, // Controle
+			range: 1, // Perto
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Controle.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: Perto.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode chamar outra criatura — um capanga — para ajudá-lo. Essa criatura é criada como um personagem independente com (graduação neste efeito x 15) pontos de personagem. O capanga possui nível de poder igual à graduação de Invocar e não pode ter seus próprios capangas.</p>"
 			+ "<p>Você pode invocar seu capanga como uma ação padrão; ele aparece no espaço aberto mais próximo ao seu lado. O capanga age na sua iniciativa a partir da rodada seguinte. Capangas invocados são tontos, tendo apenas uma ação padrão por rodada. Direcionar um capanga para fazer algo é uma ação de movimento, e capangas fazem o que lhes é ordenado até que a tarefa esteja completada. Você sempre tem o mesmo capanga a menos que aplique o modificador Tipo Variável.</p>"
@@ -1143,17 +1280,17 @@ const _EffectsList = [
 			name: "Leitura Mental",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Sensorial",
-			range: "Percepção",
-			action: "Padrão",
-			duration: "Sustentada", // 3- Sustentada
+			type: 5, // Sensorial
+			range: 3, // Percepção
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Sensorial.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: Percepção.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "<li><b>Salvamento</b>: Vontade.</li>"
 			+ "</ul>"
 			+ "<p>Você pode ler a mente de outro personagem. Para usar Leitura Mental, faça um teste de efeito oposto por um teste de Vontade do alvo. O grau de sucesso determina o grau de contato.</p>"
@@ -1191,7 +1328,7 @@ const _EffectsList = [
 			+ "<p>Caso você possa interagir com seu alvo, um teste bem-sucedido de Enganação contra um teste de Intuição do alvo faz com que ele pense conscientemente em uma informação que você esteja procurando, como uma senha ou nome, o que permite que você pesque-a da mente do alvo pelos seus pensamentos superficiais.</p>"
 			+ "",
 			exclusiveModifiers: [],
-			unavaliableModifiers: [],
+			unavaliableModifiers: [10016],
 			benefits: function() { return ""; },
 		},
 	
@@ -1200,10 +1337,10 @@ const _EffectsList = [
 			name: "Membros Extras",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1230,17 +1367,17 @@ const _EffectsList = [
 			baseCost: 5,
 			baseRanks: 1,
 			maxRank: 4,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 5 por graduação</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode alterar sua aparência. Suas características não mudam; sua nova forma é uma mudança meramente cosmética. Você ganha um bônus de +20 em testes de Enganação para se disfarçar como a forma assumida (veja as diretrizes para Disfarçar-se em Enganação).</p>"
 			+ "<p>Sua graduação em Morfar determina que forma(s) você pode assumir: com 1 graduação você pode assumir uma única outra aparência. Com 2 graduações você pode assumir qualquer forma de um grupo restrito, como pessoas de mais ou menos mesmo tamanho e sexo, um tipo de animal, como pássaros ou répteis, e assim por diante. Com 3 graduações você pode assumir qualquer forma de um grupo amplo, como humanoides, animais, máquinas, e assim por diante. Com 4 graduações você pode assumir qualquer forma com a mesma massa que a sua.</p>"
@@ -1264,17 +1401,17 @@ const _EffectsList = [
 			name: "Mover Objetos",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Controle",
-			range: "A Distância",
-			action: "Padrão",
-			duration: "Sustentada", // 3- Sustentada
+			type: 2, // Controle
+			range: 2, // A Distância
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação</li>"
 			+ "<li><b>Tipo</b>: Controle.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: A Distância.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode mover objetos sem tocar neles. Mover Objeto não tem ação/reação; um objeto em movimento não pode arrastar o personagem movendo-o, por exemplo. Este efeito também não pode ser considerado \"contato físico\" ou \"toque\" para efeitos que assim o exijam.</p>"
 			+ "<p>Sua Força efetiva para erguer e mover objetos com este efeito é igual à sua graduação. Usando uma ação de movimento para se concentrar, você pode aumentá-la em +1, alterando a duração do efeito para Concentração. Isso é em adição a usar esforço extra para aumentar sua graduação.</p>"
@@ -1293,17 +1430,17 @@ const _EffectsList = [
 			name: "Movimento",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentada", // 3- Sustentada
+			type: 4, // Movimento
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Movimento.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você tem uma forma especial de movimento. Para cada graduação neste efeito, escolha uma das opções abaixo.</p>"
 			+ "<br>"
@@ -1375,17 +1512,17 @@ const _EffectsList = [
 			name: "Natação",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 4, // Movimento
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Movimento.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você nada rápido. Você tem uma velocidade aquática igual à sua graduação em Natação menos 2, sujeita as regras normais para nadar (veja a perícia Atletismo). Você pode fazer testes de Atletismo para nadar como testes de rotina.</p>"
 			+ "<p>Este poder não permite que você respire embaixo da água (para isso, veja Imunidade).</p>"
@@ -1402,10 +1539,10 @@ const _EffectsList = [
 			name: "Nulificar",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Controle",
-			range: "A Distância",
-			action: 1,
-			duration: "Instantânea",
+			type: 2, // Controle
+			range: 2, // A Distância
+			action: 1, // Padrão
+			duration: 1, // Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1427,10 +1564,10 @@ const _EffectsList = [
 			name: "Proteção",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Defesa",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 3, // Defesa
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1449,17 +1586,17 @@ const _EffectsList = [
 			name: "Rapidez",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode realizar tarefas de rotina rápido — qualquer coisa que possa ser feita com um teste de rotina (veja Testes de Rotina) —, talvez até muito rápido. Diminua sua graduação de efeito da graduação de tempo normal para realizar uma tarefa para determinar quanto tempo você leva para realizá-la. Assim, por exemplo, caso você tenha Rapidez 7, um teste de rotina que normalmente leva uma hora (graduação de tempo 9), leva para você apenas (9 – 7 = graduação de tempo 2) 30 segundos. Testes que não sejam de rotina não são afetados por Rapidez, assim como a velocidade de movimento também não é.</p>"
 			+ "<p>Caso você possa realizar uma tarefa em menos de um segundo (graduação de tempo –2), o mestre pode escolher tratar a tarefa como uma ação livre para você (embora o mestre ainda possa limitar o número de ações livres que você pode realizar em um turno, como sempre).</p>"
@@ -1473,10 +1610,10 @@ const _EffectsList = [
 			name: "Regeneração",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Defesa",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 3, // Defesa
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1549,17 +1686,17 @@ const _EffectsList = [
 			name: "Salto",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 4, // Movimento
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Movimento.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode dar saltos prodigiosos, muito mais longos do que até mesmo um atleta olímpico é capaz. A graduação de distância que você pode cobrir com um único salto parado é igual à sua graduação Salto menos 2: assim, 4 m metros com 1 graduação, 8 metros com 2 graduações, até 2 mil quilômetros com 20 graduações! Você não sofre dano por aterrissar depois de um salto, desde que esteja dentro da sua distância máxima.</p>"
 			+ "<p>A graduação máxima de velocidade de seu salto é 7 (mais ou menos 500 quilômetros por hora), então, saltos de 1.000 quilômetros (17 graduações de distância) levam graduação de tempo 10 (17 – 7, ou duas horas) de tempo no ar! Por causa disso, saltadores podem escolher fazer \"pulos\" de apenas alguns quilômetros, que os deixam no ar por mais ou menos um minuto, para controlar melhor sua direção.</p>"
@@ -1576,17 +1713,17 @@ const _EffectsList = [
 			name: "Sentido Remoto",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Sensorial",
-			range: "Graduação",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 5, // Sensorial
+			range: 4, // Graduação
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1-5 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Sensorial.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Graduação.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode deslocar um ou mais de seus sentidos para longe, percebendo como se estivesse no local, até 15 metros de distância. Cada graduação adicional aumenta o alcance em uma graduação de distância, então 2 graduações são 30 metros, 3 graduações são 60 metros, e assim por diante. Sentido Remoto se sobrepõe a seus sentidos normais enquanto você o estiver usando. Alvos observados via Sentido Remoto podem \"senti-lo\" com um teste de Intuição (CD 10 + graduação). Você pode fazer testes de Percepção usando seus sentidos deslocados, usando a ação normal para fazê-lo. Para vistoriar uma área maior em busca de alguém ou de alguma coisa, use as diretrizes de busca de dados na descrição da perícia Investigação.</p>"
 			+ "<p>Sentido Remoto custa 1 ponto por graduação para um tipo de sentido, 2 pontos para dois tipos, 3 pontos para três tipos, 4 pontos para quatro tipos e 5 pontos por graduação para todos os tipos de sentido. Sentidos visuais custam como dois tipos de sentido (assim, Sentido Remoto visual custa 2 pontos por graduação).</p>"
@@ -1604,10 +1741,10 @@ const _EffectsList = [
 			name: "Sentidos",
 			baseCost: 1,
 			baseRanks: 0,
-			type: "Sensorial",
-			range: "Pessoal",
-			action: "Nenhuma",
-			duration: "Permanente",
+			type: 5, // Sensorial
+			range: 0, // Pessoal
+			action: 0, // Nenhuma
+			duration: 0, // Permanente
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
@@ -1773,10 +1910,10 @@ const _EffectsList = [
 			name: "Teleporte",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Graduação",
-			action: "Movimento",
-			duration: "Instantânea",
+			type: 4, // Movimento
+			range: 4, // Graduação
+			action: 2, // Movimento
+			duration: 1, // Instantânea
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
@@ -1802,17 +1939,17 @@ const _EffectsList = [
 			name: "Transformar",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Controle",
-			range: "Perto",
-			action: "Padrão",
-			duration: "Sustentado",
+			type: 2, // Controle
+			range: 1, // Perto
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2-5 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Controle.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: Perto.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "<li><b>Salvamento</b>: Esquiva.</li>"
 			+ "</ul>"
 			+ "<p>Você pode transformar objetos em outros objetos, alterando sua forma ou composição material no processo. Você deve tocar o objeto escolhido, o que exige um teste de ataque corpo-a-corpo caso o objeto esteja sendo segurado ou vestido por outro personagem. O que você pode transformar afeta o custo por graduação.</p>"
@@ -1823,7 +1960,7 @@ const _EffectsList = [
 			+ "<li><b>5 pontos:</b> transforme qualquer coisa em qualquer outra coisa.</li>"
 			+ "</ul>"
 			+ "<p>Objetos inanimados não fazem testes de salvamento e são transformados automaticamente, desde que você possa afetar sua massa total. Você pode transformar (graduação de Transformação –6) graduações de massa, então Transformação 1 pode afetar até 1 kg (graduação de massa –5), então 2 kg com graduação 2, e assim por diante, até graduação 20, que afeta 500 toneladas de uma vez só.</p>"
-			+ "<p>A transformação dura como um efeito sustentado. Quando você parar de mantê-la, o alvo reverte ao normal. Transformação Contínua é irreversível, exceto ao usar outro efeito de Transformação para transformar o alvo de volta em sua forma anterior. Transformar os dispositivos ou equipamento de alguém exige mirá-los primeiro: os personagens podem fazer testes de Esquiva para itens que estejam segurando ou vestindo, com um bônus de +5 para itens portáteis e objetos de tamanho semelhante.</p>"
+			+ "<p>A transformação dura como um efeito sustentada. Quando você parar de mantê-la, o alvo reverte ao normal. Transformação Contínua é irreversível, exceto ao usar outro efeito de Transformação para transformar o alvo de volta em sua forma anterior. Transformar os dispositivos ou equipamento de alguém exige mirá-los primeiro: os personagens podem fazer testes de Esquiva para itens que estejam segurando ou vestindo, com um bônus de +5 para itens portáteis e objetos de tamanho semelhante.</p>"
 			+ "<p>Assim, transformar uma arma portátil como uma pistola exige um teste de ataque e permite que o usuário faça um teste de Esquiva com um bônus de +5. Mirar uma armadura vestida exige um teste de ataque e permite que o usuário faça um teste de Esquiva (sem bônus, por se tratar de um item grande).</p>"
 			+ "<table class='BehindTheMask-Table'>"
 			+ "<tr> <th>Por Trás da Máscara</th> </tr>"
@@ -1833,7 +1970,7 @@ const _EffectsList = [
 			+ "<br>"
 			+ "<p><b>Transformações Destrutivas</b></p>"
 			+ "<hr>"
-			+ "<p>É possível que Transformação destrua objetos: transformar uma porta de aço em água, ar ou ferrugem a inutiliza! Entretanto, tenha em mente que Transformação normalmente é um efeito sustentado; o alvo não é realmente destruído a menos que o efeito seja contínuo, e, assim, irreversível. Mesmo então, a destruição dos alvos tende a ser tudo-ou-nada. Para um efeito capaz de apodrecer e eventualmente destruir objetos, use Enfraquecer Resistência.</p>"
+			+ "<p>É possível que Transformação destrua objetos: transformar uma porta de aço em água, ar ou ferrugem a inutiliza! Entretanto, tenha em mente que Transformação normalmente é um efeito sustentada; o alvo não é realmente destruído a menos que o efeito seja contínuo, e, assim, irreversível. Mesmo então, a destruição dos alvos tende a ser tudo-ou-nada. Para um efeito capaz de apodrecer e eventualmente destruir objetos, use Enfraquecer Resistência.</p>"
 			+ "<br>"
 			+ "<p><b>Seres Transformados</b></p>"
 			+ "<hr>"
@@ -1866,17 +2003,17 @@ const _EffectsList = [
 			name: "Variável",
 			baseCost: 7,
 			baseRanks: 1,
-			type: "Geral",
-			range: "Pessoal",
-			action: "Padrão",
-			duration: "Sustentado",
+			type: 0, // Geral
+			range: 0, // Pessoal
+			action: 1, // Padrão
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 7 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Geral.</li>"
 			+ "<li><b>Ação</b>: Padrão.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode ganhar ou usar virtualmente qualquer efeito do tipo e descritor apropriados! Um efeito Variável lhe concede (graduação x 5) pontos de poder que você pode alocar em diferentes efeitos. Use uma ação em seu turno e escolha onde alocar seus pontos de poder Variáveis. É uma boa ideia ter um “menu” de pontos pré-prontos para acelerar esse processo durante o jogo.</p>"
 			+ "<p>Os efeitos que você ganha estão sujeitos aos limites de nível de poder e da série. Você não pode, por exemplo, adquirir Característica Aumentada como um efeito Variável para melhorar uma característica além do limite de nível de poder, nem para adquirir efeitos ou descritores específicos que o mestre baniu da série. O mestre tem a palavra final se um uso específico de um efeito Variável é apropriado e pode vetar suas alocações, caso necessário. Você também deve colocar descritores em seu efeito variável, limitando seu escopo. "
@@ -1894,17 +2031,17 @@ const _EffectsList = [
 			name: "Velocidade",
 			baseCost: 1,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 4, // Movimento
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 1 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Movimento.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode se mover mais rápido que o normal. Você tem uma graduação de velocidade terrestre igual à sua graduação neste efeito. Isso também melhora todas as formas de movimento baseadas na velocidade terrestre.</p>",
 			exclusiveModifiers: [],
@@ -1919,17 +2056,17 @@ const _EffectsList = [
 			name: "Voo",
 			baseCost: 2,
 			baseRanks: 1,
-			type: "Movimento",
-			range: "Pessoal",
-			action: "Livre",
-			duration: "Sustentado",
+			type: 4, // Movimento
+			range: 0, // Pessoal
+			action: 3, // Livre
+			duration: 3, // Sustentada
 			description: "<b>Efeito de Poder</b>"
 			+ "<ul>"
 			+ "<li><b>Custo</b>: 2 por graduação.</li>"
 			+ "<li><b>Tipo</b>: Movimento.</li>"
 			+ "<li><b>Ação</b>: Livre.</li>"
 			+ "<li><b>Distância</b>: Pessoal.</li>"
-			+ "<li><b>Duração</b>: Sustentado.</li>"
+			+ "<li><b>Duração</b>: Sustentada.</li>"
 			+ "</ul>"
 			+ "<p>Você pode voar, incluindo flutuar em um mesmo lugar. Você tem uma graduação de velocidade de voo igual à sua graduação neste efeito.</p>",
 			exclusiveModifiers: [],

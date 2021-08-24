@@ -56,6 +56,10 @@ function showPopUp(){
     case 10: 
       _PopUpContext = PowerOptionsList(powerID);
       break;
+    // Opções de Poder
+    case 11: 
+      _PopUpContext = AvaliableEffectList(powerID);
+      break;
     default: closePopUp();
   }
 
